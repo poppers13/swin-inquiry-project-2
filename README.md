@@ -1,1 +1,3 @@
-testing 1 2 3
+- topic1.html shows the history of cookies
+- topic2.html defines what cookies and sessions are
+- topic3.html states the purpose of cookies
