@@ -1,3 +1,4 @@
 - topic1.html shows the history of cookies
 - topic2.html defines what cookies and sessions are
-- topic3.html states the purpose of cookies
+- topic3.html states the purpose of both
+- topic4.html lists some alternatives to cookies/sessions, and their benefits
