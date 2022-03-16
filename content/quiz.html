@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
+        <title>Cookies and Sessions - Home</title>
+        
+        <meta charset="UTF-8">
+        <meta name="description" content="How to navigate this web page">
+        <meta name="keywords" content="cookies, sessions, education, swinburne, home, menu">
+        <meta name="author" content="Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake, Kasun Jayawardhana">
+    </head>
+    
+    <body id="index-body">
+        <!-- sticky menu bar, with navigation links to other pages -->
+        <section id="menu">
+            <a href="index.html">Home</a>
+            <a href="topic1.html">History</a>
+            <a href="topic2.html">What are cookies?</a>
+            <a href="topic3.html">Usage</a>
+            <a href="topic4.html">Alternatives</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="enhancements.html">Enhancements</a>
+        </section>
+
+        <!-- header contains school logo, and info relating to the page's creation -->
+        <header class="content-block" id="header-block">
+            <img id="swin-logo" src="images/swinburne_logo.png" alt="Swinburne Logo">
+            <p>This website has been created for <u>TNE10006: Computing Technology Inquiry Project</u>.
+            <br/><br/>It was developed by Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake and Kasun Jayawardhana.</p>
+        </header>
+        
+        <h1>Cookies and Sessions Quiz</h1>
+        
+        <!-- ************ IMPORTANT DEVELOPER'S NOTE ************ -->
+        <!-- all the ids and names that begin with ph (eg. "phtext") are placeholders, and should be replaced with more relevant ids later -->
+        <!-- for example, if you have the radio button question, and it's about the history of cookies, you could fill in the id and name as "radio-history" -->
+        <!-- almost all text editors have a "Find and Replace" option: that'll be the best way to make sure you don't miss anything -->
+        <!-- it isn't super important that formatting is exactly that way, just try and keep it consistent with what's already on this page -->
+        <!-- remember, you'll also need to change the 'for' attribute of that question's label to match -->
+        <!-- **************************************************** -->
+        
+        <section class="content-block">
+            <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
+                <fieldset>
+                    <legend><strong>Personal Details</strong></legend>
+
+                    <p>
+                        <label for="studentid">Student ID</label>
+                        <input type="text" name="studentid" id="studentid" required="required" pattern="\d{7,10}">
+                    </p><p>
+                        <label for="firstname">First Name</label>
+                        <input type="text" name="firstname" id="firstname" required="required" pattern="[A-Za-z \-]{1,30}">
+                    </p><p>
+                        <label for="lastname">Last Name</label>
+                        <input type="text" name="lastname" id="lastname" required="required" pattern="[A-Za-z \-]{1,30}">
+                    </p>
+                </fieldset>
+
+                <fieldset>
+                    <legend><strong>Questions</strong></legend>
+
+                    <!-- text input question -->
+                    <fieldset>
+                        <legend>1. This is where question 1 goes</legend>
+                        <label for="phtext"><i>Answer: </i></label>
+                        <input type="text" name="phtext" id="phtext" required="required">
+                    </fieldset>
+
+                    <!-- radio multi choice question -->
+                    <fieldset>
+                        <legend>2. This is where question 2 goes</legend>
+                        <input type="radio" name="phradio" id="phr1" value="phr1" required="required"><label for="phr1">Option 1</label>
+                        <input type="radio" name="phradio" id="phr2" value="phr2"><label for="phr2">Option 2</label>
+                        <input type="radio" name="phradio" id="phr3" value="phr3"><label for="phr3">Option 3</label>
+                        <input type="radio" name="phradio" id="phr4" value="phr4"><label for="phr4">Option 4</label>
+                    </fieldset>
+                    
+                    <!-- checkbox multi choice question -->
+                    <fieldset>
+                        <legend>3. This is where question 3 goes</legend>
+                        <input type="checkbox" name="phcheckbox[]" id="phc1" value="phc1"><label for="phc1">Option 1</label>
+                        <input type="checkbox" name="phcheckbox[]" id="phc2" value="phc2"><label for="phc2">Option 2</label>
+                        <input type="checkbox" name="phcheckbox[]" id="phc3" value="phc3"><label for="phc3">Option 3</label>
+                        <input type="checkbox" name="phcheckbox[]" id="phc4" value="phc4"><label for="phc4">Option 4</label>
+                    </fieldset>
+                    
+                    <!-- dropdown question -->
+                    <fieldset>
+                        <legend>4. This is where question 4 goes</legend>
+                        <select name="phdropdown" id="phdropdown" required="required">
+                            <option value="" selected="selected" disabled>Select Answer</option>
+                            <option value="phd1">Answer 1</option>
+                            <option value="phd2">Answer 2</option>
+                            <option value="phd3">Answer 3</option>
+                            <option value="phd4">Answer 4</option>
+                            <option value="phd5">Answer 5</option>
+                        </select>
+                    </fieldset>
+                    
+                    <!-- leaving the last question blank for now: we'll decide later what this should be -->
+                    <!-- it could be good to find a way to incorporate an image map: that'll count as an enhancement -->
+                    <fieldset>
+                        <legend>5. This is where question 5 goes</legend>
+                    </fieldset>
+                    
+                </fieldset>
+                
+                <br/><button type="submit">Submit</button>
+                <button type="reset">Reset Answers</button>
+            </form>
+        </section>
+        
+        <!-- footer with email contacts for every member -->
+        <footer class="content-block" id="footer-block">
+            <span>Email contacts:</span>
+            <a href="mailto:103986200@student.swin.edu.au">Aidan D.</a>
+            <a href="mailto:103982075@student.swin.edu.au">Jesh K.</a>
+            <a href="mailto:103993019@student.swin.edu.au">Dylan L.</a>
+            <a href="mailto:103178599@student.swin.edu.au">Nimash R.</a>
+            <a href="mailto:103178638@student.swin.edu.au">Kasun J.</a>
+        </footer>
+    </body>
+</html>
