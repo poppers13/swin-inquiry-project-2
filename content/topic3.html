@@ -5,6 +5,7 @@
         <meta name="description"    content="Demonstrates the function of cookies and sessions">
         <meta name="keywords"       content="Cookies, Sessions, Function">
         <meta name="author"         content="Jesh Kumar">
+        <link href="styles/style.css" rel="stylesheet">
         <title>Functions of Cookies & Sessions</title>
     </head>
 
@@ -27,7 +28,68 @@
                 <br/><br/>It was developed by Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake and Kasun Jayawardhana.</p>
             </header>
 
-            <h1>Functions of Cookies & Sessions</h1>
+            <!-- intro to the page-->
+            <section>
+                <h1>Functions of Cookies & Sessions</h1>
+                <p>Cookies and sessions are quite useful. But how exactly do they work? <br />Let's find out!</p>
+            </section>
+            
+            <!-- how do cookies and sessions work-->
+            <section>
+                <h2>How do Cookies & Sessions Work?</h2>
+                    <p>Cookies are used for keeping data streamline, matching up with the session that's placed on a server.<br />
+                        Websites will ask to accept cookies in order to follow data privacy protection law standards. If you choose to deny 
+                        them they won't be used.<br />
+                        However, once you accept a cookie, it will gain access to information such as webiste name, browser ID, browsing 
+                        habits, time spent on a webiste and more.
+                    </p>
+                    <!--process of cookies-->
+                    <p><strong>Process from Browser to Server</strong><br />
+                    They follow a specific order as respresented by the list below:</p>
+                        <ol>
+                            <li>Browser requests a webiste</li>
+                            <li>Server sends cookie with response</li>
+                            <li>Browser stores cookie</li>
+                            <li>Browser sends cookie with requests</li>
+                            <li>Server personalises response</li>
+                        </ol>
+                    <!--main uses of cookies-->
+                    <p>There are 3 main things that they're used for and they are session management, personalisation and tracking.</p>
+                    <ul>
+                        <li><strong>Session Management:</strong> this is used as a form of identification for the user. 
+                            Since the cookies from other websites are independent of each other, session management with cookies allows for them to 
+                            be linked. <br />
+                        </li>
+                        <li><strong>Personalisation</strong> by having access to different cookies from different websites, sites are able to target 
+                            specific ads towards users which they might enjoy. This is similar to tracking with cookies.
+                        </li>
+                        <li><strong>Tracking:</strong> no, this isn't location tracking, but rather cookies can be used to track items that users have 
+                            viewed before in their shopping carts and will curate similar goods which may appeal to them.
+                        </li>
+                    </ul>
+            </section>
+            
+            <!--where are cookies & sessions used & stored-->
+            <section>
+                <h2>When are Cookies & Sessions Used & Stored?</h2>
+                    <p>Cookies and sessions are used all the time when we are accessing the Internet.<br />
+                        
+                        Where cookies are stored client side and downloaded onto the HDD of a user's computer and handled by the browser, 
+                        most sessions are found on web servers, with a handful being stored on the client side.<br />
+                        
+                        If sessions are to be stored client side, it means the session information will be able to load faster as it won't have to verify against 
+                        sessions on the server. <br />
+                        This is often the case when storage required is low, however if more storage space is needed,
+                        then the sessions should be stored on the server side.
+                    </p>
+
+                <!--who uses cookies and sessions-->
+                <h3>Who has Access to Cookies & Sessions?</h2>
+                    <p>For the most part, cookies can only be accessed by the website which requested the cookie. <br />
+                        However, cookies can make use of a unique ID (a string of characters) which allows for servers being able to match up with the cookie data on the server. <br />
+                    </p>
+                    <p><a href = "topic4.html">Click here to learn about differnet types of cookies!</a></p>
+            </section>
 
             <footer class="content-block" id="footer-block">
                 <span>Email contacts:</span>
