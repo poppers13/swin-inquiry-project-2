@@ -88,10 +88,16 @@ h1 {
 
 /* !!! FOOTER STYLING !!! */
 #footer-block {
-    /*position: fixed;*/
     padding: 5px;
     margin-top: 25px;
     margin-left: auto;
     margin-right: 0;
     width: fit-content;
+}
+
+/* !!! PAGE SPECIFIC STYLING !!! */
+#signs-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
