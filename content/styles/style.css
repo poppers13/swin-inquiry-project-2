@@ -101,3 +101,74 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* !!! TOPIC 3 STYLING !!! */
+
+aside {
+    width: 40%;
+    box-shadow: inset 5px 0px 5px -5px black;
+    float: right;
+    color: rgb(138, 74, 31);
+    font-style: italic;
+}
+
+aside > p {
+    margin: .5rem;
+}
+
+#cookie-id {
+    background-color: rgba(156, 83, 23, 0.815);
+    color: white;
+    padding: 5px;
+    border-style: ridge;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+dl {
+    margin: auto;
+}
+
+dt {
+    font-weight: bold;
+    font-size: large;
+    
+}
+
+dd {
+    background: none no-repeat left top;
+    padding: 20px 50px 20px;
+    background: none no-repeat left top;
+	margin:0 0 2em 0;
+	line-height:1.5em;	
+    text-align: justify;
+    position: relative;
+    top: 50%;
+}
+
+img.authentication {
+    float: left;
+    margin: 20px;
+}
+
+img.personalisation {
+    float: left;
+    margin: 20px;
+}
+
+img.tracking {
+    float: left;
+    margin: 20px;
+}
+
+img.figure1 {
+    width: 200px;
+    height: 200px;
+    float: right;
+}
+
+img.figure2 {
+    width: 200px;
+    height: 200px;
+    float: left;
+}
