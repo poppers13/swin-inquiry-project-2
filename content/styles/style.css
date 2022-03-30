@@ -8,6 +8,11 @@ body {
 
 h1 {
     color: white;
+	/* styling done to override the properties of Bootstrap's 'h1' styling and return it to roughly its original form */
+	font-family: Times New Roman, serif;
+	font-size: 2em;
+	margin: 2% 0%;
+	font-weight: bold;
 }
 
 .content-block {
@@ -96,10 +101,21 @@ h1 {
 }
 
 /* !!! PAGE SPECIFIC STYLING !!! */
+
+/* !!! INDEX STYLING !!! */
 #signs-image {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#youtube-video {
+	float: middle;
+	/* adds scaling for smaller resolution web browsers */
+	max-width: 100%;
+	min-width: 20%;
+	max-height: 100%;
+	min-height: 20%;
 }
 
 /* !!! TOPIC 3 STYLING !!! */
