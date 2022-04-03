@@ -192,3 +192,8 @@ img.figure2 {
     height: 200px;
     float: left;
 }
+
+/* !!! QUIZ STYLING !!! */
+
+fieldset { margin-bottom: 20px; }
+
