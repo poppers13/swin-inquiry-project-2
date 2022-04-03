@@ -122,6 +122,41 @@ h1 {
 	min-height: 20%;
 }
 
+/* !!! TOPIC 1 STYLING !!! */
+
+/*image 1 changes*/
+img.img1 {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Image 2 changes*/
+img.img2 {
+    width: 300px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Table and table content*/
+.t1 {
+    border: 2px solid black;
+    font-style: oblique;
+    font-size: 1.05em;
+}
+
+/*Change the attributes of captions*/
+.fig {
+    color: blue;
+    font-style: italic;
+    font-size: 0.9em;
+    text-align: center;
+}
+
 /* !!! TOPIC 3 STYLING !!! */
 
 aside {
@@ -212,6 +247,7 @@ img.figure2 {
     border-collapse: collapse;
 
 }
+
 /* !!! QUIZ STYLING !!! */
 
 fieldset { margin-bottom: 20px; }
