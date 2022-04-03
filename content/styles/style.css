@@ -44,6 +44,8 @@ h1 {
 }
 
 #header-block {
+    /* margin creates distance between the header and the top menu */
+    margin-top: 2%;
     max-width: 50%;
     border-width: thick;
     padding: 5px;
@@ -73,6 +75,9 @@ h1 {
 	top: 0;
     left: 0;
 	width: 100%;
+    
+    /* ensures that the menu appears over all other elements */
+    z-index: 1;
 }
 
 #menu a {
@@ -110,7 +115,6 @@ h1 {
 }
 
 #youtube-video {
-	float: middle;
 	/* adds scaling for smaller resolution web browsers */
 	max-width: 100%;
 	min-width: 20%;
