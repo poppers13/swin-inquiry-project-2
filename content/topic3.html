@@ -33,68 +33,78 @@
                 <h1>Functions of Cookies & Sessions</h1>
             </section>
             
+        <article class="content-block">
             <!-- how do cookies and sessions work -->
-            <section class="content-block">
+            <section id="function">
                 <h2>How do Cookies & Sessions Work?</h2>
-                    <p>To transfer data over the Internet we make use of protocols. In particular HTTPS (hyper-text transfer protocol secure), which by default is a <em>stateless</em> protocol. <br>
-                        Cookies and sessions are what make HTTPS a <em>stateful</em> protocol. But what does this mean?
-                    </p>
-                    <p>
-                        Cookies are used for keeping data streamline, matching up with the session that's placed on a server.<br />
+                    <p class="how-cs-work">
+                        Cookies and sessions are useful when surfing the web, but how exactly do they work? 
+                        Firstly, we need to start with protcols.
+
+                        To transfer data over the Internet we make use of protocols. In particular HTTPS (hyper-text transfer protocol secure), which by default is a <em>stateless</em> protocol.
+                        Cookies and sessions are what make HTTPS a <em>stateful</em> protocol. But what does this mean? 
+
+                        Cookies are used for keeping data streamline, matching up with the session that's placed on a server.
                         Websites will ask to accept cookies in order to follow data privacy protection law standards. If you choose to deny 
-                        them they won't be used.<br />
+                        them they won't be used.
+
                         However, once you accept a cookie, it will gain access to information such as webiste name, browser ID, browsing 
                         habits, time spent on a webiste and more.
                     </p>
-                    <!--figure containing example of cookies on websites -->
+                    
+                    <!-- figure containing example of cookies on websites -->   
                     <figure class="figure1">
-                        <img class="figure1" src="https://www.elegantthemes.com/blog/wp-content/uploads/2020/10/shutterstock_1295870983.png" alt ="Example image of cookies on a webpage">
-                        <figcaption>This is an example of how cookies will appear on a page.</figcaption>
+                        <img class="figure1" src="styles/images/cookie-accept.png" alt="Example image of cookies on a webpage">
+                        <figcaption class="figure1">This is an example of how cookies will appear on a page.</figcaption>
                     </figure>
-
-                    <!--process of cookies -->
-                    <section class="content-block">
-                        <h3>Process from Browser to Server</h3>
-                        They follow a specific order as respresented by the list below:</p>
-                            <ol>
-                                <li>Browser requests a webiste</li>
-                                <li>Server sends cookie with response</li>
-                                <li>Browser stores cookie</li>
-                                <li>Browser sends cookie with requests</li>
-                                <li>Server personalises response</li>
-                            </ol>
-
-                            <figure class="figure2">
-                                <img class="figure1" id="cookie-process-diagram" src="https://miro.medium.com/max/1136/1*uM18fYS7E_lb6W0JtSsCvQ.png" alt="Visual of cookie process">
-                                <figcaption>This is a visual representation of the cookie and server interaction.</figcaption>
-                            </figure>
-                    </section>
-                  
- 
-                    <!--main uses of cookies -->
-                    <p>There are 3 main things that they're used for and they are authentication (session management), personalisation and tracking.</p>
-                    <dl class="content-block">
-                        <dt>Authentication:</dt>
-                            <img class="authentication" src="styles/images/security.png">
-                                <dd>This is used as a form of identification for the user. <br>
-                                    Since the cookies from other websites are independent of each other, session management with cookies allows for them to be linked.
-                                </dd>
-
-                        <dt>Personalisation:</dt>
-                            <img class="personalisation" src="styles/images/personalisation.png" alt="logo for personalisation">
-                                <dd>By having access to different cookies from different websites, sites are able to target <br>
-                                    specific ads towards users which they might enjoy. This is similar to tracking with cookies.
-                                </dd>
-
-                        <dt>Tracking:</dt>
-                            <img class="tracking" src="styles/images/tracking.png">
-                                <dd>No, this isn't location tracking, but rather cookies can be used to track items that users have <br>
-                                    viewed before in their shopping carts and will curate similar goods which may appeal to them.
-                                </dd>
             </section>
-            
-            <!--where are cookies & sessions used & stored -->
-            <section class="content-block">
+
+            <!-- process of cookies -->
+            <section id="process">
+                <h3>Process from Browser to Server</h3>
+                <p class="cookies-process">They follow a specific order as respresented by the list below:</p>
+
+                <ol class="cookies-process">
+                    <li id="cookies-process1">Browser requests a webiste</li>
+                    <li id="cookies-process2">Server sends cookie with response</li>
+                    <li id="cookies-process3">Browser stores cookie</li>
+                    <li id="cookies-process4">Browser sends cookie with requests</li>
+                    <li id="cookies-process5">Server personalises response</li>
+                </ol>
+                
+                <figure class="figure2">
+                    <img class="figure2" src="https://miro.medium.com/max/1136/1*uM18fYS7E_lb6W0JtSsCvQ.png" alt="Visual of cookie process">
+                    <figcaption class="figure2">This is a visual representation of the cookie and server interaction.</figcaption>
+                </figure>
+            </section>
+
+            <!-- main uses of cookies -->
+            <section id="main-use">
+                <h3>The Main use of Cookies:</h3>
+                <p>There are 3 main things that they're used for and they are authentication (session management), personalisation and tracking.</p>
+                <dl class="content-block">
+                    <dt>Authentication:</dt>
+                        <img class="authentication" src="styles/images/security.png" alt="image of blue padlock" >
+                            <dd>This is used as a form of identification for the user. <br>
+                                Since the cookies from other websites are independent of each other, session management with cookies allows for them to be linked.
+                            </dd>
+
+                    <dt>Personalisation:</dt>
+                        <img class="personalisation" src="styles/images/personalisation.png" alt="logo for personalisation">
+                            <dd>By having access to different cookies from different websites, sites are able to target <br>
+                                specific ads towards users which they might enjoy. This is similar to tracking with cookies.
+                            </dd>
+
+                    <dt>Tracking:</dt>
+                        <img class="tracking" src="styles/images/tracking.png" alt="image of red pointer on map">
+                            <dd>No, this isn't location tracking, but rather cookies can be used to track items that users have <br>
+                                viewed before in their shopping carts and will curate similar goods which may appeal to them.
+                            </dd>
+                </dl>
+            </section>
+
+            <!-- where are cookies & sessions used & stored -->
+            <section id="where-used-stored">
                 <h2>When are Cookies & Sessions Used & Stored?</h2>
                     <p>Cookies and sessions are used all the time when we are accessing the Internet.
                         
@@ -110,22 +120,26 @@
 
                     <p>
                         If sessions are to be stored client side, it means the session information will be able to load faster as it won't have to verify against 
-                        sessions on the server. <br />
+                        sessions on the server. <br/>
                         This is often the case when storage required is low, however if more storage space is needed,
                         then the sessions should be stored on the server side.
                     </p>
 
                 <!--who uses cookies and sessions -->
-                <h3>Who has Access to Cookies & Sessions?</h3>
-                    <p>For the most part, cookies can only be accessed by the website which requested the cookie. <br />
-                        However, cookies can make use of a unique ID which allows for servers being able to match up with the cookie data on the server. <br />
-                    </p>
+                <section id="who-access"> 
+                    <h3>Who has Access to Cookies & Sessions?</h3>
+                        <p>For the most part, cookies can only be accessed by the website which requested the cookie. <br/>
+                            However, cookies can make use of a unique ID which allows for servers being able to match up with the cookie data on the server. <br/>
+                        </p>
 
-                    <p>This goes more into 3rd party cookies and alternatives to cookies. 
-                        <a href = "topic4.html">Click here to learn about different types of cookies!</a>
-                    </p>
+                        <p>This goes more into 3rd party cookies and alternatives to cookies. 
+                            <a href = "topic4.html">Click here to learn about different types of cookies!</a>
+                        </p>
+                </section>
             </section>
+        </article>
 
+            <!-- footer with emails and authors -->
             <footer class="content-block" id="footer-block">
                 <span>Email contacts:</span>
                 <a href="mailto:103986200@student.swin.edu.au">Aidan D.</a>

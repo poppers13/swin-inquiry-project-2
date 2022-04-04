@@ -120,25 +120,69 @@ h1 {
 
 /* !!! TOPIC 3 STYLING !!! */
 
-aside {
+/* start of function section */
+
+h3 {
+    border: red 1px solid;
+}
+
+section h2 {
+    border: red 1px solid;
+}
+
+.how-cs-work {
+    float: left;
     width: 40%;
-    box-shadow: inset 5px 0px 5px -5px black;
-    float: right;
-    color: rgb(138, 74, 31);
-    font-style: italic;
+    height: 80%;
+    border: red 1px solid;
+}
+    
+.figure1 {
+    float: left;
+    width: 50%;
+    max-width: 100%;
+    height: 70%;
+    border: red 1px solid;
 }
 
-aside > p {
-    margin: .5rem;
+img.figure1 {
+    width: 50%;
+    max-width: 100%;
+    height: 50%;
+}
+/* end of function section */
+
+/* start of process section */
+#process {
+    clear: both;
 }
 
-#cookie-id {
-    background-color: rgba(156, 83, 23, 0.815);
-    color: white;
-    padding: 5px;
-    border-style: ridge;
-    border-radius: 8px;
-    font-weight: bold;
+.cookies-process {
+    float: left;
+    width: 40%;
+    display: block;
+    border: red 1px solid;
+
+}
+
+.figure2 {
+    float: left;
+    width: 30%;
+    height: 30%;
+    border: red 1px solid;
+} 
+
+img.figure2 {
+    float: left;
+    width: 50%;
+    height: 30%;
+    border: red 1px solid;
+}
+/* end of process section */ 
+
+/* start of main-use section */
+#main-use {
+    clear: both;
 }
 
 dl {
@@ -164,27 +208,43 @@ dd {
 
 img.authentication {
     float: left;
-    margin: 20px;
+    margin: 2%;
 }
 
 img.personalisation {
     float: left;
-    margin: 20px;
+    margin: 2%;
 }
 
 img.tracking {
     float: left;
-    margin: 20px;
+    margin: 2%;
+}
+/* end of main-use section */
+
+/* start of where-used-stored section */
+#where-used-stored {
+    clear: both;
 }
 
-img.figure1 {
-    width: 200px;
-    height: 200px;
+aside {
+    width: 40%;
+    box-shadow: inset 5px 0px 5px -5px black;
     float: right;
+    color: rgb(138, 74, 31);
+    font-style: italic;
 }
 
-img.figure2 {
-    width: 200px;
-    height: 200px;
-    float: left;
+aside p {
+    margin: .5rem;
 }
+
+#cookie-id {
+    background-color: rgba(156, 83, 23, 0.815);
+    color: white;
+    padding: 5px;
+    border-style: ridge;
+    border-radius: 8px;
+    font-weight: bold;
+}
+/* end of where-used-stored section */
