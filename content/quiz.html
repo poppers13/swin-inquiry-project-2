@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
-        <title>Cookies and Sessions Quiz</title>
+        <!-- import Bootstrap CSS -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         
+        <!-- site-wide stylesheet -->
+        <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
+        
+        <!-- metadata -->
+        <title>Cookies and Sessions Quiz</title>
         <meta charset="UTF-8">
         <meta name="description" content="How to navigate this web page">
         <meta name="keywords" content="cookies, sessions, education, swinburne, home, menu">
@@ -100,15 +106,17 @@
                     </fieldset>
                     
                     <!-- leaving the last question blank for now: we'll decide later what this should be -->
-                    <!-- it could be good to find a way to incorporate an image map: that'll count as an enhancement -->
+                    <!-- [] NOTE: this is Aidan here. I think a <input type="number"> could be good here: it's like the range, but you just type in a number, and there's no JS necessary. I've put a template version here, so anyone is free to claim this question for their topic -->
                     <fieldset>
                         <legend>5. This is where question 5 goes</legend>
+                        <label for="phnum">Number (between 1 and 10): </label>
+                        <input type="number" name="phnum" id="phnum" required="required" min="1" max="10">
                     </fieldset>
-                    
                 </fieldset>
                 
-                <br/><button type="submit">Submit</button>
-                <button type="reset">Reset Answers</button>
+                <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling -->
+                <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset Answers</button>
             </form>
         </section>
         

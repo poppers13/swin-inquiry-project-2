@@ -9,7 +9,7 @@ body {
 h1 {
     color: white;
 	/* styling done to override the properties of Bootstrap's 'h1' styling and return it to roughly its original form */
-	font-family: Times New Roman, serif;
+	font-family: 'Times New Roman', Times, serif;
 	font-size: 2em;
 	margin: 2% 0%;
 	font-weight: bold;
@@ -44,6 +44,8 @@ h1 {
 }
 
 #header-block {
+    /* margin creates distance between the header and the top menu */
+    margin-top: 2%;
     max-width: 50%;
     border-width: thick;
     padding: 5px;
@@ -73,6 +75,9 @@ h1 {
 	top: 0;
     left: 0;
 	width: 100%;
+    
+    /* ensures that the menu appears over all other elements */
+    z-index: 1;
 }
 
 #menu a {
@@ -110,12 +115,46 @@ h1 {
 }
 
 #youtube-video {
-	float: middle;
 	/* adds scaling for smaller resolution web browsers */
 	max-width: 100%;
 	min-width: 20%;
 	max-height: 100%;
 	min-height: 20%;
+}
+
+/* !!! TOPIC 1 STYLING !!! */
+
+/*image 1 changes*/
+img.img1 {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Image 2 changes*/
+img.img2 {
+    width: 300px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Table and table content*/
+.t1 {
+    border: 2px solid black;
+    font-style: oblique;
+    font-size: 1.05em;
+}
+
+/*Change the attributes of captions*/
+.fig {
+    color: blue;
+    font-style: italic;
+    font-size: 0.9em;
+    text-align: center;
 }
 
 /* !!! TOPIC 3 STYLING !!! */
