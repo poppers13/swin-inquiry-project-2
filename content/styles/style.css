@@ -160,72 +160,87 @@ img.img2 {
 /* !!! TOPIC 3 STYLING !!! */
 
 /* start of function section */
-
-h3 {
+#function {
     border: red 1px solid;
 }
 
-section h2 {
-    border: red 1px solid;
-}
-
-.how-cs-work {
+.how-cs-work{
     float: left;
     width: 40%;
-    height: 80%;
+    height: 50%;
+    margin: 2% 2%;
     border: red 1px solid;
 }
     
-.figure1 {
-    float: left;
-    width: 50%;
+figure.figure1 {
+    float: right;
+    width: 45%;
     max-width: 100%;
     height: 70%;
     border: red 1px solid;
 }
 
 img.figure1 {
-    width: 50%;
+    float: right;
+    width: fit-content;
     max-width: 100%;
     height: 50%;
 }
+
+figcaption.figure1 {
+    width: fit-content;
+    text-align: center;
+}
+
 /* end of function section */
 
 /* start of process section */
 #process {
     clear: both;
+    width: 100%;
+    border: red 1px solid;
+}
+
+#process h3 {
+    width: fit-content;
+    border: red 1px solid;
 }
 
 .cookies-process {
-    float: left;
-    width: 40%;
+    width: 100%;
     display: block;
     border: red 1px solid;
 
 }
 
 .figure2 {
-    float: left;
-    width: 30%;
-    height: 30%;
+    clear: left;
+    width: 50%;
     border: red 1px solid;
 } 
 
 img.figure2 {
-    float: left;
+    clear: left;
     width: 50%;
-    height: 30%;
     border: red 1px solid;
 }
 /* end of process section */ 
 
 /* start of main-use section */
 #main-use {
-    clear: both;
+    float: right;
+    width: 100%;
+    border: red 1px solid;
+}
+
+#main-use h3 {
+    width: fit-content;
+    border: red 1px solid;
 }
 
 dl {
     margin: auto;
+    border: red 1px solid;
 }
 
 dt {
@@ -264,6 +279,7 @@ img.tracking {
 /* start of where-used-stored section */
 #where-used-stored {
     clear: both;
+    border: red 1px solid;
 }
 
 aside {
