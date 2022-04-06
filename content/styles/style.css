@@ -147,6 +147,10 @@ img.img2 {
     border: 2px solid black;
     font-style: oblique;
     font-size: 1.05em;
+    margin-bottom: 1.2em;
+    padding: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Change the attributes of captions*/
@@ -155,6 +159,27 @@ img.img2 {
     font-style: italic;
     font-size: 0.9em;
     text-align: center;
+}
+
+/*Styling the aside heading*/
+aside .asideh {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+    color: red;
+}
+
+/*Styling the aside list*/
+aside  li {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: blue;
+}
+
+/*Styling the aside paragraph*/
+aside .asidep {
+    color: blue;
 }
 
 /* !!! TOPIC 3 STYLING !!! */
@@ -192,6 +217,7 @@ figcaption.figure1 {
     text-align: center;
 }
 
+
 /* end of function section */
 /* !!! TOPIC 4 STYLING !!! */
 
@@ -218,8 +244,8 @@ aside h3{
 }
 /* start of process section */
 #process {
-    clear: both;
-    width: 100%;
+    float: left;
+    width: 45%;
     border: red 1px solid;
 }
 
@@ -229,7 +255,7 @@ aside h3{
 }
 
 .cookies-process {
-    width: 100%;
+    width: 50%;
     display: block;
     border: red 1px solid;
 
@@ -251,17 +277,19 @@ img.figure2 {
 /* start of main-use section */
 #main-use {
     float: right;
-    width: 100%;
+    width: 50%;
     border: red 1px solid;
 }
 
 #main-use h3 {
     width: fit-content;
+    width: 50%;
     border: red 1px solid;
 }
 
 dl {
     margin: auto;
+    width: fit-content;
     border: red 1px solid;
 }
 

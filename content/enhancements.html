@@ -48,10 +48,6 @@
                 <li><a href="index.html#signs-image">An image map on the 'Home' page</a>, which provides links to all other pages on the website. This makes the site more approachable to new visitors by including a large, colourful and easily readable navigation section. <br/>
                 The image map is created by including an <code>img</code> element with the attribute <code>usemap</code>. This references another HTML element, <code>map</code>, which itself contains several <code>area</code> elements that provide the co-ordinates (<code>coords</code>) for the clickable area on the signs, and the pages to be redirected to when those areas are clicked (<code>href</code>).</li>
                 
-                <!-- sticky menu -->
-                <li><a href="#menu">A menu at the top of each page</a> which, unlike the menu specified to be included in the project outline, <em>is at the top of the page at all times</em>. This makes it much easier to navigate the site, since the user doesn't have to scroll back to the top of the page every time they want to visit a different section. <br/>
-                This is done by applying the CSS property <code>position: fixed</code>, thereby keeping it in the same place at all times. The properties <code>top: 0</code> and <code>left: 0</code> are then used to move the menu to the top-left of the page, while <code>width: 100%</code> ensures the menu takes up the entirety of the top of the page. The <code>z-index: 1</code> CSS property is also included to ensure that menu does not appear under any elements on the page.</li>
-                
                 <!-- figures (had to include an ID on topic3.html to reference to here) (thanks for this one, Jesh!) -->
                 <li><a href="topic3.html#figure1">Figure tags on the 'Usage' page</a> that provide more description to images. This helps clarify what information they include, and ensures that the user can quickly identify the purpose of each image. <br/>
                 The figures are created by making the <code>img</code> image elements children of <code>figure</code> elements, then including an accompanying <code>figcaption</code> element to provide the additional information.</li>
@@ -62,7 +58,7 @@
             </ol>
             
             <h2>CSS Bootstrap Integration</h2>
-            <p>The preprocessor <u>Bootstrap</u> has been included on multiple pages. This provides several benefits, including quick and easy styling of key elements, as well as functionality not present in standard HTML and CSS. The following additions have been made:</p>
+            <p>The preprocessor <u>Bootstrap</u> has been included on all pages. This provides several benefits, including quick and easy styling of key elements, as well as functionality not present in standard HTML and CSS. The following additions have been made:</p>
             <ol>
                 <!-- YouTube video -->
                 <li><a href="index.html#youtube-video">An responsive, embedded YouTube video on the 'Home' page</a> that allows for viewing the video on the home page itself, instead of having to use the link to visit YouTube.com (though this is still an option). This provides more convenience, as well as better availability for users with poor Internet connections, since it only requires them to load the video instead of the entirety of YouTube.<br/>
