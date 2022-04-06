@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- import Bootstrap CSS -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-        
-        <!-- site-wide stylesheet -->
-        <link rel="stylesheet" type="text/css" href="styles/style.css">
-        
-        <!-- metadata -->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
         <meta charset="utf-8" />
-        <meta name="description" content="Cookies and sessions explained" />
+        <meta name="description" content="Cookies and sessions explanation and potential uses" />
   		<meta name="keywords" content="Cookie, session" />
-  		<meta name="author" content="Group 1" />
+  		<meta name="author" content="Dylan Lewis" />
         <title> What are Cookies and Sessions? </title>
     </head>
     
-    <body id="topic2-body">
+    <body id="menu">
         <!-- sticky menu bar, with navigation links to other pages -->
-        <div id="menu">
+        <nav id="menu">
             <a href="index.html">Home</a>
             <a href="topic1.html">History</a>
             <a href="topic2.html">What are cookies?</a>
@@ -26,7 +20,7 @@
             <a href="topic4.html">Alternatives</a>
             <a href="quiz.html">Quiz</a>
             <a href="enhancements.html">Enhancements</a>
-        </div>
+        </nav>
 
         <!-- header contains school logo, and info relating to the page's creation -->
         <header class="content-block" id="header-block">
@@ -36,14 +30,79 @@
         </header>
 
         <h1>What are Cookies and Sessions?</h1>
-
+    <section class="content-block">
         <p> Cookies and sessions are actually different things, a cookie is a text file that is stored client side (on the user's web browser) so the site and browser can recognize previous uses of a site. Cookies were invented to make user's experience on the internet more convenient. This differs to a Session as a session is data of the website user, stored on the website's server, a session is usually terminated after 30 minutes or when the tab is closed.</p>
-
-        <hr>
-
-        <h1>What are typical uses of a Cookie and a Session?</h1>
+	</section>
+<article class="content-block">
+        <h2>What are typical uses of a Cookie and a Session?</h2>
         <p>A common use of cookies is usernames and passwords, the browser utilizes cookies to remember a past user's username and password so they dont have to type it in themselves. This is different to a session as an example of a session could be a shopping basket. Most sites keep what is in your shopping basket for the purpose of convenience so if you add eggs to your basket, then open a new tab, the website will recognise that this is the session as the first tab and will use the session information to make eggs in the shopping basket of the second tab. Sessions typically timeout within 30 minutes so the server does not become full with data that is no longer needed by users. </p>
+</article>
+<h2>Technically correct names</h2>
+<p>though the names "cookie" and "session" are acceptable, the following are the "correct" terms to identify them.</p>
+<dl>
+	<dt>Cookie</dt>
+	<dd>HTTP Cookie</dd>
+	<dt>Session</dt>
+	<dd>Either Web Session or Session are acceptable</dd>
+</dl>
+<hr>
+<figure>
+	<img src="./images/webcookie.png" alt="cartoon web cookie" height="140px" width="200px" align="left">
+	<caption><strong>What does a web cookie look like?</strong></caption>
+</figure>
+<div>
+<img src="./images/googlecookie.png" alt="_utma cookie from trends.google.com" align="right" height="350px" width="270px">
+</div>
+<p>Because Sessions are moreso a set of interactions between a server and a user, an example of what a session actually looks like cannot be found. However, as a cookie is a text file which is stored client side, we can see what one looks like by going under the cookies section in settings. On the right is the "_utma" cookie that is used by google trends to identify when a user first visited the page and when their most recent visit was.</p>
+<p>Though this string of text may seem unreadable, the google server can tell from this string of text when the user first and last visited google trends.</p>
 
+<h2>Cookies and Sessions and some of their differences.</h2>
+
+<table class="deftable"><!--is called def table as this page is the definition page so its a table for the definition page-->
+	<tr>
+		<th></th>
+		<th>Cookies</th>
+		<th>Sessions</th>
+	</tr>
+	<tr>
+		<td>Stored Client Side</td>
+		<td class="Yes">Yes</td>
+		<td class="kinda">Not usually, but it can be</td> <!--class is "kinda" because its kind of right and i want to have short class tags so its easy to type -->
+	</tr>
+	<tr>
+		<td>Text File</td>
+		<td class="Yes">Yes</td>
+		<td class="no">No</td>
+	</tr>
+	<tr>
+		<td>Duration</td>
+		<td>Until Deleted</td>
+		<td>Typically around 30 Minutes</td>
+	</tr>
+	<tr>
+		<td>Requires Server interaction</td>
+		<td>No</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+	</tr>
+</table>
+<h2>More Practical uses of Web Cookies and Sessions</h2>
+<p class="useheading" id="useheading">Cookies</p>
+	<ol>
+		<li>Target advertisements effectively</li>
+		<li>Track a site's unique visitor count</li>
+		<li>Remember Login Details</li>
+	</ol>
+<p class="useheading" id="useheading">Sessions</p>
+	<ol>
+		<li>Track interactions made with the site by users</li>
+		<li>Keeping users logged in</li>
+		<dd>Store a list of activities performed by a user which can benefit their online experience.</li>
+	</ol>
+<aside>
+    <p>Lou montulli developed cookies in 1994 while working for Netscape to make web-browsing more convenient!</p>
+</aside>
         <!-- footer with email contacts for every member -->
         <footer class="content-block" id="footer-block">
             <span>Email contacts:</span>
