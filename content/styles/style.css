@@ -193,7 +193,25 @@ figcaption.figure1 {
 }
 
 /* end of function section */
+/* !!! TOPIC 4 STYLING !!! */
 
+
+#alternatives{
+    list-style-type: upper-roman;
+}
+
+.alternative-sub{
+    text-align: center;
+}
+.alternative-table{
+    margin-left: auto;
+    margin-right: auto;
+}
+.alternative-table, .alternative-tr, .alternative-th, .alternative-td{
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
 /* start of process section */
 #process {
     clear: both;
