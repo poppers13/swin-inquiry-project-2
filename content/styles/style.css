@@ -212,6 +212,10 @@ figcaption.figure1 {
     border-collapse: collapse;
 
 }
+
+aside h3{
+    margin: .5rem;
+}
 /* start of process section */
 #process {
     clear: both;
