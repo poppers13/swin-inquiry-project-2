@@ -196,8 +196,8 @@ figcaption.figure1 {
 
 /* start of process section */
 #process {
-    clear: both;
-    width: 100%;
+    float: left;
+    width: 45%;
     border: red 1px solid;
 }
 
@@ -207,7 +207,7 @@ figcaption.figure1 {
 }
 
 .cookies-process {
-    width: 100%;
+    width: 50%;
     display: block;
     border: red 1px solid;
 
@@ -229,17 +229,19 @@ img.figure2 {
 /* start of main-use section */
 #main-use {
     float: right;
-    width: 100%;
+    width: 50%;
     border: red 1px solid;
 }
 
 #main-use h3 {
     width: fit-content;
+    width: 50%;
     border: red 1px solid;
 }
 
 dl {
     margin: auto;
+    width: fit-content;
     border: red 1px solid;
 }
 
