@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
 		<!-- import Bootstrap CSS -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-	
-        <!-- import JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <!-- Bootstrap JS: required for collapsibles -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
         
+        <!-- site-wide stylesheet -->
         <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
         
         <!-- metadata -->
@@ -43,16 +39,15 @@
         
         <!-- section containing main content: summary, video and signs -->
         <section class="content-block">
-            <p>This website provides a summary of <em>cookies and sessions</em>: what they are, how they work and why they're used. If you'd like a overview of the site's pages, then <strong><a href="https://youtube.com">click here to watch a YouTube video tour!</a></strong></p>
-            <p>To navigate to other pages on this site, use the menu located at the top, or the signs below. Simply click on the relevant topic to be taken there!</p>
+            <p>This website provides a summary of <em>cookies and sessions</em>: what they are, how they work and why they're used. If you'd like a overview of the site's pages, then <strong><a href="https://youtube.com">click here to watch a YouTube video tour</a></strong>, or simply watch the video below!</p>
             
-            <!-- collapsible containing the YouTube tour video -->
-            <button class="btn btn-primary" data-toggle="collapse" data-target="#youtube-container">Show Video</button>
-            <div id="youtube-container" class="collapse">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" width="853" height="480" title="A video showing the various pages available on the 'Cookies and Sessions' website." id="youtube-video" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
-                </div>
-            </div>
+            <!-- an embedded version of the YouTube tour video -->
+            <section class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" width="640" height="360" title="A video showing the various pages available on the 'Cookies and Sessions' website." id="youtube-video" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+            </section>
+            
+            <br/>
+            <p>To navigate to other pages on this site, use the menu located at the top, or the signs below. Simply click on the relevant topic to be taken there!</p>
 			
             <!-- signs image, and corresponding image map -->
             <img src="images/direction_signs.png" id="signs-image" alt="Multi-colored arrow-shaped signs indicating directions to various places. The labels read: 'What are cookies?',  'History', 'Usage', 'Alternatives', 'Quiz' and 'Enhancements'." usemap="#signmap">
