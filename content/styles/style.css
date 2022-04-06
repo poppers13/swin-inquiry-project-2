@@ -325,3 +325,10 @@ aside p {
     font-weight: bold;
 }
 /* end of where-used-stored section */
+
+/* !!! QUIZ STYLING !!! */
+
+fieldset { margin-bottom: 15px; }
+
+/* make questions smaller, to help distinguish them from  */
+fieldset fieldset legend { font-size: 14pt; }
