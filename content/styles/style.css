@@ -192,8 +192,43 @@ figcaption.figure1 {
     text-align: center;
 }
 
-/* end of function section */
+aside .asideh {
+    font-size: 1.2em;
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+    color: red;
 
+}
+
+aside  li {
+    font-size: 1.1em;
+    color: blue;
+}
+
+aside .asidep {
+    color: blue;
+
+}
+/* end of function section */
+/* !!! TOPIC 4 STYLING !!! */
+
+
+#alternatives{
+    list-style-type: upper-roman;
+}
+
+.alternative-sub{
+    text-align: center;
+}
+.alternative-table{
+    margin-left: auto;
+    margin-right: auto;
+}
+.alternative-table, .alternative-tr, .alternative-th, .alternative-td{
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
 /* start of process section */
 #process {
     float: left;
@@ -305,3 +340,10 @@ aside p {
     font-weight: bold;
 }
 /* end of where-used-stored section */
+
+/* !!! QUIZ STYLING !!! */
+
+fieldset { margin-bottom: 15px; }
+
+/* make questions smaller, to help distinguish them from  */
+fieldset fieldset legend { font-size: 14pt; }
