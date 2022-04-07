@@ -182,6 +182,46 @@ aside .asidep {
     color: blue;
 }
 
+/* start of topic 2 css*/
+.useheading {
+    text-align: left;
+    font-size: 15pt;
+    font-weight: bold;
+
+}
+
+.def-table, .def-tr, .def-th, .def-td{
+    border: 1px solid black;
+    border-collapse: collapse;}
+
+
+#Yes {
+color:#4afc03;
+}
+
+#kinda {
+color:#fca103;
+}
+
+#no {
+    color:#fc0303;
+}
+
+.blank {
+    margin: auto;
+    border: white 1px;
+    display: flex;
+}
+
+#list-right {
+    display: inline-block;
+}
+
+#list-left {
+    display: inline-block;
+}
+
+
 /* !!! TOPIC 3 STYLING !!! */
 
 #flexbox1 {
