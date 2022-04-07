@@ -67,18 +67,16 @@
 
                     <!-- text input question -->
                     <fieldset>
-                        <legend>1. This is where question 1 goes</legend>
+                        <legend>1. What are web caches designed to store?</legend>
                         <label for="phtext"><i>Answer: </i></label>
                         <input type="text" name="phtext" id="phtext" required="required">
                     </fieldset>
 
                     <!-- radio multi choice question -->
                     <fieldset>
-                        <legend>2. This is where question 2 goes</legend>
-                        <input type="radio" name="phradio" id="phr1" value="phr1" required="required"><label for="phr1">Option 1</label>
-                        <input type="radio" name="phradio" id="phr2" value="phr2"><label for="phr2">Option 2</label>
-                        <input type="radio" name="phradio" id="phr3" value="phr3"><label for="phr3">Option 3</label>
-                        <input type="radio" name="phradio" id="phr4" value="phr4"><label for="phr4">Option 4</label>
+                        <legend>2. A cookie is stored client side</legend>
+                        <input type="radio" name="phradio" id="phr1" value="phr1" required="required"><label for="phr1">True</label>
+                        <input type="radio" name="phradio" id="phr2" value="phr2"><label for="phr2">False</label>
                     </fieldset>
                     
                     <!-- checkbox multi choice question -->
@@ -94,7 +92,7 @@
                     
                     <!-- dropdown question -->
                     <fieldset>
-                        <legend>4. This is where question 4 goes</legend>
+                        <legend>4. Which publication declared that cookies are unsafe for the public in February 1996?</legend>
                         <select name="phdropdown" id="phdropdown" required="required">
                             <option value="" selected="selected" disabled>Select Answer</option>
                             <option value="phd1">Answer 1</option>
@@ -108,8 +106,8 @@
                     <!-- leaving the last question blank for now: we'll decide later what this should be -->
                     <!-- [] NOTE: this is Aidan here. I think a <input type="number"> could be good here: it's like the range, but you just type in a number, and there's no JS necessary. I've put a template version here, so anyone is free to claim this question for their topic -->
                     <fieldset>
-                        <legend>5. This is where question 5 goes</legend>
-                        <label for="phnum">Number (between 1 and 10): </label>
+                        <legend>5. By default, how long does it take for a session to time out?</legend>
+                        <label for="phnum">Minutes (between 10 and 30): </label>
                         <input type="number" name="phnum" id="phnum" required="required" min="1" max="10">
                     </fieldset>
                 </fieldset>
