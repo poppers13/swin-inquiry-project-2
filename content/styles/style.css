@@ -326,10 +326,19 @@ aside p {
 .alternative-table, .alternative-tr, .alternative-th, .alternative-td{
     border: 1px solid black;
     border-collapse: collapse;
+    padding: 0.5em;
 
 }
 aside h3{
     margin: .5rem;
+}
+
+.alternative-th{
+    text-align: center;
+}
+#alt-caption{
+    font-style: italic;
+    color: lightskyblue;
 }
 
 /* !!! QUIZ STYLING !!! */
