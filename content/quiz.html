@@ -105,12 +105,16 @@
                     <!-- leaving the last question blank for now: we'll decide later what this should be -->
                     <!-- [] NOTE: this is Aidan here. I think a <input type="number"> could be good here: it's like the range, but you just type in a number, and there's no JS necessary. I've put a template version here, so anyone is free to claim this question for their topic -->
                     <fieldset>
+                                          <fieldset>
                         <legend>5. By default, how long does it take for a session to time out?</legend>
-                        <label for="defintion-num">Minutes (between 10 and 30): </label>
-                        <input type="number" name="defintion-num" id="defintion-num" required="required" min="10" max="30">
-                    </fieldset>
-                </fieldset>
-                
+                        <label for="q5num">Minutes (between 1 and 60): </label>
+                        <input type="number" name="q5num" id="phnum" required="required" min="1" max="60">
+                    <!-- 
+<legend>5. By default, how long does it take for a session to time out?</legend>
+                             <legend>5. By default, how long does it take for a session to time out?</legend>
+                        <label for="q5num">Minutes (between 1 and 60): </label>
+                        <input type="number" name="q5num" id="phnum" required="required" min="1" max="60">
+
                 <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling -->
                 <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
                 <button type="reset" class="btn btn-danger">Reset Answers</button>
