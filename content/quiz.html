@@ -68,15 +68,15 @@
                     <!-- text input question -->
                     <fieldset>
                         <legend>1. What are web caches designed to store?</legend>
-                        <label for="phtext"><i>Answer: </i></label>
-                        <input type="text" name="phtext" id="phtext" required="required">
+                        <label for="alternatives-text"><i>Answer: </i></label>
+                        <input type="text" name="alternatives-text" id="alternatives-text" required="required">
                     </fieldset>
 
                     <!-- radio multi choice question -->
                     <fieldset>
                         <legend>2. A cookie is stored client side</legend>
-                        <input type="radio" name="phradio" id="phr1" value="phr1" required="required"><label for="phr1">True</label>
-                        <input type="radio" name="phradio" id="phr2" value="phr2"><label for="phr2">False</label>
+                        <input type="radio" name="definition-radio" id="definition-radio1" value="definition-radio1" required="required"><label for="definition-radio1">True</label>
+                        <input type="radio" name="definition-radio" id="definition-radio2" value="definition-radio2"><label for="definition-radio2">False</label>
                     </fieldset>
                     
                     <!-- checkbox multi choice question -->
@@ -84,7 +84,7 @@
                         <legend>3. What are the 3 main functions of web cookies?</legend>
                         <input type="checkbox" name="function-checkbox[]" id="checkbox-function1" value="checkbox-function1"><label for="checkbox-function1">HDD Cleanup</label>
                         <input type="checkbox" name="function-checkbox[]" id="checkbox-function2" value="checkbox-function2"><label for="checkbox-function2">Eating</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function3" value="checkbox-function3"><label for="checkbox-function3">Personalisation</label>
+                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function3" value="checkbox-function3" required><label for="checkbox-function3">Personalisation</label>
                         <input type="checkbox" name="function-checkbox[]" id="checkbox-function4" value="checkbox-function4"><label for="checkbox-function4">Internet Protocols & Networking</label>
                         <input type="checkbox" name="function-checkbox[]" id="checkbox-function5" value="checkbox-function5"><label for="checkbox-function5">Tracking</label>
                         <input type="checkbox" name="function-checkbox[]" id="checkbox-function6" value="checkbox-function6"><label for="checkbox-function6">Authorisation</label>
@@ -93,13 +93,12 @@
                     <!-- dropdown question -->
                     <fieldset>
                         <legend>4. Which publication declared that cookies are unsafe for the public in February 1996?</legend>
-                        <select name="phdropdown" id="phdropdown" required="required">
+                        <select name="history-dropdown" id="history-dropdown" required="required">
                             <option value="" selected="selected" disabled>Select Answer</option>
-                            <option value="phd1">Answer 1</option>
-                            <option value="phd2">Answer 2</option>
-                            <option value="phd3">Answer 3</option>
-                            <option value="phd4">Answer 4</option>
-                            <option value="phd5">Answer 5</option>
+                            <option value="history-dropdown1">The New York Times</option>
+                            <option value="history-dropdown2">Financial Times</option>
+                            <option value="history-dropdown3">Scientific American</option>
+                            <option value="history-dropdown4">Time Magazine</option>
                         </select>
                     </fieldset>
                     
@@ -107,8 +106,8 @@
                     <!-- [] NOTE: this is Aidan here. I think a <input type="number"> could be good here: it's like the range, but you just type in a number, and there's no JS necessary. I've put a template version here, so anyone is free to claim this question for their topic -->
                     <fieldset>
                         <legend>5. By default, how long does it take for a session to time out?</legend>
-                        <label for="phnum">Minutes (between 10 and 30): </label>
-                        <input type="number" name="phnum" id="phnum" required="required" min="1" max="10">
+                        <label for="defintion-num">Minutes (between 10 and 30): </label>
+                        <input type="number" name="defintion-num" id="defintion-num" required="required" min="10" max="30">
                     </fieldset>
                 </fieldset>
                 

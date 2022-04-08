@@ -36,7 +36,7 @@ h1 {
 
 /* !!! HEADER STYLING !!! */
 #swin-logo {
-    max-width: auto;
+    max-width: 100%;
     max-height: 60px;
     float: left;
     margin-right: 15px;
@@ -262,7 +262,6 @@ figcaption.figure1 {
 }
 
 #table-uses {
-    border-collapse: seperate;
     border-spacing: 0 15px;
 }
 
