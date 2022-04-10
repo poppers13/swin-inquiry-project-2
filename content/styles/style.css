@@ -167,19 +167,19 @@ aside .asideh {
     font-size: 1.2em;
     margin-left: .5rem;
     margin-bottom: .5rem;
-    color: red;
+    color:rgb(138, 74, 31);
 }
 
 /*Styling the aside list*/
 aside  li {
     font-weight: bold;
     font-size: 1.1em;
-    color: blue;
+    color:#fca103
 }
 
 /*Styling the aside paragraph*/
 aside .asidep {
-    color: blue;
+    color:#fca103
 }
 
 /* start of topic 2 css*/
