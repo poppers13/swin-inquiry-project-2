@@ -193,6 +193,7 @@ aside .asidep {
 .def-table, .def-tr, .def-th, .def-td{
     border: 2px solid black;
     border-collapse: collapse;
+    font-size: 1.1em
 }
 
 #blank-cell{
@@ -212,10 +213,10 @@ color:#fca103;
     color:#fc0303;
 }
 
-.blank {
+
+#wb /* wb= whiteborder */ {
     margin: auto;
     border: white 1px;
-    display: flex;
 }
 
 #list-right {
@@ -237,7 +238,7 @@ img.webcookiepng {
 
 img.utmacookie {
     width: 130px;
-    height: 170px;
+    height: 140px;
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
