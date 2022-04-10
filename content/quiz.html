@@ -37,14 +37,6 @@
         
         <h1>Cookies and Sessions Quiz</h1>
         
-        <!-- ************ IMPORTANT DEVELOPER'S NOTE ************ -->
-        <!-- all the ids and names that begin with ph (eg. "phtext") are placeholders, and should be replaced with more relevant ids later -->
-        <!-- for example, if you have the radio button question, and it's about the history of cookies, you could fill in the id and name as "radio-history" -->
-        <!-- almost all text editors have a "Find and Replace" option: that'll be the best way to make sure you don't miss anything -->
-        <!-- it isn't super important that formatting is exactly that way, just try and keep it consistent with what's already on this page -->
-        <!-- remember, you'll also need to change the 'for' attribute of that question's label to match -->
-        <!-- **************************************************** -->
-        
         <section class="content-block">
             <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
                 <fieldset>
@@ -103,18 +95,12 @@
                     </fieldset>
                     
                     <!-- leaving the last question blank for now: we'll decide later what this should be -->
-                    <!-- [] NOTE: this is Aidan here. I think a <input type="number"> could be good here: it's like the range, but you just type in a number, and there's no JS necessary. I've put a template version here, so anyone is free to claim this question for their topic -->
                     <fieldset>
-                                          <fieldset>
                         <legend>5. By default, how long does it take for a session to time out?</legend>
                         <label for="q5num">Minutes (between 1 and 60): </label>
                         <input type="number" name="q5num" id="q5num" required="required" min="1" max="60">
-                    <!-- 
-<legend>5. By default, how long does it take for a session to time out?</legend>
-                             <legend>5. By default, how long does it take for a session to time out?</legend>
-                        <label for="q5num">Minutes (between 1 and 60): </label>
-                        <input type="number" name="q5num" id="phnum" required="required" min="1" max="60">
-                    -->
+                    </fieldset>
+                </fieldset>
                 <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling -->
                 <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
                 <button type="reset" class="btn btn-danger">Reset Answers</button>
