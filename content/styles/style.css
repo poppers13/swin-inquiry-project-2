@@ -193,7 +193,12 @@ aside .asidep {
 .def-table, .def-tr, .def-th, .def-td{
     border: 2px solid black;
     border-collapse: collapse;
-    font-size: 1.1em
+    font-size: 1.05em
+
+}
+
+.def-td, .def-th{
+    padding: 4px
 }
 
 #blank-cell{
@@ -214,7 +219,7 @@ color:#fca103;
 }
 
 
-#wb /* wb= whiteborder */ {
+#wb /* wb= whiteborder, this is purely an id to get white/clear table borders */ {
     margin: auto;
     border: white 1px;
 }
@@ -237,12 +242,17 @@ img.webcookiepng {
 }
 
 img.utmacookie {
-    width: 130px;
-    height: 140px;
+    width: 200px;
+    height: 250px;
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
     float: right;
+    border: 3px solid #595959; /* gives a border as the image has a white background so you can see where the image ends*/
+}
+
+.bulletpt{
+    list-style-type: circle;
 }
 
 /* !!! TOPIC 3 STYLING !!! */
