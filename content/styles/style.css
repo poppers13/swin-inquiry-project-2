@@ -103,6 +103,7 @@ h1 {
     margin-left: auto;
     margin-right: 0;
     width: fit-content;
+    font-style: italic;
 }
 
 /* !!! PAGE SPECIFIC STYLING !!! */
@@ -162,7 +163,7 @@ img.img2 {
 }
 
 /*Styling the aside heading*/
-aside .asideh {
+.asideh {
     font-weight: bold;
     font-size: 1.2em;
     margin-left: .5rem;
@@ -171,15 +172,21 @@ aside .asideh {
 }
 
 /*Styling the aside list*/
-aside  li {
+aside li {
     font-weight: bold;
     font-size: 1.1em;
-    color:#fca103
+    color:#fca103;
 }
 
 /*Styling the aside paragraph*/
 aside .asidep {
-    color:#fca103
+    color:#fca103;
+}
+
+#aside-history {
+    width: 35%;
+    margin-left: 1%;
+    padding: 0 1%;
 }
 
 /* start of topic 2 css*/
@@ -207,7 +214,7 @@ aside .asidep {
 }
 
 .green-td {
-color:#4afc03;
+color:#44ba16;
 }
 
 .yellow-td {
@@ -248,7 +255,7 @@ img.utmacookie {
     margin-left: auto;
     margin-right: auto;
     float: right;
-    border: 3px solid #595959; /* gives a border as the image has a white background so you can see where the image ends*/
+    border: 3px solid #595959; /* gives a border as the image has a white background so you can see where the image ends */
 }
 
 .bulletpt{
@@ -257,6 +264,7 @@ img.utmacookie {
 
 /* !!! TOPIC 3 STYLING !!! */
 
+/* creating a flex container for 2 elements to act as columns next to each other */
 #flexbox1 {
     display: flex;
     justify-content: space-between;
@@ -270,6 +278,7 @@ img.utmacookie {
     padding-right: 2%;
 }
 
+/* moving figure to the right of text */
 figure.figure1 {
     float: right;
     width: 35%;
@@ -302,19 +311,23 @@ figcaption.figure1 {
     width: fit-content;
 }
 
+/* another flexbox for the list and figure element so that they're side by side */
 #process-flexbox {
     display: flex;
     justify-content: space-between;
 }
 
+/* changing proportions of ol in the flexbox */
 #process-flexbox ol {
     flex-basis: 40%;
 }
 
+/* changing proportions of li in the flexbox */
 #process-flexbox li {
     margin-top: 13%;
 }
 
+/* changing how much the figure takes up in the flexbox */
 #process-flexbox figure {
     flex-basis: 55%;
 }
@@ -328,12 +341,15 @@ figcaption.figure1 {
 /* end of process section */ 
 
 /* start of main-use section */
+
+/* determining what order in the flexbox will the main use section be */
 #main-use {
     flex: 1;
     margin: 0 1%;
     
 }
 
+/* organising table box-model */
 #table-uses {
     border-spacing: 0 15px;
 }
@@ -403,6 +419,10 @@ aside p {
 }
 aside h3{
     margin: .5rem;
+}
+
+#aside-alt {
+    padding: 0 1%;
 }
 
 .alternative-th{
