@@ -19,13 +19,14 @@
     <body id="index-body">
         <!-- sticky menu bar, with navigation links to other pages -->
         <nav id="menu">
-            <a href="index.html">Home</a>
-            <a href="topic1.html">History</a>
-            <a href="topic2.html">What are cookies?</a>
-            <a href="topic3.html">Usage</a>
-            <a href="topic4.html">Alternatives</a>
-            <a href="quiz.html">Quiz</a>
-            <a href="enhancements.html">Enhancements</a>
+            <!-- each menu item contains a relevant glyph icon from Bootstrap: uses <span> tags, as recommended by the Bootstrap documentation -->
+            <a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
+            <a href="topic1.html"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> History</a>
+            <a href="topic2.html"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> What are cookies?</a>
+            <a href="topic3.html"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Usage</a>
+            <a href="topic4.html"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Alternatives</a>
+            <a href="quiz.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Quiz</a>
+            <a href="enhancements.html"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Enhancements</a>
         </nav>
 
         <!-- header contains school logo, and info relating to the page's creation -->
@@ -101,9 +102,9 @@
                         <input type="number" name="q5num" id="q5num" required="required" min="1" max="60">
                     </fieldset>
                 </fieldset>
-                <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling -->
-                <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
-                <button type="reset" class="btn btn-danger">Reset Answers</button>
+                <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling and glyph icons -->
+                <button type="submit" class="btn btn-success" id="submit-button"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                <button type="reset" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Reset Answers</button>
             </form>
         </div>
         
