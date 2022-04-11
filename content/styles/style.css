@@ -98,12 +98,16 @@ h1 {
 
 /* !!! FOOTER STYLING !!! */
 #footer-block {
+    border-style: ridge none none none;
     padding: 5px;
     margin-top: 25px;
-    margin-left: auto;
-    margin-right: 0;
-    width: fit-content;
+    width: 100%;
+    text-align: center;
+    color: white;
 }
+
+/* change link colour to be more legible on dark background */
+#footer-block a { color: deepskyblue; }
 
 /* !!! PAGE SPECIFIC STYLING !!! */
 
