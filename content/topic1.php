@@ -18,23 +18,10 @@
 
         <body id="topic1-body">
             <!-- sticky menu bar, with navigation links to other pages -->
-            <nav id="menu">
-                <!-- each menu item contains a relevant glyph icon from Bootstrap: uses <span> tags, as recommended by the Bootstrap documentation -->
-                <a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
-                <a href="topic1.html"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> History</a>
-                <a href="topic2.html"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> What are cookies?</a>
-                <a href="topic3.html"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Usage</a>
-                <a href="topic4.html"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Alternatives</a>
-                <a href="quiz.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Quiz</a>
-                <a href="enhancements.html"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Enhancements</a>
-            </nav>
+            <?php include 'menu.inc'; ?>
     
             <!-- header contains school logo, and info relating to the page's creation -->
-            <header class="content-block" id="header-block">
-                <img id="swin-logo" src="images/swinburne_logo.png" alt="Swinburne Logo">
-                <p>This website has been created for <u>COS10026: Computing Technology Inquiry Project</u>.
-                <br/><br/>It was developed by Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake and Kasun Jayawardhana.</p>
-            </header>
+            <?php include 'header.inc'; ?>
 
             <h1>History of Cookies and Sessions</h1>
             
@@ -160,18 +147,12 @@
                     </ul>
 
                 <!--Link to the topic 2-->
-                    <a class="a" href = "topic2.html">Click here to learn more about what exactly cookies and sessions are!</a>
+                    <a class="a" href = "topic2.php">Click here to learn more about what exactly cookies and sessions are!</a>
 
             </section>
-
-            <footer id="footer-block">
-                <span>Email contacts:</span>
-                <a href="mailto:103986200@student.swin.edu.au">Aidan D.</a>
-                <a href="mailto:103982075@student.swin.edu.au">Jesh K.</a>
-                <a href="mailto:103993019@student.swin.edu.au">Dylan L.</a>
-                <a href="mailto:103178599@student.swin.edu.au">Nimash R.</a>
-                <a href="mailto:103178638@student.swin.edu.au">Kasun J.</a>
-            </footer>
+			
+			<!-- footer with email contacts for every member -->
+            <?php include 'footer.inc'; ?>
         </body>
 
         <!--References

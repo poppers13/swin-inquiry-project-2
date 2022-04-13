@@ -18,23 +18,10 @@
     
     <body id="index-body">
         <!-- sticky menu bar, with navigation links to other pages -->
-        <nav id="menu">
-            <!-- each menu item contains a relevant glyph icon from Bootstrap: uses <span> tags, as recommended by the Bootstrap documentation -->
-            <a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
-            <a href="topic1.html"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> History</a>
-            <a href="topic2.html"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> What are cookies?</a>
-            <a href="topic3.html"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Usage</a>
-            <a href="topic4.html"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Alternatives</a>
-            <a href="quiz.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Quiz</a>
-            <a href="enhancements.html"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Enhancements</a>
-        </nav>
+        <?php include 'menu.inc'; ?>
 
         <!-- header contains school logo, and info relating to the page's creation -->
-        <header class="content-block" id="header-block">
-            <img id="swin-logo" src="images/swinburne_logo.png" alt="Swinburne Logo">
-            <p>This website has been created for <u>COS10026: Computing Technology Inquiry Project</u>.
-            <br/><br/>It was developed by Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake and Kasun Jayawardhana.</p>
-        </header>
+        <?php include 'header.inc'; ?>
 
         <h1>Welcome!</h1>
         
@@ -55,24 +42,17 @@
             <img src="images/direction_signs.png" id="signs-image" alt="Multi-colored arrow-shaped signs indicating directions to various places. The labels read: 'What are cookies?',  'History', 'Usage', 'Alternatives', 'Quiz' and 'Enhancements'." usemap="#signmap">
             
             <map name="signmap">
-                <!-- red --> <area shape="poly" coords="456,40,95,75,42,128,104,174,466,141" alt="'What are cookies?' sign" href="topic2.html">
-                <!-- white --> <area shape="poly" coords="514,41,869,75,927,128,864,173,505,140" alt="History sign" href="topic1.html">
-                <!-- green --> <area shape="poly" coords="68,185,425,216,481,270,417,316,58,282" alt="Usage sign" href="topic3.html">
-                <!-- yellow --> <area shape="poly" coords="570,186,931,227,920,326,561,284,507,226" alt="Alternatives sign" href="topic4.html">
-                <!-- orange --> <area shape="poly" coords="82,376,441,343,503,385,449,443,91,473" alt="Quiz sign" href="quiz.html">
-                <!-- blue --> <area shape="poly" coords="564,300,912,392,958,456,885,491,541,395" alt="Enhancements sign" href="enhancements.html">
+                <!-- red --> <area shape="poly" coords="456,40,95,75,42,128,104,174,466,141" alt="'What are cookies?' sign" href="topic2.php">
+                <!-- white --> <area shape="poly" coords="514,41,869,75,927,128,864,173,505,140" alt="History sign" href="topic1.php">
+                <!-- green --> <area shape="poly" coords="68,185,425,216,481,270,417,316,58,282" alt="Usage sign" href="topic3.php">
+                <!-- yellow --> <area shape="poly" coords="570,186,931,227,920,326,561,284,507,226" alt="Alternatives sign" href="topic4.php">
+                <!-- orange --> <area shape="poly" coords="82,376,441,343,503,385,449,443,91,473" alt="Quiz sign" href="quiz.php">
+                <!-- blue --> <area shape="poly" coords="564,300,912,392,958,456,885,491,541,395" alt="Enhancements sign" href="enhancements.php">
             </map>
         </div>
         
         <!-- footer with email contacts for every member -->
-        <footer id="footer-block">
-            <span>Email contacts:</span>
-            <a href="mailto:103986200@student.swin.edu.au">Aidan D.</a>
-            <a href="mailto:103982075@student.swin.edu.au">Jesh K.</a>
-            <a href="mailto:103993019@student.swin.edu.au">Dylan L.</a>
-            <a href="mailto:103178599@student.swin.edu.au">Nimash R.</a>
-            <a href="mailto:103178638@student.swin.edu.au">Kasun J.</a>
-        </footer>
+        <?php include 'footer.inc' ?>
         
         <!-- IMAGES USED:
         Original signs image (edited for this page): https://www.bartush.com/wp-content/uploads/2016/04/Direction-sign-Vector.jpg
