@@ -6,5 +6,7 @@
 			<a href="topic3.php"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Usage</a>
 			<a href="topic4.php"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Alternatives</a>
 			<a href="quiz.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Quiz</a>
-			<a href="enhancements.php"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Enhancements</a>
+			<a href="enhancements.php"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> HTML/CSS Enhancements</a>
+			<a href="phpenhancements.php"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> PHP Enhancements</a>
+			<a href="manage.php"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Manage</a>
 		</nav>
