@@ -26,7 +26,27 @@
         <h1>Cookies and Sessions Quiz</h1>
         
         <div class="content-block">
-            <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
+            <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php" novalidate="novalidate">
+                <!-- STORE QUESTION LIST IN THIS FIELD!!!!
+                    "value" should be a comma separated list of all question names in the order they appear: this can later be separated into an array
+                    e.g. value="alternatives,definition,function,history,timeout" is the default list
+                    you can include PHP code inside the value string to do this list: 
+                    for example, value="<_?php echo "the question list" ?_>" (just without the underscores) -->
+                <input type="hidden" name="question_list" value="alternatives,definition,function[],history,timeout">
+                
+                <?php
+                    // connect to the SQL database
+                    require_once ("db_settings.php");
+                    $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+                
+                    if (!$sql_db) {
+                        // if connection is unsuccessful, then replace quiz form with error message
+                        echo "<p>Failed to connect to database: try reloading the page.</p>";
+                    } else {
+                        // put rest of question generation code here
+                    }
+                ?>
+                
                 <fieldset>
                     <legend><strong>Personal Details</strong></legend>
 
@@ -48,45 +68,45 @@
                     <!-- text input question -->
                     <fieldset>
                         <legend>1. What are web caches designed to store?</legend>
-                        <label for="alternatives-text"><i>Answer: </i></label>
-                        <input type="text" name="alternatives-text" id="alternatives-text" required="required">
+                        <label for="alternatives"><i>Answer: </i></label>
+                        <input type="text" name="alternatives" id="alternatives" required="required">
                     </fieldset>
 
                     <!-- radio multi choice question -->
                     <fieldset>
                         <legend>2. A cookie is stored client side</legend>
-                        <input type="radio" name="definition-radio" id="definition-radio1" value="definition-radio1" required="required"><label for="definition-radio1">True</label>
-                        <input type="radio" name="definition-radio" id="definition-radio2" value="definition-radio2"><label for="definition-radio2">False</label>
+                        <input type="radio" name="definition" id="definition-true" value="definition-true" required="required"><label for="definition-true">True</label>
+                        <input type="radio" name="definition" id="definition-false" value="definition-false"><label for="definition-false">False</label>
                     </fieldset>
                     
                     <!-- checkbox multi choice question -->
                     <fieldset>
                         <legend>3. What are the 3 main functions of web cookies?</legend>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function1" value="checkbox-function1"><label for="checkbox-function1">HDD Cleanup</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function2" value="checkbox-function2"><label for="checkbox-function2">Eating</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function3" value="checkbox-function3" required><label for="checkbox-function3">Personalisation</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function4" value="checkbox-function4"><label for="checkbox-function4">Internet Protocols & Networking</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function5" value="checkbox-function5"><label for="checkbox-function5">Tracking</label>
-                        <input type="checkbox" name="function-checkbox[]" id="checkbox-function6" value="checkbox-function6"><label for="checkbox-function6">Authorisation</label>
+                        <input type="checkbox" name="function[]" id="cleanup" value="cleanup"><label for="cleanup">HDD Cleanup</label>
+                        <input type="checkbox" name="function[]" id="eating" value="eating"><label for="eating">Eating</label>
+                        <input type="checkbox" name="function[]" id="personalisation" value="personalisation" required><label for="personalisation">Personalisation</label>
+                        <input type="checkbox" name="function[]" id="networking" value="networking"><label for="networking">Internet Protocols & Networking</label>
+                        <input type="checkbox" name="function[]" id="tracking" value="tracking"><label for="tracking">Tracking</label>
+                        <input type="checkbox" name="function[]" id="authorisation" value="authorisation"><label for="authorisation">Authorisation</label>
                     </fieldset>
                     
                     <!-- dropdown question -->
                     <fieldset>
                         <legend>4. Which publication declared that cookies are unsafe for the public in February 1996?</legend>
-                        <select name="history-dropdown" id="history-dropdown" required="required">
+                        <select name="history" id="history" required="required">
                             <option value="" selected="selected" disabled>Select Answer</option>
-                            <option value="history-dropdown1">The New York Times</option>
-                            <option value="history-dropdown2">Financial Times</option>
-                            <option value="history-dropdown3">Scientific American</option>
-                            <option value="history-dropdown4">Time Magazine</option>
+                            <option value="new-york">The New York Times</option>
+                            <option value="financial-times">Financial Times</option>
+                            <option value="scientific-american">Scientific American</option>
+                            <option value="time-magazine">Time Magazine</option>
                         </select>
                     </fieldset>
                     
                     <!-- leaving the last question blank for now: we'll decide later what this should be -->
                     <fieldset>
                         <legend>5. By default, how long does it take for a session to time out?</legend>
-                        <label for="q5num">Minutes (between 1 and 60): </label>
-                        <input type="number" name="q5num" id="q5num" required="required" min="1" max="60">
+                        <label for="timeout">Minutes (between 1 and 60): </label>
+                        <input type="number" name="timeout" id="timeout" required="required" min="1" max="60">
                     </fieldset>
                 </fieldset>
                 <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling and glyph icons -->
