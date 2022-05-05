@@ -27,25 +27,42 @@
         
         <div class="content-block">
             <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php" novalidate="novalidate">
+                <?php
+                    // connect to the SQL database
+                    require_once ("db_settings.php");
+                    $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+
+                    if (!$sql_db) {
+                        // if connection is unsuccessful, then replace quiz form with error message
+                        echo "<p>Failed to connect to database: try reloading the page.</p>";
+                    } else {
+                        // replace this with random generation later: until then, every question will be retrieved
+                        // apparently, use "SELECT * FROM yourTableName ORDER BY RAND() LIMIT 1" as the query to select a random row
+                        // so "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5" selects 5 random rows, i assume
+                        $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                        // RETRIEVE QUESTION LIST
+                        $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                        $question_string = "";
+                        $is_first_row = true;
+                        
+                        // generate question string (to be passed into the $_POST superglobal)
+                        foreach ($questions as $row) {
+                            if (!$is_first_row) {
+                                $question_string .= ",";
+                            } else {
+                                $is_first_row = false;
+                            }
+                            $question_string .= $row['name'];
+                        }
+                    }
+                ?>
+                
                 <!-- STORE QUESTION LIST IN THIS FIELD!!!!
                     "value" should be a comma separated list of all question names in the order they appear: this can later be separated into an array
                     e.g. value="alternatives,definition,function,history,timeout" is the default list
                     you can include PHP code inside the value string to do this list: 
                     for example, value="<_?php echo "the question list" ?_>" (just without the underscores) -->
-                <input type="hidden" name="question_list" value="alternatives,definition,function[],history,timeout">
-                
-                <?php
-                    // connect to the SQL database
-                    require_once ("db_settings.php");
-                    $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
-                
-                    if (!$sql_db) {
-                        // if connection is unsuccessful, then replace quiz form with error message
-                        echo "<p>Failed to connect to database: try reloading the page.</p>";
-                    } else {
-                        // put rest of question generation code here
-                    }
-                ?>
+                <input type="hidden" name="question_list" value="<?php echo $question_string ?>">
                 
                 <fieldset>
                     <legend><strong>Personal Details</strong></legend>
@@ -64,50 +81,61 @@
 
                 <fieldset>
                     <legend><strong>Questions</strong></legend>
-
-                    <!-- text input question -->
-                    <fieldset>
-                        <legend>1. What are web caches designed to store?</legend>
-                        <label for="alternatives"><i>Answer: </i></label>
-                        <input type="text" name="alternatives" id="alternatives" required="required">
-                    </fieldset>
-
-                    <!-- radio multi choice question -->
-                    <fieldset>
-                        <legend>2. A cookie is stored client side</legend>
-                        <input type="radio" name="definition" id="definition-true" value="definition-true" required="required"><label for="definition-true">True</label>
-                        <input type="radio" name="definition" id="definition-false" value="definition-false"><label for="definition-false">False</label>
-                    </fieldset>
                     
-                    <!-- checkbox multi choice question -->
-                    <fieldset>
-                        <legend>3. What are the 3 main functions of web cookies?</legend>
-                        <input type="checkbox" name="function[]" id="cleanup" value="cleanup"><label for="cleanup">HDD Cleanup</label>
-                        <input type="checkbox" name="function[]" id="eating" value="eating"><label for="eating">Eating</label>
-                        <input type="checkbox" name="function[]" id="personalisation" value="personalisation" required><label for="personalisation">Personalisation</label>
-                        <input type="checkbox" name="function[]" id="networking" value="networking"><label for="networking">Internet Protocols & Networking</label>
-                        <input type="checkbox" name="function[]" id="tracking" value="tracking"><label for="tracking">Tracking</label>
-                        <input type="checkbox" name="function[]" id="authorisation" value="authorisation"><label for="authorisation">Authorisation</label>
-                    </fieldset>
-                    
-                    <!-- dropdown question -->
-                    <fieldset>
-                        <legend>4. Which publication declared that cookies are unsafe for the public in February 1996?</legend>
-                        <select name="history" id="history" required="required">
-                            <option value="" selected="selected" disabled>Select Answer</option>
-                            <option value="new-york">The New York Times</option>
-                            <option value="financial-times">Financial Times</option>
-                            <option value="scientific-american">Scientific American</option>
-                            <option value="time-magazine">Time Magazine</option>
-                        </select>
-                    </fieldset>
-                    
-                    <!-- leaving the last question blank for now: we'll decide later what this should be -->
-                    <fieldset>
-                        <legend>5. By default, how long does it take for a session to time out?</legend>
-                        <label for="timeout">Minutes (between 1 and 60): </label>
-                        <input type="number" name="timeout" id="timeout" required="required" min="1" max="60">
-                    </fieldset>
+                    <?php
+                        if ($sql_db) {
+                            $q_num = 1;
+                            foreach ($questions as $row) {
+                                // retrieve all mandatory fields for this question
+                                $q_title = $row['title'];
+                                $q_type = $row['type'];
+                                $q_name = $row['name'];
+                                $q_ids = explode(",", $row['ids']); // split comma-separated string into numeric array
+                                $q_options = explode(",", $row['options']);
+                                $q_answer = explode(",", $row['answer']);
+                                $output_html = "<fieldset>\n<legend>$q_num. $q_title</legend>\n"; // output_html = string containing current question
+                                // DEV NOTE: if there's a way to have multiple possible conditions for a single case, combine checkbox and radio (and perhaps text and number as well)
+                                switch ($q_type) {
+                                    case 'text':
+                                        $output_html .= "<label for=\"$q_name\">$q_options[0]</label>\n<input type=\"text\" name=\"$q_name\" id=\"$q_ids[0]\">\n";
+                                        break;
+                                    case 'number':
+                                        $q_min = $row['min_len'];
+                                        $q_max = $row['max_len'];
+                                        $output_html .= "<label for=\"$q_name\">$q_options[0]</label>\n<input type=\"number\" name=\"$q_name\" id=\"$q_ids[0]\" min=\"$q_min\" max=\"$q_max\">\n";
+                                        break;
+                                    case 'checkbox':
+                                        for ($i = 0; $i < count($q_ids); $i += 1) {
+                                            $id = $q_ids[$i];
+                                            $text = $q_options[$i];
+                                            $output_html .= "<input type=\"$q_type\" name=\"$q_name\" id=\"$id\" value=\"$id\"><label for=\"$id\">$text</label>\n";
+                                        }
+                                        break;
+                                    case 'radio':
+                                        for ($i = 0; $i < count($q_ids); $i += 1) {
+                                            $id = $q_ids[$i];
+                                            $text = $q_options[$i];
+                                            $output_html .= "<input type=\"$q_type\" name=\"$q_name\" id=\"$id\" value=\"$id\"><label for=\"$id\">$text</label>\n";
+                                        }
+                                        break;
+                                    case 'dropdown':
+                                        $output_html .= "<select name=\"$q_name\" id=\"$q_name\" required=\"required\">\n<option value=\"\" selected=\"selected\" disabled=\"disabled\">Select Answer</option>\n";
+                                        for ($i = 0; $i < count($q_ids); $i += 1) {
+                                            $id = $q_ids[$i];
+                                            $text = $q_options[$i];
+                                            $output_html .= "<option value=\"$id\">$text</option>\n";
+                                        }
+                                        $output_html .= "</select>\n";
+                                        break;
+                                    default:
+                                        $output_html = "<fieldset>\n<p>Question $q_num could not be generated: unknown data type given.</p>\n";
+                                }
+                                $q_num += 1;
+                                $output_html .= "</fieldset>\n";
+                                echo $output_html;
+                            }
+                        }
+                    ?>
                 </fieldset>
                 <!-- buttons for submitting and resetting the form, with included Bootstrap CSS styling and glyph icons -->
                 <button type="submit" class="btn btn-success" id="submit-button"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
