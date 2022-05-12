@@ -26,7 +26,7 @@
         <h1>Cookies and Sessions Quiz</h1>
         
         <div class="content-block">
-            <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php" novalidate="novalidate">
+            <form method="post" action="markquiz.php" novalidate="novalidate">
                 <!-- STORE QUESTION LIST IN THIS FIELD!!!!
                     "value" should be a comma separated list of all question names in the order they appear: this can later be separated into an array
                     e.g. value="alternatives,definition,function,history,timeout" is the default list
