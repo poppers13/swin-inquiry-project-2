@@ -17,159 +17,140 @@
     </head>
 
     <body>
-        <?php
-            // connect to the SQL database
-            require_once ("db_settings.php");
-            $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
-            
-            // declaring all field information as empty strings to add information into them later
-            $attempt_id = "";
-            $attempt_date = "";
-            $first_name = "";
-            $last_name = "";
-            $student_id = "";
-            $attempt_num = "";
-            $score = "";
-
-            // declaring all questions as empty strings so that things can be added to them
-            $score = 0;
-            $question_1 = "";
-            $question_2 = "";
-            $question_3 = "";
-            $question_4 = "";
-            $question_5 = "";
-
-            // Checking if all student details are filled in and then continuing to put values from HTML form into PHP code
-            if (isset ($_POST["firstname"]) && ($_POST["firstname"]!="")) {
-                $first_name = $_POST["firstname"];
-            }
+        <section class="content-block">
+            <?php
+                // connect to the SQL database
+                require_once ("db_settings.php");
+                $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
                 
-            if (isset ($_POST["lastname"]) && ($_POST["lastname"]!="")) {
-                $last_name = $_POST["lastname"];
-            }
+                // declaring all field information as empty strings to add information into them later
+                $attempt_id = "";
+                $attempt_date = date("Y-m-d H:i:s"); 
+
+                $first_name = "";
+                $last_name = "";
+                $student_id = "";
+                $attempt_num = 0;
+
+                // declaring all questions as empty strings so that things can be added to them
+                $score = 0;
+                $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                // retrieving the list of questions
+                $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                $question_string = "";
+
+                // need to make array with entire database
+                // need an array with question string exploded to get each question out
+
+                // Checking if all student details are filled in and then continuing to put values from HTML form into PHP code
+                if (isset ($_POST["firstname"]) && ($_POST["firstname"]!="")) {
+                    $first_name = $_POST["firstname"];
+                }
+                    
+                if (isset ($_POST["lastname"]) && ($_POST["lastname"]!="")) {
+                    $last_name = $_POST["lastname"];
+                }
+                    
+                if (isset ($_POST["studentid"]) && ($_POST["studentid"]!="")) {
+                    $student_id = $_POST["studentid"];
+                }
+
+                // Checking if all questions are filled in and then continuing to put values from HTML form into PHP code
+                // need to use the things that Aidan used for random questions here
                 
-            if (isset ($_POST["studentid"]) && ($_POST["studentid"]!="")) {
-                $student_id = $_POST["studentid"];
-            }
+                /*
+                // Q1. TEXT
+                if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")) {
+                    $question_1 = $_POST["alternatives"];
+                }
 
-            // Checking if all questions are filled in and then continuing to put values from HTML form into PHP code
-            
-            // Q1. TEXT
-            if (isset ($_POST["alternatives-text"]) && ($_POST["alternatives-text"]!="")) {
-                $question_1 = $_POST["alternatives-text"];
-            }
-
-            // Q2. RADIO
-            if (isset ($_POST["definition-radio"])) {
-                $question_2 = $_POST["definition-radio"];
-            }
-            else {
-                $question_2 = "Answer not filled in";
-            }
-
-            // Q3. CHECKBOX
-            if (isset ($_POST["checkbox-function1"]))
-                $question_3 = $_POST["checkbox-function1"];
-            if (isset ($_POST["checkbox-function2"]))
-                $question_3 = $_POST["checkbox-function2"];
-            if (isset ($_POST["checkbox-function3"]))
-                $question_3 = $_POST["checkbox-function3"];
-            if (isset ($_POST["checkbox-function4"]))
-                $question_3 = $_POST["checkbox-function4"];
-            if (isset ($_POST["checkbox-function5"]))
-                $question_3 = $_POST["checkbox-function5"];
-            if (isset ($_POST["checkbox-function6"]))
-                $question_3 = $_POST["checkbox-function6"];
-
-            // Q4. DROPDOWN
-            if (isset ($_POST["history-dropdown"]) && ($_POST["history-dropdown"]!="")) {
-                $question_4 = $_POST["history-dropdown"];
-            }
-
-            // Q5. NUMBER
-            if (isset ($_POST["q5num"]) && ($_POST["q5num"]!="")) {
-                $question_5 = $_POST["q5num"];
-            }
-
-            // Question marking
-            $errMsg = "";
-
-            if ($question_1 == "Data that rarely changes") {
-                $score = $score + 1;
-            }
-            else {
-                $errMsg .= "<p>Incorrect. The correct answer is: 'data that rarely changes'</p>";
-            }
-
-            if ($question_2 == "defintion-radio1") {
-                echo "<p>Correct!</p>";
-                $score = $score + 1;
-            }
-            else {
-                $errMsg .= "<p>Incorrect. The correct answer is 'False'</p>";
-            }
-
-            if ($question_3 == "checkbox-function3" && $question_3 == "checkbox-function5" && $question_3 == "checkbox-function6") {
-                echo "<p>Correct!</p>";
-                $score = $score + 1;
-            }
-            else {
-                $errMsg .= "<p>Incorrect. Please select ALL correct answers: 'Personalisation, Tracking & Authorisation'</p>";
-            }
-
-            if ($question_4 == "Financial Times") {
-                echo "<p>Correct!</p>";
-                $score = $score + 1;
-            }
-            else {
-                $errMsg .= "<p>Incorrect. The correct answer is: 'Financial Times'</p>";
-            }
-
-            if ($question_5 == 30) {
-                echo "<p>Correct!</p>";
-                $score = $score + 1;
-            }
-            else {
-                $errMsg .= "<p>Incorrect. The correct answer is: '30' minutes</p>";
-            }
-
-            // conditions if the connection isn't made
-            if (!$sql_db) {
-                echo "<p>Database connection failure!</p>";
-            }
-            else {
-                $sql_table="quiz_attempts";
-
-                // need to check if the fields in the form have been entered or not using validation
-                
-                /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS FROM NIMASH */
-                
-                /* Conditions for the number of attempts
-                if ($attempt_num < 2) {
-                    // allow for the person to retake quiz
+                // Q2. RADIO
+                if (isset ($_POST["definition"])) {
+                    $question_2 = $_POST["definition"];
                 }
                 else {
-                    header("location: retry.html");
+                    $question_2 = "Answer not filled in";
+                }
+
+                // Q3. CHECKBOX
+                if (isset ($_POST["function1"]))
+                    $question_3 = $_POST["function1"];
+                if (isset ($_POST["function2"]))
+                    $question_3 = $_POST["function2"];
+                if (isset ($_POST["function3"]))
+                    $question_3 = $_POST["function3"];
+                if (isset ($_POST["function4"]))
+                    $question_3 = $_POST["function4"];
+                if (isset ($_POST["function5"]))
+                    $question_3 = $_POST["function5"];
+                if (isset ($_POST["function6"]))
+                    $question_3 = $_POST["function6"];
+
+                // Q4. DROPDOWN
+                if (isset ($_POST["history"]) && ($_POST["history"]!="")) {
+                    $question_4 = $_POST["history"];
+                }
+
+                // Q5. NUMBER
+                if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")) {
+                    $question_5 = $_POST["timeout"];
                 }
                 */
 
-                $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num) 
-                VALUES ('$attempt_id' , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
-
-                // the query that we wrote will now go to the database and send that query and receive the results inside of the result variable
-                $result = mysqli_query($sql_db, $query);
-
-                // if the result isn't successful then show an error message, otherwise give a message that it has worked
-                if (!$result) {
-                    echo "<p>Something is wrong with " , $query , "</p>";
-                } 
-                else {
-                    echo "<p>Successfully added new question attempt!</p>";
+                // Conditions for the number of attempts once all of the inputs have been validated 
+                if (isset($_POST['firstname'])) {
+                    $attempt_num = $attempt_num + 1;
                 }
-            mysqli_close($sql_db);
-            }
-            
-        ?>
+
+                // conditions if the connection isn't made
+                if (!$sql_db) {
+                    echo "<p>Database connection failure!</p>";
+                }
+                else {
+                    $sql_table="quiz_attempts";
+
+                    // need to check if the fields in the form have been entered or not using validation
+                    
+                    /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS FROM NIMASH */
+
+                    // query to insert all of the inputs that the user has put into the form
+                    $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
+                    VALUES (NULL , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
+                    $result = mysqli_query($sql_db, $query);
+
+                    // the query that we wrote will now go to the database and send that query and receive the results inside of the result variable
+
+                    // if the result is true, then select everything that's been entered in the form into the database and show it in a table
+                    if ($result == true) { 
+                        $query = "SELECT * FROM $sql_table";
+                        $result = mysqli_query($sql_db, $query);
+                        $record = mysqli_fetch_assoc($result);
+                        if ($record) {
+                            echo "<table border = '1'>";
+                            echo "<tr><th>Attempt ID</th><th>Attempt Date</th><th>First Name</th><th>Last Name</th><th>Student ID</th><th>Attempt Number</th><th>Score</th></tr>";
+                            while ($record) {
+                                echo "<tr><td>{$record['attempt_id']}</td>";
+                                echo "<td>{$record['attempt_date']}</td>";
+                                echo "<td>{$record['first_name']}</td>";
+                                echo "<td>{$record['last_name']}</td>";
+                                echo "<td>{$record['student_id']}</td>";
+                                echo "<td>{$record['attempt_num']}</td>";
+                                echo "<td>{$record['score']}</td></tr>";
+                                $record = mysqli_fetch_assoc($result);
+                            }
+                            echo "</table>";
+                            mysqli_free_result($result);
+                            echo "<p>Successfully added new question attempt!</p>";
+                        }
+
+                    }
+                    else { 
+                        echo "<p>Something is wrong with " , $query , "</p>";
+                    }
+                    mysqli_close($sql_db);
+                }
+            ?>
+        </section>
     </body>
 
 </html>
