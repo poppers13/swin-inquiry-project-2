@@ -63,11 +63,11 @@
                 // connect to the SQL database
                 require_once ("db_settings.php");
                 $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
-                if ($conn)
+                if ($sql_db)
                 {
                     //echo"<p>Connection succesful!</p>";
                     
-                    $result = mysqli_query($conn, $query);
+                    $result = mysqli_query($sql_db, $query);
 
                     if ($result){
                         //echo "<p>select succesful</p>";
