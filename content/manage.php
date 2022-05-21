@@ -25,7 +25,7 @@
                 include_once "header.inc";        
             ?>
             <h2>All Entries </h2>
-            <?php>
+            <?php
 
                 if (isset($_POST["fsearch"]))
                 {
@@ -57,7 +57,7 @@
                 }
 
                 else {
-                    $query = "SELECT * FROM quiz_attempts "
+                    $query = "SELECT * FROM quiz_attempts ";
                 }
 
                 // connect to the SQL database
@@ -76,15 +76,15 @@
                             echo "<table>";
                             echo "<tr><td>Attempt Id</td> <td>Attempt Date</td> <td>First Name</td> <td>Last Name</td> <td>Student ID</td> <td>Number of Attempts</td> </tr>";
                             while ($record){
-                                echo "<tr><td>{$record['attempt_id']}</td>"
-                                echo "<td>{$record['attempt_date']}</td>"
-                                echo "<td>{$record['first_name']}</td>"
-                                echo "<td>{$record['last_name']}</td>"
-                                echo "<td>{$record['student_id']}</td>"
-                                echo "<td>{$record['attempt_num']}</td></tr>"
+                                echo "<tr><td>{$record['attempt_id']}</td>";
+                                echo "<td>{$record['attempt_date']}</td>";
+                                echo "<td>{$record['first_name']}</td>";
+                                echo "<td>{$record['last_name']}</td>";
+                                echo "<td>{$record['student_id']}</td>";
+                                echo "<td>{$record['attempt_num']}</td></tr>";
                                 $record = mysqli_fetch_assoc ($result);
                             }
-                            echo "</table>"
+                            echo "</table>";
                             mysqli_free_result($result);
                         }
                         else 
@@ -96,7 +96,7 @@
                     mysqli_close($conn);
                 }
                 else {
-                    echo "<p>Connection failed!</p>"
+                    echo "<p>Connection failed!</p>";
                 }
             ?>
             
