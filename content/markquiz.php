@@ -111,7 +111,58 @@
 
                     // need to check if the fields in the form have been entered or not using validation
                     
-                    /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS FROM NIMASH */
+            /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS */
+
+            //Sanitising function
+            function sanitise_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+                }
+                
+            if (isset($_POST["studentid"])){
+            $err_msg = "";
+
+            $student_id = $_POST["studentid"];
+            $first_name = $_POST["firstname"];
+            $last_name = $_POST["lastname"];
+            
+            //Student ID
+            if (trim($student_id)=="")
+                $err_msg .= "<p>Please enter your Student ID</p>";
+            
+            else
+                $student_id = sanitise_input ($student_id);
+                if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
+                    $err_msg .= "<p>Should be numbers and between 7 - 10</p>";
+
+            //First name
+            if (trim($first_name)=="")
+                $err_msg .= "<p>Please enter first name</p>";
+            
+            else
+                $first_name = sanitise_input ($first_name);
+                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
+                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+
+
+            //Last name
+            if (trim($last_name)=="")
+                $err_msg .= "<p>Please enter last name</p>";
+            
+            else
+                $last_name = sanitise_input ($last_name);
+                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
+                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+            }
+    
+            //Error msg
+
+            if ($err_msg!="")
+                echo $err_msg;
+            
+            }
 
                     // query to insert all of the inputs that the user has put into the form
                     $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
