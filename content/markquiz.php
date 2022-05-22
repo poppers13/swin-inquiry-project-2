@@ -80,47 +80,73 @@
                     $student_id = $_POST["studentid"];
                 }
 
-                // Checking if all questions are filled in and then continuing to put values from HTML form into PHP code
-                // need to use the things that Aidan used for random questions here
-
-                /*
-                // Q1. TEXT
-                if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")) {
-                    $question_1 = $_POST["alternatives"];
+                    // Checking if all questions are filled in and then continuing to put values             // Q1. TEXT
+                $question_1 = "";
+                    $score = "0";
+                    $score = intval($score);
+                 if (isset($_POST["alternatives-text"])){
+                    $question_1 = $_POST["alternatives-text"];
+                        if ($question_1 == "storing the data of the user to be used again" + "storing data"){ 
+                                //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
+                        echo "<p>Correct - 1/1 marks.</p>";
+                        $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                    }
                 }
-
-                // Q2. RADIO
-                if (isset ($_POST["definition"])) {
-                    $question_2 = $_POST["definition"];
+               // Q2. RADIO
+                $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
+                 if (isset($_POST["definition-radio"])){
+                    $question_2 = $_POST["definition-radio"];
+                        if ($question_2 == "definition-radio1"){
+                             echo "<p>Correct - 1/1 marks.</p>";
+                        $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                    }
                 }
-                else {
-                    $question_2 = "Answer not filled in";
-                }
-
                 // Q3. CHECKBOX
-                if (isset ($_POST["function1"]))
-                    $question_3 = $_POST["function1"];
-                if (isset ($_POST["function2"]))
-                    $question_3 = $_POST["function2"];
-                if (isset ($_POST["function3"]))
-                    $question_3 = $_POST["function3"];
-                if (isset ($_POST["function4"]))
-                    $question_3 = $_POST["function4"];
-                if (isset ($_POST["function5"]))
-                    $question_3 = $_POST["function5"];
-                if (isset ($_POST["function6"]))
-                    $question_3 = $_POST["function6"];
+                $score = intval($score);
+                 if (in_array("checkbox-function3", $_POST["function-checkbox"])){
+                        echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                 if (in_array("checkbox-function5", $_POST["function-checkbox"])){
+                        echo "<p>Correct, Cookies are used in tracking users web activity - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                 if (in_array("checkbox-function6", $_POST["function-checkbox"])){
+                        echo "<p>Correct, cookies do assist with authorisation - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                }
 
                 // Q4. DROPDOWN
-                if (isset ($_POST["history"]) && ($_POST["history"]!="")) {
-                    $question_4 = $_POST["history"];
+                $score = intval($score);
+                     if (isset($_POST["history-dropdown"])){
+                      $question_4 = $_POST["history-dropdown"];
+                           if ($question_4 == "history-dropdown2"){
+                              echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
+                               $score = $score + 1;
+                         } else {
+                    echo "<p>Incorrect - 0/1 marks.</p>";
+                }
+            }
+                // Q5. NUMBER
+                $score = intval($score);
+                     if (isset($_POST["question_5num"])){
+                         $question_5 = $_POST["question_5num"];
+                              if ($question_5 == "30"){
+                             echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
+                             $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
+                    }
                 }
 
-                // Q5. NUMBER
-                if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")) {
-                    $question_5 = $_POST["timeout"];
-                }
-                */
+                echo "<p>Your score for this quiz was $score out of 7 </p>"; // will implement this later when i have made random question gen to get a percent from test and i will do some tidying up when i come back to this after random question maker is done.($score/7*100 %)//
 
                 // Conditions for the number of attempts once all of the inputs have been validated 
                 if (isset($_POST['firstname'])) {
@@ -153,43 +179,148 @@
                 if (isset($_POST["studentid"])){
                 $err_msg = "";
 
-                $student_id = $_POST["studentid"];
-                $first_name = $_POST["firstname"];
-                $last_name = $_POST["lastname"];
+            //Sanitising function
+            function sanitise_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
                 
-                //Student ID
-                if (trim($student_id)=="")
-                    $err_msg .= "<p>Please enter your Student ID</p>";
-                
-                else
-                    $student_id = sanitise_input ($student_id);
-                    if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
-                        $err_msg .= "<p>Should be numbers and between 7 - 10</p>";
+            if (isset($_POST["studentid"])){
+            $err_msg = "";
 
-                //First name
-                if (trim($first_name)=="")
-                    $err_msg .= "<p>Please enter first name</p>";
-                
-                else
-                    $first_name = sanitise_input ($first_name);
-                    if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
-                        $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+            $student_id = $_POST["studentid"];
+            $first_name = $_POST["firstname"];
+            $last_name = $_POST["lastname"];
+            
+            //Student ID
+            if (trim($student_id)=="")
+                $err_msg .= "<p>Please enter your Student ID.</p>";
+            
+            else
+                $student_id = sanitise_input ($student_id);
+                if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
+                    $err_msg .= "<p>Student ID can only contain numbers and length between 7 - 10.</p>";
+
+            //First name
+            if (trim($first_name)=="")
+                $err_msg .= "<p>Please enter your First name.</p>";
+            
+            else
+                $first_name = sanitise_input ($first_name);
+                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
+                    $err_msg .= "<p>First name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
 
 
-                //Last name
-                if (trim($last_name)=="")
-                    $err_msg .= "<p>Please enter last name</p>";
-                
-                else
-                    $last_name = sanitise_input ($last_name);
-                    if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
-                        $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
-                }
-        
-                //Error msg
-                if ($err_msg != "") {
-                    echo $err_msg;
-                }
+            //Last name
+            if (trim($last_name)=="")
+                $err_msg .= "<p>Please enter your Last name.</p>";
+            
+            else
+                $last_name = sanitise_input ($last_name);
+                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
+                    $err_msg .= "<p>Last name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
+            }
+
+            //Q1
+            if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")){
+                $q1 = $_POST["alternatives"]; 
+                $q1 = sanitise_input ($q1);
+            }
+            else
+                $err_msg .= "<p>Please answer Question 1.</p>";
+            
+
+            //Q2
+            if (isset ($_POST["definition"])){
+                $q2 = $_POST["definition"];
+                $q2 = sanitise_input ($q2);
+            }      
+            else 
+                $err_msg .= "<p>Please answer Question 2.<p>";
+            
+            //Q3
+            if (isset ($_POST["client_true"])){
+                $q3a = ($_POST["client_true"]);
+                $q3a = sanitise_input ($q3a);
+            }
+            if (isset ($_POST["client_false"])){
+                $q3b = ($_POST["client_false"]);
+                $q3b = sanitise_input ($q3b);
+            }
+            if (!isset ($_POST["client_true" || "client_false"]))
+                $err_msg .= "<p>Please answer Question 3.<p>";   
+
+            //Q4
+            if (isset ($_POST["file_true"])){
+                $q4a = ($_POST["file_true"]);
+                $q4a = sanitise_input ($q4a);
+            }
+            if (isset ($_POST["file_false"])){
+                $q4b = ($_POST["file_false"]);
+                $q4b = sanitise_input ($q4b);
+            }
+            if (!isset ($_POST["client_true" || "client_false"]))
+                $err_msg .= "<p>Please answer Question 4.<p>"; 
+
+            //Q5 
+            if (isset ($_POST["function1"])){
+                $q5 = $_POST["function1"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function2"])){
+                $q5 = $_POST["function2"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function3"])){
+                $question_3 = $_POST["function3"];
+                $question_3 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function4"])){
+                $q5 = $_POST["function4"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function5"])){
+                $q5 = $_POST["function5"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function6"])){
+                $q5 = $_POST["function6"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (!isset ($_POST["function1" || "function2" || "function3" || "function4" || "function5" || "function6"])){
+                $err_msg .= "<p>Please answer Question 5.<p>";
+            }
+
+            // Q6
+            if (isset ($_POST["history"]) && ($_POST["history"]!="")){
+                $q6 = $_POST["history"];
+                $q6 = sanitise_input ($q6);
+            }
+            else 
+                $err_msg .= "<p>Please answer Question 6.<p>";
+
+            //Q7
+            if (isset ($_POST["creator"]) && ($_POST["creator"]!="")){
+                $q7 = $_POST["creator"]; 
+                $q7 = sanitise_input ($q7);
+            }
+            else
+                $err_msg .= "<p>Please answer Question 7.</p>";
+            
+            //Q8
+            if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")){
+                $question_5 = $_POST["timeout"];
+                $question_5 = sanitise_input ($question_5);
+            }
+            else 
+                $err_msg .= "<p>Please answer Question 8.<p>";
+
+            //Error msg
+
+            if ($err_msg!="")
+                echo $err_msg;
 
                 // only allowing for a max of 2 attempts
                 if ($attempt_num < 2) {
