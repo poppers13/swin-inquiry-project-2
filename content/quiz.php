@@ -39,7 +39,7 @@
                         // replace this with random generation later: until then, every question will be retrieved
                         // apparently, use "SELECT * FROM yourTableName ORDER BY RAND() LIMIT 1" as the query to select a random row
                         // so "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5" selects 5 random rows, i assume
-                        $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                        $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5");
                         // RETRIEVE QUESTION LIST
                         $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         $question_string = "";

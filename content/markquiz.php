@@ -356,8 +356,8 @@
                 
                 // Q8
                 if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")){
-                    $question_5 = $_POST["timeout"];
-                    $question_5 = sanitise_input ($question_5);
+                    $q8 = $_POST["timeout"];
+                    $q8 = sanitise_input ($question_5);
                 }
                 else 
                     $err_msg .= "<p>Please answer Question 8.<p>";
