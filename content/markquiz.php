@@ -291,7 +291,7 @@
                         echo "<p>Something is wrong with " , $query , "</p>";
                     }
                     mysqli_close($sql_db);
-                }
+                
             ?>
         </section>
     </body>
