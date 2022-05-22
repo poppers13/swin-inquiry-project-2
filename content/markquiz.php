@@ -9,7 +9,7 @@
         <link rel = "stylesheet" type = "text/css" href = "styles/style.css">
         
         <!-- metadata -->
-        <title>Cookies and Sessions Quiz</title>
+        <title>Cookies and Sessions - Mark Quiz</title>
         <meta charset="UTF-8">
         <meta name="description"    content="How to navigate this web page">
         <meta name="keywords"       content="cookies, sessions, education, swinburne, home, menu">
@@ -17,7 +17,15 @@
     </head>
 
     <body>
-        <section class="content-block">
+        <!-- sticky menu bar, with navigation links to other pages -->
+        <?php include 'menu.inc'; ?>
+
+        <!-- header contains school logo, and info relating to the page's creation -->
+        <?php include 'header.inc'; ?>
+
+        <h1>Mark Quiz</h1>
+        
+        <div class="content-block">
             <?php
                 // connect to the SQL database
                 require_once ("db_settings.php");
@@ -32,40 +40,77 @@
                 $student_id = "";
                 $attempt_num = 0;
 
-                // declaring all questions as empty strings so that things can be added to them
+                // declaring score as 0 from the start
                 $score = 0;
 
                 // retrieving the list of questions and putting into an associative array
-                $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
-                $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                //$result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                $select_qnames = mysqli_query($sql_db, "SELECT name FROM quiz_questions");
+                $select_qtypes = mysqli_query($sql_db, "SELECT type FROM quiz_questions");
+                
+                //$questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                $fetch_qnames = mysqli_fetch_assoc($select_qnames);
+                $fetch_qtypes = mysqli_fetch_assoc($select_qtypes);
+                
+                // declaring empty arrays for the values of the fields to go into
                 $question_names = array();
-                $question_type = array();
+                $question_types = array();
 
-                foreach ($questions as $field) {
+                // looping through the array and putting all the values into question_names array
+                foreach ($select_qnames as $field) {
                     // this $q_name will contain all of the names for the questions to be used in code ahead
                     $q_name = $field['name'];
-                    $q_type = $field['type'];
                     // putting each of the names from the loop into the $question_names array
                     array_push($question_names, $q_name);
-                    array_push($question_type, $q_type);
+                }
+                // looping through the array and putting all the values into question_type array
+                foreach ($select_qtypes as $field) {
+                    $q_type = $field['type'];
+                    array_push($question_types, $q_type);
                 }
 
                 /* assigning all of the question names and adapts to how many questions there are  the extract 
                 function will take out each of the values from the $question_names array and assign it to a new variable
-                with the prefix of name_[i]
-                we can now access each question name by using these depending on how many questions there are (8 questions)
+                with the prefix of name_[i] -> the values begin from 0 up to how many question there are minus 1 (8 questions, 0->7)
+                we can now access each question name by using these depending on how many questions there are (8 questions 0->7)
                 */ 
-                for ($i = 1; $i <= count($question_names); $i++) {
+                for ($i = 0; $i < count($question_names); $i++) {
                     extract($question_names, EXTR_PREFIX_ALL, "name");
                 }
 
-                echo $name_1;
-
-                for ($i = 1; $i <= count($question_type); $i++) {
-                    extract($question_names, EXTR_PREFIX_ALL, "type");
+                for ($i = 0; $i < count($question_types); $i++) {
+                    extract($question_types, EXTR_PREFIX_ALL, "type");
                 }
+
                 // need to make array with entire database
                 // need an array with question string exploded to get each question out
+
+                // going through all questions to check their type before validation
+                // **NEEDS FIXING ECHOES THE SAME THINGS 8 TIMES
+                for ($i = 1; $i < count($question_types) + 1; $i++) {
+                    if (${"type_" . $i} = "checkbox") {
+                        // perform validation
+                        echo "<p>checkbox<br></p>";
+                    }
+                    if (${"type_" . $i} = "text") {
+                        // perform validation
+                        echo "<p>text<br></p>";
+                    }
+                /*
+                    if (${"type_" . $i} = "radio") {
+                        // perform validation
+                        echo "<p>radio<br></p>";
+                    }
+                    if (${"type_" . $i} = "dropdown") {
+                        // perform validation
+                        echo "<p>dropdown<br></p>";
+                    }
+                    if (${"type_" . $i} = "number") {
+                        // perform validation
+                        echo "<p>number<br></p>";
+                    }
+                */
+                }
 
                 // Checking if all student details are filled in and then continuing to put values from HTML form into PHP code
                 if (isset ($_POST["firstname"]) && ($_POST["firstname"]!="")) {
@@ -80,9 +125,10 @@
                     $student_id = $_POST["studentid"];
                 }
 
-                    // Checking if all questions are filled in and then continuing to put values             // Q1. TEXT
+                // Checking if all questions are filled in and then continuing to put values             
+                
+                // Q1. TEXT
                 $question_1 = "";
-                $score = "0";
                 $score = intval($score);
                 if (isset($_POST["alternatives-text"])) {
                     $question_1 = $_POST["alternatives-text"];
@@ -94,6 +140,7 @@
                         echo "<p>Incorrect - 0/1 marks.</p>";
                     }
                 }
+
                // Q2. RADIO
                 $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
                  if (isset($_POST["definition-radio"])) {
@@ -105,7 +152,9 @@
                         echo "<p>Incorrect - 0/1 marks.</p>";
                     }
                 }
+
                 // Q3. CHECKBOX
+                /* **NEED TO FIX
                 $score = intval($score);
                 if (in_array("checkbox-function3", $_POST["function-checkbox"])) {
                     echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
@@ -122,6 +171,7 @@
                 else {
                     echo "<p>Incorrect - 0/1 marks.</p>";
                 }
+                */ 
 
                 // Q4. DROPDOWN
                 $score = intval($score);
@@ -134,6 +184,7 @@
                         echo "<p>Incorrect - 0/1 marks.</p>";
                     }
                 }
+
                 // Q5. NUMBER
                 $score = intval($score);
                 if (isset($_POST["question_5num"])){
@@ -176,31 +227,26 @@
                 }
                     
                 if (isset($_POST["studentid"])) {
-                $err_msg = "";
-
-                //Sanitising function
-                function sanitise_input($data) {
-                    $data = trim($data);
-                    $data = stripslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
-                }
+                    $err_msg = "";
                 
                 if (isset($_POST["studentid"])){
-                $err_msg = "";
+                    $err_msg = "";
 
-                $student_id = $_POST["studentid"];
-                $first_name = $_POST["firstname"];
-                $last_name = $_POST["lastname"];
+                    $student_id = $_POST["studentid"];
+                    $first_name = $_POST["firstname"];
+                    $last_name = $_POST["lastname"];
                 
                 //Student ID
-                if (trim($student_id)=="")
+                if (trim($student_id) == "") {
                     $err_msg .= "<p>Please enter your Student ID.</p>";
-                
-                else
+                }
+                else {
                     $student_id = sanitise_input ($student_id);
-                    if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
+                    if (!preg_match("/^[0-9]{7,10}+$/",$student_id)) {
                         $err_msg .= "<p>Student ID can only contain numbers and length between 7 - 10.</p>";
+                    }   
+                }
+
 
                 //First name
                 if (trim($first_name)=="")
@@ -316,9 +362,8 @@
                 else 
                     $err_msg .= "<p>Please answer Question 8.<p>";
 
-                //Error msg
-
-                if ($err_msg!="")
+                // Echoing all errors if the string isn't empty
+                if ($err_msg != "")
                     echo $err_msg;
 
                 // only allowing for a max of 2 attempts
@@ -336,16 +381,16 @@
                         $result = mysqli_query($sql_db, $query);
                         $record = mysqli_fetch_assoc($result);
                         if ($record) {
-                            echo "<table border = '1'>";
+                            echo "<table border='1' class='alternative-table'>";
                             echo "<tr><th>Attempt ID</th><th>Attempt Date</th><th>First Name</th><th>Last Name</th><th>Student ID</th><th>Attempt Number</th><th>Score</th></tr>";
                             while ($record) {
-                                echo "<tr><td>{$record['attempt_id']}</td>";
-                                echo "<td>{$record['attempt_date']}</td>";
-                                echo "<td>{$record['first_name']}</td>";
-                                echo "<td>{$record['last_name']}</td>";
-                                echo "<td>{$record['student_id']}</td>";
-                                echo "<td>{$record['attempt_num']}</td>";
-                                echo "<td>{$record['score']}</td></tr>";
+                                echo "<tr class='alternative-tr'><td class='alternative-td'>{$record['attempt_id']}</td>";
+                                echo "<td class='alternative-td'>{$record['attempt_date']}</td>";
+                                echo "<td class='alternative-td'>{$record['first_name']}</td>";
+                                echo "<td class='alternative-td'>{$record['last_name']}</td>";
+                                echo "<td class='alternative-td'>{$record['student_id']}</td>";
+                                echo "<td class='alternative-td'>{$record['attempt_num']}</td>";
+                                echo "<td class='alternative-td'>{$record['score']}</td></tr>";
                                 $record = mysqli_fetch_assoc($result);
                             }
                             echo "</table>";
@@ -368,6 +413,8 @@
                 }
             }
             ?>
-        </section>
+        </div>
+        <!-- footer with email contacts for every member -->
+        <?php include 'footer.inc'; ?>
     </body>
 </html>
