@@ -119,7 +119,7 @@
                 $data = stripslashes($data);
                 $data = htmlspecialchars($data);
                 return $data;
-                }
+            }
                 
             if (isset($_POST["studentid"])){
             $err_msg = "";
@@ -130,39 +130,131 @@
             
             //Student ID
             if (trim($student_id)=="")
-                $err_msg .= "<p>Please enter your Student ID</p>";
+                $err_msg .= "<p>Please enter your Student ID.</p>";
             
             else
                 $student_id = sanitise_input ($student_id);
                 if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
-                    $err_msg .= "<p>Should be numbers and between 7 - 10</p>";
+                    $err_msg .= "<p>Student ID can only contain numbers and length between 7 - 10.</p>";
 
             //First name
             if (trim($first_name)=="")
-                $err_msg .= "<p>Please enter first name</p>";
+                $err_msg .= "<p>Please enter your First name.</p>";
             
             else
                 $first_name = sanitise_input ($first_name);
                 if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
-                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+                    $err_msg .= "<p>First name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
 
 
             //Last name
             if (trim($last_name)=="")
-                $err_msg .= "<p>Please enter last name</p>";
+                $err_msg .= "<p>Please enter your Last name.</p>";
             
             else
                 $last_name = sanitise_input ($last_name);
                 if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
-                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+                    $err_msg .= "<p>Last name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
             }
-    
+
+            //Q1
+            if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")){
+                $q1 = $_POST["alternatives"]; 
+                $q1 = sanitise_input ($q1);
+            }
+            else
+                $err_msg .= "<p>Please answer Question 1.</p>";
+            
+
+            //Q2
+            if (isset ($_POST["definition"])){
+                $q2 = $_POST["definition"];
+                $q2 = sanitise_input ($q2);
+            }      
+            else 
+                $err_msg .= "<p>Please answer Question 2.<p>";
+            
+            //Q3
+            if (isset ($_POST["client_true"])){
+                $q3a = ($_POST["client_true"]);
+                $q3a = sanitise_input ($q3a);
+            }
+            if (isset ($_POST["client_false"])){
+                $q3b = ($_POST["client_false"]);
+                $q3b = sanitise_input ($q3b);
+            }
+            if (!isset ($_POST["client_true" || "client_false"]))
+                $err_msg .= "<p>Please answer Question 3.<p>";   
+
+            //Q4
+            if (isset ($_POST["file_true"])){
+                $q4a = ($_POST["file_true"]);
+                $q4a = sanitise_input ($q4a);
+            }
+            if (isset ($_POST["file_false"])){
+                $q4b = ($_POST["file_false"]);
+                $q4b = sanitise_input ($q4b);
+            }
+            if (!isset ($_POST["client_true" || "client_false"]))
+                $err_msg .= "<p>Please answer Question 4.<p>"; 
+
+            //Q5 
+            if (isset ($_POST["function1"])){
+                $q5 = $_POST["function1"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function2"])){
+                $q5 = $_POST["function2"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function3"])){
+                $question_3 = $_POST["function3"];
+                $question_3 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function4"])){
+                $q5 = $_POST["function4"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function5"])){
+                $q5 = $_POST["function5"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (isset ($_POST["function6"])){
+                $q5 = $_POST["function6"];
+                $q5 = sanitise_input ($q5);
+            }
+            if (!isset ($_POST["function1" || "function2" || "function3" || "function4" || "function5" || "function6"])){
+                $err_msg .= "<p>Please answer Question 5.<p>";
+            }
+
+            // Q6
+            if (isset ($_POST["history"]) && ($_POST["history"]!="")){
+                $q6 = $_POST["history"];
+                $q6 = sanitise_input ($q6);
+            }
+            else 
+                $err_msg .= "<p>Please answer Question 6.<p>";
+
+            //Q7
+            if (isset ($_POST["creator"]) && ($_POST["creator"]!="")){
+                $q7 = $_POST["creator"]; 
+                $q7 = sanitise_input ($q7);
+            }
+            else
+                $err_msg .= "<p>Please answer Question 7.</p>";
+            
+            //Q8
+            if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")){
+                $question_5 = $_POST["timeout"];
+                $question_5 = sanitise_input ($question_5);
+            }
+            else 
+                $err_msg .= "<p>Please answer Question 8.<p>";
+
             //Error msg
 
             if ($err_msg!="")
                 echo $err_msg;
-            
-            }
 
                     // query to insert all of the inputs that the user has put into the form
                     $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
