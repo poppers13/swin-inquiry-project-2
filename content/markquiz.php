@@ -55,47 +55,73 @@
                     $student_id = $_POST["studentid"];
                 }
 
-                // Checking if all questions are filled in and then continuing to put values from HTML form into PHP code
-                // need to use the things that Aidan used for random questions here
-                
-                /*
-                // Q1. TEXT
-                if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")) {
-                    $question_1 = $_POST["alternatives"];
+                    // Checking if all questions are filled in and then continuing to put values             // Q1. TEXT
+                $question_1 = "";
+                    $score = "0";
+                    $score = intval($score);
+                 if (isset($_POST["alternatives-text"])){
+                    $question_1 = $_POST["alternatives-text"];
+                        if ($question_1 == "storing the data of the user to be used again" + "storing data"){ 
+                                //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
+                        echo "<p>Correct - 1/1 marks.</p>";
+                        $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                    }
                 }
-
-                // Q2. RADIO
-                if (isset ($_POST["definition"])) {
-                    $question_2 = $_POST["definition"];
+               // Q2. RADIO
+                $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
+                 if (isset($_POST["definition-radio"])){
+                    $question_2 = $_POST["definition-radio"];
+                        if ($question_2 == "definition-radio1"){
+                             echo "<p>Correct - 1/1 marks.</p>";
+                        $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                    }
                 }
-                else {
-                    $question_2 = "Answer not filled in";
-                }
-
                 // Q3. CHECKBOX
-                if (isset ($_POST["function1"]))
-                    $question_3 = $_POST["function1"];
-                if (isset ($_POST["function2"]))
-                    $question_3 = $_POST["function2"];
-                if (isset ($_POST["function3"]))
-                    $question_3 = $_POST["function3"];
-                if (isset ($_POST["function4"]))
-                    $question_3 = $_POST["function4"];
-                if (isset ($_POST["function5"]))
-                    $question_3 = $_POST["function5"];
-                if (isset ($_POST["function6"]))
-                    $question_3 = $_POST["function6"];
+                $score = intval($score);
+                 if (in_array("checkbox-function3", $_POST["function-checkbox"])){
+                        echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                 if (in_array("checkbox-function5", $_POST["function-checkbox"])){
+                        echo "<p>Correct, Cookies are used in tracking users web activity - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                 if (in_array("checkbox-function6", $_POST["function-checkbox"])){
+                        echo "<p>Correct, cookies do assist with authorisation - 1/1 marks.</p>";
+                        $score = $score + 1;
+                    }
+                else {
+                        echo "<p>Incorrect - 0/1 marks.</p>";
+                }
 
                 // Q4. DROPDOWN
-                if (isset ($_POST["history"]) && ($_POST["history"]!="")) {
-                    $question_4 = $_POST["history"];
+                $score = intval($score);
+                     if (isset($_POST["history-dropdown"])){
+                      $question_4 = $_POST["history-dropdown"];
+                           if ($question_4 == "history-dropdown2"){
+                              echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
+                               $score = $score + 1;
+                         } else {
+                    echo "<p>Incorrect - 0/1 marks.</p>";
+                }
+            }
+                // Q5. NUMBER
+                $score = intval($score);
+                     if (isset($_POST["question_5num"])){
+                         $question_5 = $_POST["question_5num"];
+                              if ($question_5 == "30"){
+                             echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
+                             $score = $score + 1;
+                        } else {
+                        echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
+                    }
                 }
 
-                // Q5. NUMBER
-                if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")) {
-                    $question_5 = $_POST["timeout"];
-                }
-                */
+                echo "<p>Your score for this quiz was $score out of 7 </p>"; // will implement this later when i have made random question gen to get a percent from test and i will do some tidying up when i come back to this after random question maker is done.($score/7*100 %)//
 
                 // Conditions for the number of attempts once all of the inputs have been validated 
                 if (isset($_POST['firstname'])) {
