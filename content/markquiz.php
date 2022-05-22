@@ -34,11 +34,36 @@
 
                 // declaring all questions as empty strings so that things can be added to them
                 $score = 0;
-                $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
-                // retrieving the list of questions
-                $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                $question_string = "";
 
+                // retrieving the list of questions and putting into an associative array
+                $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                $question_names = array();
+                $question_type = array();
+
+                foreach ($questions as $field) {
+                    // this $q_name will contain all of the names for the questions to be used in code ahead
+                    $q_name = $field['name'];
+                    $q_type = $field['type'];
+                    // putting each of the names from the loop into the $question_names array
+                    array_push($question_names, $q_name);
+                    array_push($question_type, $q_type);
+                }
+
+                /* assigning all of the question names and adapts to how many questions there are  the extract 
+                function will take out each of the values from the $question_names array and assign it to a new variable
+                with the prefix of name_[i]
+                we can now access each question name by using these depending on how many questions there are (8 questions)
+                */ 
+                for ($i = 1; $i <= count($question_names); $i++) {
+                    extract($question_names, EXTR_PREFIX_ALL, "name");
+                }
+
+                echo $name_1;
+
+                for ($i = 1; $i <= count($question_type); $i++) {
+                    extract($question_names, EXTR_PREFIX_ALL, "type");
+                }
                 // need to make array with entire database
                 // need an array with question string exploded to get each question out
 
@@ -57,7 +82,7 @@
 
                 // Checking if all questions are filled in and then continuing to put values from HTML form into PHP code
                 // need to use the things that Aidan used for random questions here
-                
+
                 /*
                 // Q1. TEXT
                 if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")) {
@@ -99,7 +124,11 @@
 
                 // Conditions for the number of attempts once all of the inputs have been validated 
                 if (isset($_POST['firstname'])) {
-                    $attempt_num = $attempt_num + 1;
+                    if (isset($_POST['lastname'])) {
+                        if (isset($_POST['studentid'])) {
+                            $attempt_num = $attempt_num + 1;
+                        }
+                    }
                 }
 
                 // conditions if the connection isn't made
@@ -111,59 +140,59 @@
 
                     // need to check if the fields in the form have been entered or not using validation
                     
-            /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS */
+                /* VALIDATION OF ALL QUESTIONS & STUDENT DETAILS */
 
-            //Sanitising function
-            function sanitise_input($data) {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-                }
+                //Sanitising function
+                function sanitise_input($data) {
+                    $data = trim($data);
+                    $data = stripslashes($data);
+                    $data = htmlspecialchars($data);
+                    return $data;
+                    }
+                    
+                if (isset($_POST["studentid"])){
+                $err_msg = "";
+
+                $student_id = $_POST["studentid"];
+                $first_name = $_POST["firstname"];
+                $last_name = $_POST["lastname"];
                 
-            if (isset($_POST["studentid"])){
-            $err_msg = "";
+                //Student ID
+                if (trim($student_id)=="")
+                    $err_msg .= "<p>Please enter your Student ID</p>";
+                
+                else
+                    $student_id = sanitise_input ($student_id);
+                    if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
+                        $err_msg .= "<p>Should be numbers and between 7 - 10</p>";
 
-            $student_id = $_POST["studentid"];
-            $first_name = $_POST["firstname"];
-            $last_name = $_POST["lastname"];
-            
-            //Student ID
-            if (trim($student_id)=="")
-                $err_msg .= "<p>Please enter your Student ID</p>";
-            
-            else
-                $student_id = sanitise_input ($student_id);
-                if (!preg_match("/^[0-9]{7,10}+$/",$student_id))
-                    $err_msg .= "<p>Should be numbers and between 7 - 10</p>";
-
-            //First name
-            if (trim($first_name)=="")
-                $err_msg .= "<p>Please enter first name</p>";
-            
-            else
-                $first_name = sanitise_input ($first_name);
-                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
-                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+                //First name
+                if (trim($first_name)=="")
+                    $err_msg .= "<p>Please enter first name</p>";
+                
+                else
+                    $first_name = sanitise_input ($first_name);
+                    if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
+                        $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
 
 
-            //Last name
-            if (trim($last_name)=="")
-                $err_msg .= "<p>Please enter last name</p>";
-            
-            else
-                $last_name = sanitise_input ($last_name);
-                if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
-                    $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
-            }
-    
-            //Error msg
+                //Last name
+                if (trim($last_name)=="")
+                    $err_msg .= "<p>Please enter last name</p>";
+                
+                else
+                    $last_name = sanitise_input ($last_name);
+                    if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
+                        $err_msg .= "<p>Maximum 30 letters ,[space], hyphen characters.</p>";
+                }
+        
+                //Error msg
+                if ($err_msg != "") {
+                    echo $err_msg;
+                }
 
-            if ($err_msg!="")
-                echo $err_msg;
-            
-            }
-
+                // only allowing for a max of 2 attempts
+                if ($attempt_num < 2) {
                     // query to insert all of the inputs that the user has put into the form
                     $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
                     VALUES (NULL , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
@@ -199,6 +228,13 @@
                         echo "<p>Something is wrong with " , $query , "</p>";
                     }
                     mysqli_close($sql_db);
+                }
+                // if the attempt number is greater than 2, then redirection to a page saying max attempts
+                else {
+                    echo "<p>You have reached the maximum number of attempts.</p>";
+                    echo "<p>Please try again later.</p>";
+                }
+                    
                 }
             ?>
         </section>
