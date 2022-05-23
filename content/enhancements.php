@@ -23,7 +23,7 @@
         <!-- header contains school logo, and info relating to the page's creation -->
         <?php include 'header.inc'; ?>
 
-        <h1>Enhancements</h1>
+        <h1>HTML & CSS Enhancements</h1>
         
         <!-- main content: listing the enhancements made to the page -->
         <section class="content-block" id="enhance-block">

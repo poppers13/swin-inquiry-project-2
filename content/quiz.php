@@ -16,7 +16,7 @@
         <meta name="author" content="Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake, Kasun Jayawardhana">
     </head>
     
-    <body id="index-body">
+    <body>
         <!-- sticky menu bar, with navigation links to other pages -->
         <?php include 'menu.inc'; ?>
 
@@ -26,7 +26,7 @@
         <h1>Cookies and Sessions Quiz</h1>
         
         <div class="content-block">
-            <form method="post" action="markquiz.php" novalidate="novalidate">
+            <form method="post" action="markquiz.php" novalidate="novalidate" id="quiz-form">
                 <?php
                     // connect to the SQL database
                     require_once ("db_settings.php");
@@ -36,9 +36,7 @@
                         // if connection is unsuccessful, then replace quiz form with error message
                         echo "<p>Failed to connect to database: try reloading the page.</p>";
                     } else {
-                        // replace this with random generation later: until then, every question will be retrieved
-                        // apparently, use "SELECT * FROM yourTableName ORDER BY RAND() LIMIT 1" as the query to select a random row
-                        // so "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5" selects 5 random rows, i assume
+                        // this query selects 5 random questions from the table
                         $result = mysqli_query($sql_db, "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5");
                         // RETRIEVE QUESTION LIST
                         $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
