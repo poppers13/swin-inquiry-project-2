@@ -25,19 +25,59 @@
             ?>
             <h2>All Entries </h2>
             <?php 
-            if (!isset($_POST["student_id"])){
-                echo"<p>Connection succesful!</p>";
+            if (!isset($_POST["search"])){
+                
                 $query = "SELECT * FROM quiz_attempts";
             }
             else 
-            {
-                
+            {               
                 $student_id = trim ($_POST["student_id"]);
+                $first_name = trim ($_POST["first_name"]);
+                $last_name = trim ($_POST["last_name"]);
                 
-                
-                $query = "SELECT * FROM quiz_attempts WHERE student_id LIKE '%$student_id%'";
+                $query = "SELECT * FROM quiz_attempts WHERE student_id LIKE '%$student_id%' AND first_name LIKE '%$first_name%' AND last_name LIKE '%$last_name%'";
+            }
 
-            }                          
+            if(isset($_POST["full"])){
+
+                $query = "SELECT * FROM quiz_attempts WHERE score = 100 AND attempt_num = 1 ";
+            }
+
+            if(isset($_POST["half"])){
+
+                $query = "SELECT * FROM quiz_attempts WHERE score < 50 AND attempt_num = 2 ";
+            }
+
+            if(isset($_POST["delete"])){
+                ini_set('display_errors', '0');
+                $student_id = trim ($_POST["student_id"]);
+                $query1 = "DELETE FROM quiz_attempts WHERE student_id = $student_id ";
+
+                require_once ("db_settings.php");
+                $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+                $result = mysqli_query($sql_db,$query1) ;
+                
+
+                if ($result)
+                    echo "<p>Delete successful There are ". mysqli_affected_rows($sql_db). " record/s deleted</p>";
+                else 
+                    echo "<p> Delete unsuccessful </p>";
+                mysqli_close($sql_db);
+                
+            }
+            if(isset($_POST["update"]))
+            {               
+                ini_set('display_errors', '0');
+                $student_id = trim ($_POST["student_id"]);
+                $score = trim ($_POST["score"]);
+                
+                
+                $query1 = "UPDATE quiz_attempts SET score = $score WHERE student_id = $student_id ";
+                require_once ("db_settings.php");
+                $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+                $result = mysqli_query($sql_db,$query1) ;
+            }
+
                 // connect to the SQL database
                 require_once ("db_settings.php");
                 $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
@@ -77,13 +117,37 @@
                 else {
                     echo "<p>Connection failed!</p>";
                 }
+                
             ?>           
         </body>
-        <h2> Search based on name </h2>
+        <h2> Search based on Student </h2>
         <form action = "manage.php" method ="post">
                 <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
+                <p><label> First Name: <input type="text" name= "first_name" /> </label></p>
+                <p><label> Last Name: <input type="text" name= "last_name" /> </label></p>
                 
-                <input type = "submit" value ="Search"/>
+                <input type = "submit" name = "search" value ="Search"/>
+        </form>    
+        <br>    
+        <form action = "manage.php" method ="post">
+           
+                <input type = "submit" name = "full" value ="Show students with 100% on first attempt"/>
+            </form>
+            <br>      
+        <form action = "manage.php" method ="post">
+            <input type = "submit" name = "half" value ="Show students with below 50% on second attempt"/>
+        </form>
+
+        <h2>Delete an entry</h2>
+        <form action = "manage.php" method ="post">
+                <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
+                <input type = "submit" name = "delete" value ="Delete"/>
+        </form>
+        <h2>Update score for a student</h2>
+        <form action = "manage.php" method ="post">
+                <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
+                <p><label> Score: <input type="text" name= "score" /> </label></p>
+                <input type = "submit" name = "update" value ="update"/>
         </form>
     </section>
     <?php include_once "footer.inc"; ?>
