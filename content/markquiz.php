@@ -27,7 +27,12 @@
         
         <div class="content-block">
             <?php
-                // connect to the SQL database
+                // 1. REDIRECTION - checking if the first name has been entered, if not then terminate the code and send back to quiz page
+                if (!isset($_POST['firstname'])) {
+                    header("location:quiz.php");
+                    exit();
+                }
+                // 2. CONNECTION - connect to the SQL database
                 require_once ("db_settings.php");
                 $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
                 
@@ -38,9 +43,8 @@
                 $first_name = "";
                 $last_name = "";
                 $student_id = "";
+                $err_msg = "";
                 $attempt_num = 0;
-
-                // declaring score as 0 from the start
                 $score = 0;
 
                 // retrieving the list of questions and putting into an associative array
@@ -69,10 +73,9 @@
                     array_push($question_types, $q_type);
                 }
 
-                /* assigning all of the question names and adapts to how many questions there are  the extract 
-                function will take out each of the values from the $question_names array and assign it to a new variable
+                /* assigning all of the question names and adapts to how many questions there are 
+                the extract  function will take out each of the values from the $question_names array and assign it to a new variable
                 with the prefix of name_[i] -> the values begin from 0 up to how many question there are minus 1 (8 questions, 0->7)
-                we can now access each question name by using these depending on how many questions there are (8 questions 0->7)
                 */ 
                 for ($i = 0; $i < count($question_names); $i++) {
                     extract($question_names, EXTR_PREFIX_ALL, "name");
@@ -81,35 +84,88 @@
                 for ($i = 0; $i < count($question_types); $i++) {
                     extract($question_types, EXTR_PREFIX_ALL, "type");
                 }
-
-                // need to make array with entire database
-                // need an array with question string exploded to get each question out
-
+                
+                //Sanitising Function
+                function sanitise_input($data) {
+                    $data = trim($data);
+                    $data = stripslashes($data);
+                    $data = htmlspecialchars($data);
+                    return $data;
+                }
+               
                 // going through all questions to check their type before validation
-                // **NEEDS FIXING ECHOES THE SAME THINGS 8 TIMES
-                for ($i = 1; $i < count($question_types) + 1; $i++) {
-                    if (${"type_" . $i} = "checkbox") {
-                        // perform validation
-                        echo "<p>checkbox<br></p>";
+                for ($i = 0; $i < count($question_types); $i++) {
+                    
+                    if (${"type_" . $i} == "checkbox") {
+                        // help here as well
+                        // CHECKBOX - Why do websites ask the user to accept cookies?
+                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                        {
+                            $checkbox = $_POST[${"name_" . $i}]; 
+                            $checkbox = sanitise_input($checkbox);
+                        }
+                        else 
+                        {
+                            $err_msg .= "<p>Please answer checkbox questions.</p>";
+                        }
                     }
-                    if (${"type_" . $i} = "text") {
-                        // perform validation
-                        echo "<p>text<br></p>";
+
+                    if (${"type_" . $i} == "text") {
+                        // TEXT - What are web caches designed to store?
+                        if (isset ($_POST[${"name_" . $i}]))
+                        {
+                            $text = $_POST[${"name_" . $i}];
+                            $text = sanitise_input($text);
+                        }   
+                        else 
+                        {
+                            $err_msg .= "<p>Please answer text questions.<p>";  
+                        }
                     }
-                /*
-                    if (${"type_" . $i} = "radio") {
-                        // perform validation
-                        echo "<p>radio<br></p>";
+
+                    if (${"type_" . $i} == "radio") {
+                        // need help here
+                        // RADIO - A cookie is stored client side. True or false?
+                        if (isset ($_POST["client_true"]))
+                        {
+                            $radio_true = ($_POST["client_true"]);
+                            $radio_true = sanitise_input($radio_true);
+                        }
+                        if (isset ($_POST["client_false"]))
+                        {
+                            $radio_false = ($_POST["client_false"]);
+                            $radio_false = sanitise_input($radio_false);
+                        }
+                        if (!isset ($_POST["client_true" || "client_false"]))
+                        {
+                            $err_msg .= "<p>Please answer radio questions.<p>"; 
+                        }
                     }
-                    if (${"type_" . $i} = "dropdown") {
-                        // perform validation
-                        echo "<p>dropdown<br></p>";
+                        
+                    if (${"type_" . $i} == "dropdown") {
+                        // DROPDOWN - Which publication declared that cookies are unsafe for the public in February 1996?
+                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                        {
+                            $q6 = $_POST["history"];
+                            $q6 = sanitise_input ($q6);
+                        }
+                        else 
+                        {
+                            $err_msg .= "<p>Please answer dropdown questions.<p>";
+                        }    
                     }
-                    if (${"type_" . $i} = "number") {
-                        // perform validation
-                        echo "<p>number<br></p>";
+                    if (${"type_" . $i} == "number") {
+                        // NUMBER - By default, how long does it take for a session to time out?
+                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                        {
+                            $q8 = $_POST[${"name_" . $i}];
+                            $q8 = sanitise_input($q8);
+                        }
+                        else 
+                        {
+                            $err_msg .= "<p>Please answer number questions.<p>";
+                        } 
                     }
-                */
                 }
 
                 // Checking if all student details are filled in and then continuing to put values from HTML form into PHP code
@@ -127,6 +183,7 @@
 
                 // Checking if all questions are filled in and then continuing to put values             
                 
+                /*
                 // Q1. TEXT
                 $question_1 = "";
                 $score = intval($score);
@@ -154,7 +211,7 @@
                 }
 
                 // Q3. CHECKBOX
-                /* **NEED TO FIX
+                *NEED TO FIX
                 $score = intval($score);
                 if (in_array("checkbox-function3", $_POST["function-checkbox"])) {
                     echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
@@ -171,7 +228,7 @@
                 else {
                     echo "<p>Incorrect - 0/1 marks.</p>";
                 }
-                */ 
+                
 
                 // Q4. DROPDOWN
                 $score = intval($score);
@@ -198,6 +255,7 @@
                 }
 
                 echo "<p>Your score for this quiz was $score out of 7 </p>"; // will implement this later when i have made random question gen to get a percent from test and i will do some tidying up when i come back to this after random question maker is done.($score/7*100 %)//
+                */
 
                 // Conditions for the number of attempts once all of the inputs have been validated 
                 if (isset($_POST['firstname'])) {
@@ -217,26 +275,18 @@
                     // need to check if the fields in the form have been entered or not using validation
                     
                 // VALIDATION OF ALL QUESTIONS & STUDENT DETAILS
-
-                //Sanitising function
-                function sanitise_input($data) {
-                    $data = trim($data);
-                    $data = stripslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
-                }
                     
-                if (isset($_POST["studentid"])) {
+                if (isset($_POST["studentid"])) { // why is this being checked twice?
                     $err_msg = "";
                 
                 if (isset($_POST["studentid"])){
                     $err_msg = "";
 
-                    $student_id = $_POST["studentid"];
+                    $student_id = $_POST["studentid"]; // how come if the studentid isset then you automatically set the names as well?
                     $first_name = $_POST["firstname"];
                     $last_name = $_POST["lastname"];
                 
-                //Student ID
+                // VALIDATION - Student ID
                 if (trim($student_id) == "") {
                     $err_msg .= "<p>Please enter your Student ID.</p>";
                 }
@@ -247,57 +297,27 @@
                     }   
                 }
 
-
                 //First name
-                if (trim($first_name)=="")
-                    $err_msg .= "<p>Please enter your First name.</p>";
-                
-                else
+                if (trim($first_name)=="") {
+                    $err_msg .= "<p>Please enter your first name.</p>";
+                }
+                else  {
                     $first_name = sanitise_input ($first_name);
                     if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$first_name))
-                        $err_msg .= "<p>First name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
-
+                        $err_msg .= "<p>First name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
+                }
 
                 //Last name
-                if (trim($last_name)=="")
-                    $err_msg .= "<p>Please enter your Last name.</p>";
+                if (trim($last_name) == "")
+                    $err_msg .= "<p>Please enter your last name.</p>";
                 
                 else
                     $last_name = sanitise_input ($last_name);
                     if (!preg_match("/^[a-zA-Z'-_ ]{1,30}+$/",$last_name))
-                        $err_msg .= "<p>Last name can only contain Maximum 30 letters ,[space], hyphen characters.</p>";
-                }
+                        $err_msg .= "<p>Last name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
+                }  
 
-                //Q1
-                if (isset ($_POST["alternatives"]) && ($_POST["alternatives"]!="")){
-                    $q1 = $_POST["alternatives"]; 
-                    $q1 = sanitise_input ($q1);
-                }
-                else
-                    $err_msg .= "<p>Please answer Question 1.</p>";
-                
-
-                //Q2
-                if (isset ($_POST["definition"])){
-                    $q2 = $_POST["definition"];
-                    $q2 = sanitise_input ($q2);
-                }      
-                else 
-                    $err_msg .= "<p>Please answer Question 2.<p>";
-                
-                //Q3
-                if (isset ($_POST["client_true"])){
-                    $q3a = ($_POST["client_true"]);
-                    $q3a = sanitise_input ($q3a);
-                }
-                if (isset ($_POST["client_false"])){
-                    $q3b = ($_POST["client_false"]);
-                    $q3b = sanitise_input ($q3b);
-                }
-                if (!isset ($_POST["client_true" || "client_false"]))
-                    $err_msg .= "<p>Please answer Question 3.<p>";   
-
-                //Q4
+                // RADIO - What kind of file is a cookie?
                 if (isset ($_POST["file_true"])){
                     $q4a = ($_POST["file_true"]);
                     $q4a = sanitise_input ($q4a);
@@ -309,7 +329,7 @@
                 if (!isset ($_POST["client_true" || "client_false"]))
                     $err_msg .= "<p>Please answer Question 4.<p>"; 
 
-                //Q5 
+                // CHECKBOX - What are the 3 main functions of web cookies?
                 if (isset ($_POST["function1"])){
                     $q5 = $_POST["function1"];
                     $q5 = sanitise_input ($q5);
@@ -338,42 +358,27 @@
                     $err_msg .= "<p>Please answer Question 5.<p>";
                 }
 
-                // Q6
-                if (isset ($_POST["history"]) && ($_POST["history"]!="")){
-                    $q6 = $_POST["history"];
-                    $q6 = sanitise_input ($q6);
-                }
-                else 
-                    $err_msg .= "<p>Please answer Question 6.<p>";
-
-                //Q7
+                // TEXT - Who invented cookies?
                 if (isset ($_POST["creator"]) && ($_POST["creator"]!="")){
                     $q7 = $_POST["creator"]; 
                     $q7 = sanitise_input ($q7);
                 }
                 else
                     $err_msg .= "<p>Please answer Question 7.</p>";
-                
-                // Q8
-                if (isset ($_POST["timeout"]) && ($_POST["timeout"]!="")){
-                    $q8 = $_POST["timeout"];
-                    $q8 = sanitise_input ($question_5);
-                }
-                else 
-                    $err_msg .= "<p>Please answer Question 8.<p>";
 
                 // Echoing all errors if the string isn't empty
                 if ($err_msg != "")
                     echo $err_msg;
 
-                // only allowing for a max of 2 attempts
+                // only allowing for a max of 2 attempts *SETTING THIS UP PROPERLY
                 if ($attempt_num < 2) {
                     // query to insert all of the inputs that the user has put into the form
                     $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
                     VALUES (NULL , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
-                    $result = mysqli_query($sql_db, $query);
-
                     // the query that we wrote will now go to the database and send that query and receive the results inside of the result variable
+                    $result = mysqli_query($sql_db, $query);
+                    
+                    echo "<p>You had less than 2 attempts. <a href='quiz.php'>Click here</a> to try again!</p>";
 
                     // if the result is true, then select everything that's been entered in the form into the database and show it in a table
                     if ($result == true) { 
@@ -381,17 +386,17 @@
                         $result = mysqli_query($sql_db, $query);
                         $record = mysqli_fetch_assoc($result);
                         if ($record) {
-                            echo "<table border='1' class='alternative-table'>";
-                            echo "<tr><th>Attempt ID</th><th>Attempt Date</th><th>First Name</th><th>Last Name</th><th>Student ID</th><th>Attempt Number</th><th>Score</th></tr>";
-                            while ($record) {
-                                echo "<tr class='alternative-tr'><td class='alternative-td'>{$record['attempt_id']}</td>";
-                                echo "<td class='alternative-td'>{$record['attempt_date']}</td>";
-                                echo "<td class='alternative-td'>{$record['first_name']}</td>";
-                                echo "<td class='alternative-td'>{$record['last_name']}</td>";
-                                echo "<td class='alternative-td'>{$record['student_id']}</td>";
-                                echo "<td class='alternative-td'>{$record['attempt_num']}</td>";
-                                echo "<td class='alternative-td'>{$record['score']}</td></tr>";
-                                $record = mysqli_fetch_assoc($result);
+                            echo "<table border='1' >";
+                            echo "<tr> <th class='alternative-th'>Attempt Id</th> <th class='alternative-th'>Attempt Date</th> <th class='alternative-th'>First Name</th> <th class='alternative-th'>Last Name</th> <th class='alternative-th'>Student ID</th> <th class='alternative-th'>Score</th> <th class='alternative-th'>Number of Attempts</th> </tr>";
+                                while ($record){
+                                    echo "<tr class='alternative-tr'><td>{$record['attempt_id']}</td>";
+                                    echo "<td class='alternative-td'>{$record['attempt_date']}</td>";
+                                    echo "<td class='alternative-td'>{$record['first_name']}</td>";
+                                    echo "<td class='alternative-td'>{$record['last_name']}</td>";
+                                    echo "<td class='alternative-td'>{$record['student_id']}</td>";
+                                    echo "<td class='alternative-td'>{$record['score']}</td>";
+                                    echo "<td class='alternative-td'>{$record['attempt_num']}</td></tr>";
+                                    $record = mysqli_fetch_assoc ($result);
                             }
                             echo "</table>";
                             mysqli_free_result($result);
