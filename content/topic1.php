@@ -34,9 +34,9 @@
                 <!--Early history of cookies-->
                 <h3>Creation of Cookies</h3>
                 <p>
-                    "Persistent client state objects" nicknamed by the creator as "Cookies", were first created in 1994 by Lou Montuili, 
+                    "Persistent client state objects" nicknamed by the creator as "Cookies", were first created in 1994 by Lou Montulli, 
                     a web browser programmer at Netscape, which was the most popular web browser back in the day. 
-                    Lon Montuili invented cookies with the purpose in mind of making the shopping experience on online e-commerce sites much easier 
+                    Lou Montulli invented cookies with the purpose in mind of making the shopping experience on online e-commerce sites much easier 
                     for customers, by allowing them to store their selected items in a virtual shopping cart. 
                     The following year, he applied for the patent for his newfound Cookie technology.
                 </p>
