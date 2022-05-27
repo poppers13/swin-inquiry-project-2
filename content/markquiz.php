@@ -315,8 +315,8 @@
                     $q5 = sanitise_input ($q5);
                 }
                 if (isset ($_POST["function3"])){
-                    $question_3 = $_POST["function3"];
-                    $question_3 = sanitise_input ($q5);
+                    $q5 = $_POST["function3"];
+                    $q5 = sanitise_input ($q5);
                 }
                 if (isset ($_POST["function4"])){
                     $q5 = $_POST["function4"];
