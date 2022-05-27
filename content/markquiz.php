@@ -380,6 +380,13 @@
                     }
                 }
 
+                /*
+                if ($score == 0) {
+                    echo "<p>Please try again later. Your score was 0/5.</p>";
+                    exit();
+                }
+                */
+
                 // Adding attempt number before scoring
                 if (isset ($_POST['firstname']) && ($_POST["firstname"] != "")) {
                     if (isset ($_POST['lastname']) && ($_POST["lastname"] != "")) {
@@ -403,10 +410,8 @@
                     echo "<p>It took you $attempt_num attempt. Would you like to <a href='quiz.php'>try again?</a></p>";
                 } elseif ($attempt_num == 2) {
                     echo "<p>It took you $attempt_num attempts. Would you like to <a href='quiz.php'>try again?</a></p>";
-                } elseif ($attempt_num > 2) {
-                    echo "<p>You have already had more than 2 attempts. Please try again later.</p>";
                 }
-
+                
                 // conditions if the connection isn't made
                 if (!$sql_db) {
                     echo "<p>Database connection failure!</p>";
