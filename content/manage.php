@@ -40,12 +40,12 @@
 
             if(isset($_POST["full"])){
 
-                $query = "SELECT * FROM quiz_attempts WHERE score = 100 AND attempt_num = 1 ";
+                $query = "SELECT * FROM quiz_attempts WHERE score = 5 AND attempt_num = 1 ";
             }
 
             if(isset($_POST["half"])){
 
-                $query = "SELECT * FROM quiz_attempts WHERE score < 50 AND attempt_num = 2 ";
+                $query = "SELECT * FROM quiz_attempts WHERE score < 3 AND attempt_num = 2 ";
             }
 
             if(isset($_POST["delete"])){
