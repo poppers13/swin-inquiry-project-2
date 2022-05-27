@@ -171,7 +171,7 @@
                     /*
                     if (${"type_" . $i} == "checkbox") {
                         // CHECKBOX QUESTION VALIDATION
-                        if (in_array("checkbox-function1" , $_POST["name_" . $i]))
+                        if (isset($_POST['checkbox']))
                         {
                             echo "hi";
                             // storing the checked boxes array in the variable called $checkbox
@@ -196,17 +196,24 @@
 
                     }
                     */
+                    
                     // checking if the question selected is a text input
                     if (${"type_" . $i} == "text") {
-                        // TEXT QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
-                        {
-                            $text = $_POST[${"name_" . $i}];
-                            $text = sanitise_input($text);
+                        continue;
 
+                        $text = array();
+                        array_push($text, $_POST[${"name_" . $i}]);
+                        echo $text[0];
+                        echo $text[1];
+                        // TEXT QUESTION VALIDATION
+                        /*if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                        {
+                            $text = sanitise_input($_POST[${"name_" . $i}]);
+                            $text = $_POST[${"name_" . $i}];
+                        
                             // TEXT QUESTION MARKING
                             $score = intval($score);
-                            if ($text == ${"answer_" . $i}) {
+                            if ($text[$i] == ${"answer_" . $i}) {
                             //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
                                 echo "<p>Correct - 1/1 marks.</p>";
                                 $score = $score + 1;
@@ -219,6 +226,7 @@
                             $err_msg .= "<p>Please answer question $q_num.<p>";
                             $questions = false;
                         }
+                        */
                     }
 
                     // checking if the question selected is a radio 
@@ -303,6 +311,13 @@
                         } 
                     }
                 }
+                echo $text;
+                echo "$radio <br>";
+
+                echo "$number <br>";
+                echo "$dropdown <br>";
+                echo "$checkbox <br>";
+                
                 
                 /*
                 // RADIO - What kind of file is a cookie?
@@ -368,7 +383,7 @@
                         // check to see if there are any student ids in the database
                         if ($student_id == ${"sid_" . $i}) {
                             // if yes, count how many there are and if greater than 2, don't submit attempt
-                            if (mysqli_num_rows($select_studentids) > 2) {
+                            if (mysqli_num_rows($select_studentids) > 3) {
                                 echo "<p>You have already had 2 attempts. Please try again later.</p>";
                             } else {
                                 $attempt_num = $attempt_num + 1;
@@ -403,8 +418,6 @@
                     echo "<p>It took you $attempt_num attempt. Would you like to <a href='quiz.php'>try again?</a></p>";
                 } elseif ($attempt_num == 2) {
                     echo "<p>It took you $attempt_num attempts. Would you like to <a href='quiz.php'>try again?</a></p>";
-                } elseif ($attempt_num > 2) {
-                    echo "<p>You have already had more than 2 attempts. Please try again later.</p>";
                 }
 
                 // conditions if the connection isn't made
