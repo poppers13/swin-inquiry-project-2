@@ -69,10 +69,11 @@
             {               
                 ini_set('display_errors', '0');
                 $student_id = trim ($_POST["student_id"]);
+                $attempt_num = trim ($_POST["attempt_num"]);
                 $score = trim ($_POST["score"]);
                 
                 
-                $query1 = "UPDATE quiz_attempts SET score = $score WHERE student_id = $student_id ";
+                $query1 = "UPDATE quiz_attempts SET score = $score WHERE student_id = $student_id ANd attempt_num = $attempt_num";
                 require_once ("db_settings.php");
                 $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
                 $result = mysqli_query($sql_db,$query1) ;
@@ -146,6 +147,7 @@
         <h2>Update score for a student</h2>
         <form action = "manage.php" method ="post">
                 <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
+                <p><label> Attempt number: <input type="text" name= "attempt_num" /> </label></p>
                 <p><label> Score: <input type="text" name= "score" /> </label></p>
                 <input type = "submit" name = "update" value ="update"/>
         </form>
