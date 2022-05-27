@@ -44,10 +44,11 @@
                 $last_name = "";
                 $student_id = "";
                 $err_msg = "";
-                $attempt_num = 0;
+                $attempt_num = 1;
                 $score = 0;
                 // using this boolean to check if the answers have all been answered or not. if all true then add attempt
-                $questions = false;
+                $questions = true;
+                // start as being true and in the case of a question then leave it as is. otherwise set it to false
 
                 // retrieving the list of questions and putting into an associative array
                 //$result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
@@ -57,10 +58,12 @@
                 $select_qanswers = mysqli_query($sql_db, "SELECT answer FROM quiz_questions");
                 
                 //$questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                /*
                 $fetch_qnames = mysqli_fetch_assoc($select_qnames);
                 $fetch_qtypes = mysqli_fetch_assoc($select_qtypes);
                 $fetch_qids = mysqli_fetch_assoc($select_qids);
                 $fetch_qanswers = mysqli_fetch_assoc($select_qanswers);
+                */
                 
                 // declaring empty arrays for the values of the fields to go into
                 $question_names = array();
@@ -88,10 +91,10 @@
                 }
 
                 /* assigning all of the question names and adapts to how many questions there are 
-                the extract  function will take out each of the values from the $question_names array and assign it to a new variable
+                the extract function will take out each of the values from the $question_names array and assign it to a new variable
                 with the prefix of name_[i] -> the values begin from 0 up to how many question there are minus 1 (8 questions, 0->7)
                 */ 
-                for ($i = 0; $i < count($question_names); $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     extract($question_names, EXTR_PREFIX_ALL, "name");
                 }
 
@@ -99,11 +102,11 @@
                     extract($question_types, EXTR_PREFIX_ALL, "type");
                 }
 
-                for ($i = 0; $i < count($question_ids); $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     extract($question_ids, EXTR_PREFIX_ALL, "id");
                 }
 
-                for ($i = 0; $i < count($question_answers); $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     extract($question_answers, EXTR_PREFIX_ALL, "answer");
                 }
 
@@ -115,99 +118,84 @@
                     return $data;
                 }
 
-                /* 
-                if (isset ($_POST["studentid"])) { // why is this being checked twice?
-                    $err_msg = "";
-                */
-                      
-                // STUDENT DETAILS VALIDATION
-                if (isset ($_POST["studentid"])) {
-                    $err_msg = "";
+                // STUDENT DETAIL VALIDATION
+                $err_msg = "";
 
-                    $student_id = $_POST["studentid"]; // how come if the studentid isset then you automatically set the names as well?
-                    $first_name = $_POST["firstname"];
-                    $last_name = $_POST["lastname"];
-                
                 // VALIDATION - Student ID
-                if (trim($student_id) == "") {
+                if (isset ($_POST["studentid"]) && ($_POST["studentid"] != "")) {
+                    if (is_numeric($_POST["studentid"]) == true) { // use the form value until it's acutally set below
+                        $student_id = trim($student_id);
+                        $student_id = sanitise_input($student_id);
+                        // once cleaned, put the value into the variable
+                        $student_id = $_POST["studentid"];
+                    } else {
+                        $err_msg .= "<p>Student ID can only contain numbers with length between 7 - 10.</p>";
+                    }
+                } else {
                     $err_msg .= "<p>Please enter your Student ID.</p>";
-                }
-                else 
-                {
-                    $student_id = sanitise_input ($student_id);
-                    if (!preg_match("/^[0-9]{7,10}+$/",$student_id)) 
-                    {
-                        $err_msg .= "<p>Student ID can only contain numbers and length between 7 - 10.</p>";
-                    }   
                 }
 
                 // VALIDATION - First Name
-                if (trim($first_name) == "") 
-                {
-                    $err_msg .= "<p>Please enter your first name.</p>";
-                }
-                else  
-                {
-                    $first_name = sanitise_input($first_name);
-                    if (!preg_match("/^[a-zA-Z-_]{1,30}+$/", $first_name)) 
-                    {
-                        $err_msg .= "<p>First name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
-                    }
-                }
-
-                // VALIDATION - Last Name
-                if (trim($last_name) == "")
-                {
-                    $err_msg .= "<p>Please enter your last name.</p>";
-                }
-                else
-                {
-                    $last_name = sanitise_input($last_name);
-                    if (!preg_match("/^[a-zA-Z-_]{1,30}+$/",$last_name)) 
-                    {
-                        $err_msg .= "<p>Last name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
-                    }
-                }
-                }
-                
-                
-                // Checking if all student details are filled in and then continuing to put values from HTML form into PHP code
                 if (isset ($_POST["firstname"]) && ($_POST["firstname"] != "")) {
-                    $first_name = $_POST["firstname"];
+                    if (!preg_match("/^[a-zA-Z_-\s]{1,30}+$/", $_POST["firstname"])) { // use \s for a space in regex
+                        $err_msg .= "<p>First name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
+                    } else {
+                        $first_name = trim($_POST["firstname"]);
+                        $first_name = sanitise_input($first_name);
+                        // once cleaned, put the value into the variable
+                        $first_name = $_POST["firstname"];
+                    }
+                } else {
+                    $err_msg .= "<p>Please enter your First Name</p>";
                 }
-                    
+                 
+                // VALIDATION - Last Name
                 if (isset ($_POST["lastname"]) && ($_POST["lastname"] != "")) {
-                    $last_name = $_POST["lastname"];
+                    if (!preg_match("/^[a-zA-Z_-\s]{1,30}+$/", $_POST["lastname"])) {
+                        $err_msg .= "<p>Last name can only contain Maximum 30 letters, [space], hyphen characters.</p>";
+                    } else {
+                        $last_name = trim($_POST["lastname"]);
+                        $last_name = sanitise_input($last_name);
+                        // once cleaned, put the value into the variable
+                        $last_name = $_POST["lastname"];
+                    }
+                } else {
+                    $err_msg .= "<p>Please enter your Last Name</p>";
                 }
-                    
-                if (isset ($_POST["studentid"]) && ($_POST["studentid"] != "")) {
-                    $student_id = $_POST["studentid"];
-                }
-                
                
                 // going through all questions to check their type before validation
-                for ($i = 0; $i < count($question_types); $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     $q_num = $i + 1;
 
                     // checking if the question selected is a checkbox **need to check if all the boxes have been checked or not
+                    /*
                     if (${"type_" . $i} == "checkbox") {
                         // CHECKBOX QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}]))
+                        if (in_array("checkbox-function1" , $_POST["name_" . $i]))
                         {
+                            echo "hi";
                             // storing the checked boxes array in the variable called $checkbox
                             $checkbox = $_POST[${"name_" . $i}];
                             // breaks the checked boxes that user entered from string into an array
                             $user_answer = explode("," , $checkbox);
-                            $questions = true;
+                            // CHECKBOX QUESTION MARKING
+                            $score = intval($score);
+                            if ($user_answer[$i] == ${"answer_" . $i}) {
+                                echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
+                                $score = $score + 1;
+                            }
+                            else {
+                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            }
                         }
-                        // ch
                         else 
                         {
                             $err_msg .= "<p>Please answer question $q_num.</p>";
                             $questions = false;
                         }
-                    }
 
+                    }
+                    */
                     // checking if the question selected is a text input
                     if (${"type_" . $i} == "text") {
                         // TEXT QUESTION VALIDATION
@@ -215,12 +203,21 @@
                         {
                             $text = $_POST[${"name_" . $i}];
                             $text = sanitise_input($text);
-                            $questions = true;
+
+                            // TEXT QUESTION MARKING
+                            $score = intval($score);
+                            if ($text == ${"answer_" . $i}) {
+                            //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
+                                echo "<p>Correct - 1/1 marks.</p>";
+                                $score = $score + 1;
+                            } else {
+                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            }
                         }   
                         else 
                         {
                             $err_msg .= "<p>Please answer question $q_num.<p>";
-                            $questions = false;  
+                            $questions = false;
                         }
                     }
 
@@ -230,7 +227,16 @@
                         if (isset ($_POST[${"name_" . $i}])) 
                         {
                             $radio = $_POST[${"name_" . $i}];
-                            $questions = true;
+                            
+                            // RADIO QUESTION MARKING
+                            $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
+                            if ($radio == ${"answer_" . $i}) 
+                            {
+                                echo "<p>Correct - 1/1 marks.</p>";
+                                $score = $score + 1;
+                            } else {
+                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            }
                         }
                         else
                         {
@@ -250,7 +256,16 @@
                         if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
                         {
                             $dropdown = $_POST[${"name_" . $i}];
-                            $questions = true;
+                            
+                            // DROPDOWN QUESTION MARKING
+                            $score = intval($score);
+                            if ($dropdown == ${"answer_" . $i})
+                            {
+                                echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
+                                $score = $score + 1;
+                            } else {
+                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            }
                         }
                         else 
                         {
@@ -258,15 +273,28 @@
                             $questions = false;
                         }    
                     }
-
+                    
                     // checking if the question selected is a number input
                     if (${"type_" . $i} == "number") {
                         // NUMBER QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}]) && is_numeric($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
                         {
-                            $number = $_POST[${"name_" . $i}];
-                            $number = sanitise_input($number);
-                            $questions = true;
+                            if (is_numeric($_POST[${"name_" . $i}]) == true) {
+                                $number = sanitise_input($number);
+                                $number = $_POST[${"name_" . $i}];
+                                
+                                // NUMBER QUESTION MARKING
+                                $score = intval($score);
+                                if ($number == ${"answer_" . $i}) {
+                                    echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
+                                    $score = $score + 1;
+                                } else {
+                                    echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
+                                }
+                            } else {
+                                echo "<p>Please enter a number between 1-60 for question $q_num.</p>";
+                            }
+
                         }
                         else 
                         {
@@ -275,7 +303,7 @@
                         } 
                     }
                 }
- 
+                
                 /*
                 // RADIO - What kind of file is a cookie?
                 if (isset ($_POST["file_true"])){
@@ -319,98 +347,65 @@
                 }
                 */
 
+                // CHECKING WHETHER STUDENT EXISTS IN DB FOR ATTEMPTS
+                $select_studentids = mysqli_query($sql_db, "SELECT * FROM quiz_attempts WHERE student_id = $student_id");
+                $student_ids = array();
+
+                if ($select_studentids == true) {
+                    // looping through the array and putting all the values into student_ids array
+                    foreach ($select_studentids as $field) {
+                        $sid = $field['student_id'];
+                        // putting each of the names from the loop into the $student_ids array
+                        array_push($student_ids, $sid);
+                    }
+
+                    for ($i = 0; $i < count($student_ids); $i++) {
+                        extract($student_ids, EXTR_PREFIX_ALL, "sid");
+                    }
+
+                    // count number of rows which has the instance of the id
+                    for ($i = 0; $i < count($student_ids); $i++) {
+                        // check to see if there are any student ids in the database
+                        if ($student_id == ${"sid_" . $i}) {
+                            // if yes, count how many there are and if greater than 2, don't submit attempt
+                            if (mysqli_num_rows($select_studentids) > 2) {
+                                echo "<p>You have already had 2 attempts. Please try again later.</p>";
+                            } else {
+                                $attempt_num = $attempt_num + 1;
+                            }
+                        } else {
+                            // if there isn't already a student id in the database, then add an attempt
+                            $attempt_num = $attempt_num + 1;
+                        }
+                    }
+                }
+
                 // Adding attempt number before scoring
                 if (isset ($_POST['firstname']) && ($_POST["firstname"] != "")) {
                     if (isset ($_POST['lastname']) && ($_POST["lastname"] != "")) {
                         if (isset ($_POST['studentid']) && ($_POST["studentid"] != "")) {
                             if ($questions == true) {
-                                $attempt_num = $attempt_num + 1;
+                                if ($score != 0) {
+                                    $attempt_num = $attempt_num + 1;
+                                // complete the rest of the code and add an attempt into the db
+                                // first or second attempt
+                                }
                             }
                         }
                     } 
                 }
+                // *will implement this later when i have made random question gen to get a percent from test and i will do some tidying up when i come back to this after random question maker is done.($score/7*100 %)//
 
-                if ($attempt_num >= 2) {
-                    echo "<p>You have already had 2 attempts. Please try again later.</p>";
+                // SCORE CONDITIONS
+                $percentage = ($score / 5) * 100;
+                echo "<p>Congratulations $first_name $last_name! Your score for this quiz was $score out of 5. That's $percentage% !</p>";
+                if ($attempt_num == 1) {
+                    echo "<p>It took you $attempt_num attempt. Would you like to <a href='quiz.php'>try again?</a></p>";
+                } elseif ($attempt_num == 2) {
+                    echo "<p>It took you $attempt_num attempts. Would you like to <a href='quiz.php'>try again?</a></p>";
+                } elseif ($attempt_num > 2) {
+                    echo "<p>You have already had more than 2 attempts. Please try again later.</p>";
                 }
-                
-                // 4. MARKING QUIZ AND SCORES
-                for ($i = 0; $i < count($question_answers); $i++) {
-
-                    // Q1. TEXT
-                    echo $answer_1;
-                    $score = intval($score);
-                    if ($text == ${"answer_" . $i})
-                    { 
-                    //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
-                        echo "<p>Correct - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    } else {
-                        echo "<p>Incorrect - 0/1 marks.</p>";
-                    }
-                    
-                    // Q2. RADIO
-                    
-                    $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
-                    if ($radio == ${"answer_" . $i}) 
-                    {
-                        echo "<p>Correct - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    } else {
-                        echo "<p>Incorrect - 0/1 marks.</p>";
-                    }
-
-                    /*
-                    // Q3. CHECKBOX
-                    //*NEED TO FIX
-
-                    $score = intval($score);
-                    if (in_array("checkbox-function3", $_POST["function-checkbox"])) {
-                        echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    }
-                    if (in_array("checkbox-function5", $_POST["function-checkbox"])) {
-                        echo "<p>Correct, Cookies are used in tracking users web activity - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    }
-                    if (in_array("checkbox-function6", $_POST["function-checkbox"])) {
-                        echo "<p>Correct, cookies do assist with authorisation - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    }
-                    else {
-                        echo "<p>Incorrect - 0/1 marks.</p>";
-                    }
-                    */
-                    
-                    // Q4. DROPDOWN
-                    $score = intval($score);
-                    if ($dropdown == ${"answer_" . $i})
-                    {
-                        echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    } else {
-                        echo "<p>Incorrect - 0/1 marks.</p>";
-                    }
-                    
-                    // Q5. NUMBER
-                    $score = intval($score);
-                    if ($number== ${"answer_" . $i}){
-                        echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
-                        $score = $score + 1;
-                    } else {
-                        echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
-                    }
-
-                    // SCORE CONDITIONS
-                    if ($score == 0) {
-                        echo "<p>Your score for this quiz was 0/5. Please review your answers.</p>";
-                        exit();
-                    }
-                    echo "<p>Your score for this quiz was $score out of 5</p>"; 
-
-                }
-                    
-                // will implement this later when i have made random question gen to get a percent from test and i will do some tidying up when i come back to this after random question maker is done.($score/7*100 %)//
 
                 // conditions if the connection isn't made
                 if (!$sql_db) {
@@ -418,58 +413,70 @@
                 }
                 else {
                     // ** need to fix this up so that created if doesn't exists already : $table = "CREATE TABLE IF NOT EXISTS quiz_attempts";
-                    $sql_table="quiz_attempts";
+                    $sql_table = "quiz_attempts";
                     // need to check if the fields in the form have been entered or not using validation
 
-                // Echoing all errors if the string isn't empty
-                if ($err_msg != "")
-                    echo $err_msg;
+                    // Echoing all errors if the string isn't empty
+                    if ($err_msg != "")
+                        echo $err_msg;
 
-                // only allowing for a max of 2 attempts *SETTING THIS UP PROPERLY
-                if ($attempt_num < 2) {
-                    // query to insert all of the inputs that the user has put into the form
-                    $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
-                    VALUES (NULL , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
-                    // the query that we wrote will now go to the database and send that query and receive the results inside of the result variable
-                    $result = mysqli_query($sql_db, $query);
-                    
-                    echo "<p>You had less than 2 attempts. <a href='quiz.php'>Click here</a> to try again!</p>";
+                    // only allowing for a max of 2 attempts *SETTING THIS UP PROPERLY
+                    if ($attempt_num < 3) {
+                        $table = "SELECT * FROM quiz_attempts";
+                        $check_table = mysqli_query($sql_db, $table);
+                        if (!$check_table) {
+                        // create the table
+                            $create_table = "CREATE TABLE quiz_attempts (
+                                attempt_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                attempt_date datetime,
+                                first_name varchar(30),
+                                last_name varchar(30),
+                                student_id int(11),
+                                attempt_num int(11),
+                                score int(11) 
+                                )";
 
-                    // if the result is true, then select everything that's been entered in the form into the database and show it in a table
-                    if ($result == true) { 
-                        $query = "SELECT * FROM $sql_table";
-                        $result = mysqli_query($sql_db, $query);
-                        $record = mysqli_fetch_assoc($result);
-                        if ($record) {
-                            echo "<table border='1' >";
-                            echo "<tr> <th class='alternative-th'>Attempt Id</th> <th class='alternative-th'>Attempt Date</th> <th class='alternative-th'>First Name</th> <th class='alternative-th'>Last Name</th> <th class='alternative-th'>Student ID</th> <th class='alternative-th'>Score</th> <th class='alternative-th'>Number of Attempts</th> </tr>";
-                                while ($record){
-                                    echo "<tr class='alternative-tr'><td>{$record['attempt_id']}</td>";
-                                    echo "<td class='alternative-td'>{$record['attempt_date']}</td>";
-                                    echo "<td class='alternative-td'>{$record['first_name']}</td>";
-                                    echo "<td class='alternative-td'>{$record['last_name']}</td>";
-                                    echo "<td class='alternative-td'>{$record['student_id']}</td>";
-                                    echo "<td class='alternative-td'>{$record['score']}</td>";
-                                    echo "<td class='alternative-td'>{$record['attempt_num']}</td></tr>";
-                                    $record = mysqli_fetch_assoc ($result);
+                            $make_table = mysqli_query($sql_db, $create_table);
+
+                        } else {
+                            // query to insert all of the inputs that the user has put into the form
+                            $query = "INSERT INTO $sql_table (attempt_id, attempt_date, first_name, last_name, student_id, attempt_num, score) 
+                            VALUES (NULL , '$attempt_date' , '$first_name' , '$last_name' , '$student_id' , '$attempt_num', '$score' )";
+                            // the query that we wrote will now go to the database and send that query and receive the results inside of the result variable
+                            $result = mysqli_query($sql_db, $query);
+                            
+                            echo "<p>You had less than 2 attempts. <a href='quiz.php'>Click here</a> to try again!</p>";
+
+                            // if the result is true, then select everything that's been entered in the form into the database and show it in a table
+                            if ($result == true) { 
+                                $query = "SELECT * FROM $sql_table";
+                                $result = mysqli_query($sql_db, $query);
+                                $record = mysqli_fetch_assoc($result);
+                                if ($record) {
+                                    echo "<table border='1' >";
+                                    echo "<tr> <th class='alternative-th'>Attempt Id</th> <th class='alternative-th'>Attempt Date</th> <th class='alternative-th'>First Name</th> <th class='alternative-th'>Last Name</th> <th class='alternative-th'>Student ID</th> <th class='alternative-th'>Score</th> <th class='alternative-th'>Number of Attempts</th> </tr>";
+                                        while ($record){
+                                            echo "<tr class='alternative-tr'><td>{$record['attempt_id']}</td>";
+                                            echo "<td class='alternative-td'>{$record['attempt_date']}</td>";
+                                            echo "<td class='alternative-td'>{$record['first_name']}</td>";
+                                            echo "<td class='alternative-td'>{$record['last_name']}</td>";
+                                            echo "<td class='alternative-td'>{$record['student_id']}</td>";
+                                            echo "<td class='alternative-td'>{$record['score']}</td>";
+                                            echo "<td class='alternative-td'>{$record['attempt_num']}</td></tr>";
+                                            $record = mysqli_fetch_assoc ($result);
+                                    }
+                                    echo "</table>";
+                                    mysqli_free_result($result);
+                                    echo "<p>Successfully added new question attempt!</p>";
+                                }
+
                             }
-                            echo "</table>";
-                            mysqli_free_result($result);
-                            echo "<p>Successfully added new question attempt!</p>";
+                            else { 
+                                echo "<p>Something is wrong with " , $query , "</p>";
+                            }
+                            mysqli_close($sql_db);
                         }
-
                     }
-                    else { 
-                        echo "<p>Something is wrong with " , $query , "</p>";
-                    }
-                    mysqli_close($sql_db);
-                }
-                // if the attempt number is greater than 2, then redirection to a page saying max attempts
-                else {
-                    echo "<p>You have reached the maximum number of attempts.</p>";
-                    echo "<p>Please try again later.</p>";
-                }
-                    
                 }
             ?>
         </div>
