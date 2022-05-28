@@ -17,12 +17,16 @@
         <meta name="keywords" content="cookies, sessions, education, swinburne, enhancements, extra">
         <meta name="author" content="Aidan Davies, Jesh Kumar, Dylan Lewis, Nimash Rathnayake, Kasun Jayawardhana">
     </head>
-    <section class="content-block">
-        <body>
-            <?php include 'menu.inc'; ?>
-            <?php               
-                include_once "header.inc";        
-            ?>
+    <body>
+        <!-- sticky menu bar, with navigation links to other pages -->
+        <?php include 'menu.inc'; ?>
+
+        <!-- header contains school logo, and info relating to the page's creation -->
+        <?php include 'header.inc'; ?>
+        
+        <h1>Manage Quiz Attempts</h1>
+        
+        <section class="content-block">
             <h2>All Entries </h2>
             <?php 
             if (!isset($_POST["search"])){
@@ -120,7 +124,6 @@
                 }
                 
             ?>           
-        </body>
         <h2> Search based on Student </h2>
         <form action = "manage.php" method ="post">
                 <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
@@ -149,8 +152,9 @@
                 <p><label> Student ID: <input type="text" name= "student_id" /> </label></p>
                 <p><label> Attempt number: <input type="text" name= "attempt_num" /> </label></p>
                 <p><label> Score: <input type="text" name= "score" /> </label></p>
-                <input type = "submit" name = "update" value ="update"/>
+                <input type = "submit" name = "update" value ="Update">
         </form>
-    </section>
-    <?php include_once "footer.inc"; ?>
+        </section>
+        <?php include_once "footer.inc"; ?>
+    </body>
 </html>
