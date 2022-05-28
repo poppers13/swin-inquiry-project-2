@@ -27,12 +27,16 @@
         
         <!-- section containing main content: summary, video and signs -->
         <div class="content-block">
-            <p>This website provides a summary of <em>cookies and sessions</em>: what they are, how they work and why they're used. If you'd like a overview of the site's pages, then <strong><a href="https://youtube.com/watch?v=ZpIWiQYZq-Y">click here to watch a YouTube video tour</a></strong>, or simply watch the video below!</p>
+            <p>This website provides a summary of <em>cookies and sessions</em>: what they are, how they work and why they're used. If you'd like a overview of the site's pages, then click <strong><a href="https://youtube.com/watch?v=ZpIWiQYZq-Y">here for part 1</a></strong> and <strong><a href="https://youtube.com/watch?v=ZpYCEr9RuOE">here for part 2</a></strong> of the YouTube video tour, or simply watch the videos below!</p>
             
-            <!-- an embedded version of the YouTube tour video, with Bootstrap styling for responsive scaling based on browser size -->
+            <!-- embedded versions of the YouTube tour videos, with Bootstrap styling for responsive scaling based on browser size -->
             <div class="embed-responsive embed-responsive-16by9">
                 <!-- this iframe element has been signed off by the facilitator of this assignment, Fatma Mohammed, as it is necessary for this video player -->
                 <iframe class="embed-responsive-item" width="640" height="360" title="A video showing the various pages available on the 'Cookies and Sessions' website." id="youtube-video" src="https://www.youtube.com/embed/ZpIWiQYZq-Y"></iframe>
+            </div>
+            <div class="embed-responsive embed-responsive-16by9">
+                <!-- this iframe element has been signed off by the facilitator of this assignment, Fatma Mohammed, as it is necessary for this video player -->
+                <iframe class="embed-responsive-item" width="640" height="360" title="A video showing the PHP functions available on the 'Cookies and Sessions' website." id="youtube-video" src="https://www.youtube.com/embed/ZpYCEr9RuOE"></iframe>
             </div>
             
             <br/>
