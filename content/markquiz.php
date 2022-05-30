@@ -45,6 +45,8 @@
                 $q_options = ""; 
                 $q_answer = "";
 
+                $q_num = 1;
+
                 /*
                 foreach ($questions as $row) {
                     // looping through the entire db and assigning each of the fields to their respective variables
@@ -53,7 +55,7 @@
                     $q_name[] = $row['name'];
                     $q_ids[] = explode(",", $row['ids']); // split comma-separated string into numeric array
                     $q_options[] = explode(",", $row['options']);
-                    $q_answer[] = explode(",", $row['answer']);
+                    $q_answer[] = explode(",", $q_answer);
                 }
                 */
                 
@@ -139,32 +141,29 @@
                     $q_options = explode(",", $row['options']);
                     $q_answer = explode(",", $row['answer']);
 
-                    for ($i = 0; $i < 5; $i++) {
-                        $q_num = $i + 1;
-                    }
-
                 // QUESTION VALIDATION & MARKING
-                    if ($row['type'] = "number") {
+                
+                    if ($q_type = "number") {
                         //echo "<p>1 <br> </p>";
                         if (isset ($_POST[$q_name]) && ($_POST[$q_name] != "")) 
                         {
-                            echo $row['name'];
+                            echo $q_name;
                             //echo "<p>2 <br> </p>";
                             // NUMBER QUESTION VALIDATION
-                            if (is_numeric($_POST[$row['name']]) == true) {
+                            if (is_numeric($_POST[$q_name]) == true) {
                             //echo "<p>3 <br> </p>";
-                                $number = sanitise_input($_POST[$row['name']]);
+                                $number = sanitise_input($_POST[$q_name]);
                                 if (($number > 1) && ($number < 60)) {
                                     //echo "<p>4 <br> </p>";
                                     
                                     // NUMBER QUESTION MARKING
                                     $score = intval($score);
-                                    if ($number == $row['answer']) {
+                                    if ($number == $q_answer) {
                                         //echo "<p>5 <br> </p>";
                                         echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
                                         $score = $score + 1;
                                     } else {
-                                        echo "<p>6 <br> </p>";
+                                        //echo "<p>6 <br> </p>";
                                         echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
                                     }
                                 }
@@ -177,126 +176,127 @@
                                 }
                             }
                         } else {
-                            echo "<p>8 <br> </p>";
+                            //echo "<p>8 <br> </p>";
                             $err_msg .= "<p>Please answer question $q_num.<p>";
                             $questions = false;
                         }
                     }
-                    /*
-                    if ($q_type[$i] = "checkbox") {
-                        echo "<p>1 <br> </p>";
+                
+                    if ($q_type = "checkbox") {
+                        //echo "<p>1 <br> </p>";
                         // CHECKBOX QUESTION VALIDATION
-                        if (!empty($_POST[$row['name']])) 
+                        if (!empty($_POST[$q_name])) 
                         {
-                            echo "<p>3 <br> </p>";
-                            $checkbox = $_POST[$row['name']];
+                            //echo "<p>2 <br> </p>";
+                            $checkbox = $_POST[$q_name];
 
-                            foreach($_POST['name'] as $check) {
-                                //echo $check;
-                            }
-                            
                             // CHECKBOX QUESTION MARKING
                             $score = intval($score);
-                            if ($checkbox[$i] == $row['answer']) {
-                                echo "<p>4 <br> </p>";
-                                echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
-                                $score = $score + 1;
-                            }
-                            else {
-                                echo "<p>5 <br> </p>";
-                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            for ($i = 0; $i < 8; $i++) {
+                                if ($checkbox[$i] == $q_answer) {
+                                    //echo "<p>4 <br> </p>";
+                                    echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
+                                    $score = $score + 1;
+                                }
+                                else {
+                                    echo "<p>5 <br> </p>";
+                                    echo "<p>Incorrect - 0/1 marks.</p>";
+                                }
                             }
 
                         }
                         else 
                         {
-                            echo "<p>6 <br> </p>";
+                            //echo "<p>6 <br> </p>";
                             $err_msg .= "<p>Please answer question $q_num.</p>";
                             $questions = false;
                         }
                     }
 
-                    if ($q_type[$i] = "text") {
+                    if ($q_type = "text") {
                         echo "<p>1 <br> </p>";
-                        echo $row['name'];
-                        if (isset ($_POST[$row['name']]) && ($_POST[$row['name']] != "")) 
+                        if (isset ($_POST[$q_name]) && ($_POST[$q_name] != "")) 
                             {
-                                
                                 echo "<p>2 <br> </p>";
-                                $text = $_POST[$row['name']];
-                                echo $text;
-                                $text = sanitise_input($_POST[$row['name']]);
-                                echo $text;
+                                $text = $_POST[$q_name];
+                                $text = sanitise_input($_POST[$q_name]);
 
                                 // TEXT QUESTION MARKING
                                 $score = intval($score);
-                                if ($text == $row['answer']) {
-                                //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
-                                    echo "<p>3 <br> </p>";
+                                
+                            for ($i = 0; $i < 8; $i++) {
+                                if ($text == $q_answer[$i]) {
+                                // will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
+                                    //echo "<p>3 <br> </p>";
                                     echo "<p>Correct - 1/1 marks.</p>";
                                     $score = $score + 1;
                                 } else {
-                                    echo "<p>4 <br> </p>";
+                                    //echo "<p>4 <br> </p>";
                                     echo "<p>Incorrect - 0/1 marks.</p>";
                                 }
+                            }
 
                             } else {
-                                echo "<p>5 <br> </p>";
+                                //echo "<p>5 <br> </p>";
                                 $err_msg .= "<p>Please answer question $q_num.<p>";
                                 $questions = false;
                             }
                     }
-
-                    if ($q_type[$i] = "radio") {
+                
+                    if ($q_type = "radio") {
                         echo "<p>1 <br> </p>";
                             // RADIO QUESTION VALIDATION
-                            if (isset ($_POST[$row['name']]) && ($_POST[$row['name']]) != "") {
-                                echo "<p>2 <br> </p>";
-                                $radio = $_POST[$row['type']];
-                                echo $radio;
+                            if (isset ($_POST[$q_name]) && ($_POST[$q_name]) != "") {
+                                //echo "<p>2 <br> </p>";
+                                $radio = $_POST[$q_name];
                                 
                                 // RADIO QUESTION MARKING
                                 $score = intval($score);
-                                if ($radio == $row['answer']) 
-                                {
-                                    echo "<p>3 <br> </p>";
-                                    echo "<p>Correct - 1/1 marks.</p>";
-                                    $score = $score + 1;
-                                } else {
-                                    echo "<p>4 <br> </p>";
-                                    echo "<p>Incorrect - 0/1 marks.</p>";
+                                for ($i = 0; $i < 8; $i++) {
+                                    if ($radio == $q_answer) 
+                                    {
+                                        //echo "<p>3 <br> </p>";
+                                        echo "<p>Correct - 1/1 marks.</p>";
+                                        $score = $score + 1;
+                                    } else {
+                                        //echo "<p>4 <br> </p>";
+                                        echo "<p>Incorrect - 0/1 marks.</p>";
+                                    }
                                 }
                             } else {
-                                echo "<p>5 <br> </p>";
+                                //echo "<p>5 <br> </p>";
                                 $err_msg .= "<p>Please answer question $q_num.<p>"; 
                                 $questions = false;
                             }
                     }
 
-                    if ($q_type[$i] = "dropdown") {
-                        echo "<p>1 <br> </p>";
+                    if ($q_type = "dropdown") {
+                        //echo "<p>1 <br> </p>";
                         if (isset($_POST[$q_name]) && ($_POST[$$q_name]) != "")
                         {
-                            echo "<p>2 <br> </p>";
+                            //echo "<p>2 <br> </p>";
                             $dropdown = $_POST[$q_name];
                             
                             // DROPDOWN QUESTION MARKING
                             $score = intval($score);
-                            if ($dropdown == $q_answer) {
-                                echo "<p>3 <br> </p>";
-                                echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
-                                $score = $score + 1;
-                            } else {
-                                echo "<p>4 <br> </p>";
-                                echo "<p>Incorrect - 0/1 marks.</p>";
+                            for ($i = 0; $i < 8; $i++) {
+                                if ($dropdown == $q_answer) {
+                                    //echo "<p>3 <br> </p>";
+                                    echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
+                                    $score = $score + 1;
+                                } else {
+                                    //echo "<p>4 <br> </p>";
+                                    echo "<p>Incorrect - 0/1 marks.</p>";
+                                }
                             }
                         } else {
-                            echo "<p>5 <br> </p>";
+                            //echo "<p>5 <br> </p>";
                             $err_msg .= "<p>Please answer question $q_num.<p>";
                             $questions = false;
                         }
                     }
-                    */
+                    // add 1 to the question number every iteration
+                    $q_num = $q_num + 1;
                 }
                 /*
                 // RADIO - What kind of file is a cookie?
