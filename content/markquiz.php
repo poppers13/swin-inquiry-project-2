@@ -27,14 +27,35 @@
         
         <div class="content-block">
             <?php
-                // 1. REDIRECTION - checking if the first name has been entered, if not then terminate the code and send back to quiz page
+                // REDIRECTION - checking if the first name has been entered, if not then terminate the code and send back to quiz page
                 if (!isset ($_POST['firstname'])) {
                     header("location:quiz.php");
                     exit();
                 }
-                // 2. CONNECTION - connect to the SQL database
+                // CONNECTION - connect to the SQL database
                 require_once ("db_settings.php");
                 $sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+
+                // declaration of empty arrays to put all the idfferent form values into
+
+                $q_title = "";
+                $q_type = "";
+                $q_name = "";
+                $q_ids = "";
+                $q_options = ""; 
+                $q_answer = "";
+
+                /*
+                foreach ($questions as $row) {
+                    // looping through the entire db and assigning each of the fields to their respective variables
+                    $q_title[] = $row['title'];
+                    $q_type[] = $row['type'];
+                    $q_name[] = $row['name'];
+                    $q_ids[] = explode(",", $row['ids']); // split comma-separated string into numeric array
+                    $q_options[] = explode(",", $row['options']);
+                    $q_answer[] = explode(",", $row['answer']);
+                }
+                */
                 
                 // declaring all field information as empty strings to add information into them later
                 $attempt_id = "";
@@ -47,69 +68,9 @@
                 $attempt_num = 1;
                 $score = 0;
                 // using this boolean to check if the answers have all been answered or not. if all true then add attempt
-                $questions = true;
                 // start as being true and in the case of a question then leave it as is. otherwise set it to false
-
-                // retrieving the list of questions and putting into an associative array
-                //$result = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
-                $select_qnames = mysqli_query($sql_db, "SELECT name FROM quiz_questions");
-                $select_qtypes = mysqli_query($sql_db, "SELECT type FROM quiz_questions");
-                $select_qids = mysqli_query($sql_db, "SELECT ids FROM quiz_questions");
-                $select_qanswers = mysqli_query($sql_db, "SELECT answer FROM quiz_questions");
+                $questions = true;
                 
-                //$questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                /*
-                $fetch_qnames = mysqli_fetch_assoc($select_qnames);
-                $fetch_qtypes = mysqli_fetch_assoc($select_qtypes);
-                $fetch_qids = mysqli_fetch_assoc($select_qids);
-                $fetch_qanswers = mysqli_fetch_assoc($select_qanswers);
-                */
-                
-                // declaring empty arrays for the values of the fields to go into
-                $question_names = array();
-                $question_types = array();
-                $question_ids = array();
-                $question_answers = array();
-
-                // looping through the array and putting all the values into question_names array
-                foreach ($select_qnames as $field) {
-                    // this $q_name will contain all of the names for the questions to be used in code ahead
-                    $q_name = $field['name'];
-                    // putting each of the names from the loop into the $question_names array
-                    array_push($question_names, $q_name);
-                }
-                // looping through the array and putting all the values into question_type array
-                foreach ($select_qtypes as $field) {
-                    $q_type = $field['type'];
-                    array_push($question_types, $q_type);
-                }
-
-                // looping through the array and putting all the values into question_answers array
-                foreach ($select_qanswers as $field) {
-                    $q_answer = $field['answer'];
-                    array_push($question_answers, $q_answer);
-                }
-
-                /* assigning all of the question names and adapts to how many questions there are 
-                the extract function will take out each of the values from the $question_names array and assign it to a new variable
-                with the prefix of name_[i] -> the values begin from 0 up to how many question there are minus 1 (8 questions, 0->7)
-                */ 
-                for ($i = 0; $i < 5; $i++) {
-                    extract($question_names, EXTR_PREFIX_ALL, "name");
-                }
-
-                for ($i = 0; $i < count($question_types); $i++) {
-                    extract($question_types, EXTR_PREFIX_ALL, "type");
-                }
-
-                for ($i = 0; $i < 5; $i++) {
-                    extract($question_ids, EXTR_PREFIX_ALL, "id");
-                }
-
-                for ($i = 0; $i < 5; $i++) {
-                    extract($question_answers, EXTR_PREFIX_ALL, "answer");
-                }
-
                 // Sanitising Function
                 function sanitise_input($data) {
                     $data = trim($data);
@@ -118,7 +79,7 @@
                     return $data;
                 }
 
-                // STUDENT DETAIL VALIDATION
+                // STUDENT DETAILS VALIDATION
                 $err_msg = "";
 
                 // VALIDATION - Student ID
@@ -163,162 +124,180 @@
                     $err_msg .= "<p>Please enter your Last Name</p>";
                 }
                
-                // going through all questions to check their type before validation
-                for ($i = 0; $i < 5; $i++) {
-                    $q_num = $i + 1;
 
-                    // checking if the question selected is a checkbox **need to check if all the boxes have been checked or not
-                    /*
-                    if (${"type_" . $i} == "checkbox") {
-                        // CHECKBOX QUESTION VALIDATION
-                        if (isset($_POST['checkbox']))
+                // RETRIEVE QUESTION LIST
+                // select all questions and store into $questions
+                $select_questions = mysqli_query($sql_db, "SELECT * FROM quiz_questions");
+                $questions = mysqli_fetch_all($select_questions, MYSQLI_ASSOC);
+
+                foreach ($questions as $row) {
+                    // looping through the entire db and assigning each of the fields to their respective variables
+                    $q_title = $row['title'];
+                    $q_type = $row['type'];
+                    $q_name = $row['name'];
+                    $q_ids = explode(",", $row['ids']); // split comma-separated string into numeric array
+                    $q_options = explode(",", $row['options']);
+                    $q_answer = explode(",", $row['answer']);
+
+                    for ($i = 0; $i < 5; $i++) {
+                        $q_num = $i + 1;
+                    }
+
+                // QUESTION VALIDATION & MARKING
+                    if ($row['type'] = "number") {
+                        //echo "<p>1 <br> </p>";
+                        if (isset ($_POST[$q_name]) && ($_POST[$q_name] != "")) 
                         {
-                            echo "hi";
-                            // storing the checked boxes array in the variable called $checkbox
-                            $checkbox = $_POST[${"name_" . $i}];
-                            // breaks the checked boxes that user entered from string into an array
-                            $user_answer = explode("," , $checkbox);
+                            echo $row['name'];
+                            //echo "<p>2 <br> </p>";
+                            // NUMBER QUESTION VALIDATION
+                            if (is_numeric($_POST[$row['name']]) == true) {
+                            //echo "<p>3 <br> </p>";
+                                $number = sanitise_input($_POST[$row['name']]);
+                                if (($number > 1) && ($number < 60)) {
+                                    //echo "<p>4 <br> </p>";
+                                    
+                                    // NUMBER QUESTION MARKING
+                                    $score = intval($score);
+                                    if ($number == $row['answer']) {
+                                        //echo "<p>5 <br> </p>";
+                                        echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
+                                        $score = $score + 1;
+                                    } else {
+                                        echo "<p>6 <br> </p>";
+                                        echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
+                                    }
+                                }
+                        
+                                // if outside the range
+                                if (($number < 1) or ($number > 60)) {
+                                    // if outside the range
+                                    //echo "<p>7 <br> </p>";
+                                    $err_msg .= "<p>Please enter a number between 1-60 for question $q_num.</p>";
+                                }
+                            }
+                        } else {
+                            echo "<p>8 <br> </p>";
+                            $err_msg .= "<p>Please answer question $q_num.<p>";
+                            $questions = false;
+                        }
+                    }
+                    /*
+                    if ($q_type[$i] = "checkbox") {
+                        echo "<p>1 <br> </p>";
+                        // CHECKBOX QUESTION VALIDATION
+                        if (!empty($_POST[$row['name']])) 
+                        {
+                            echo "<p>3 <br> </p>";
+                            $checkbox = $_POST[$row['name']];
+
+                            foreach($_POST['name'] as $check) {
+                                //echo $check;
+                            }
+                            
                             // CHECKBOX QUESTION MARKING
                             $score = intval($score);
-                            if ($user_answer[$i] == ${"answer_" . $i}) {
+                            if ($checkbox[$i] == $row['answer']) {
+                                echo "<p>4 <br> </p>";
                                 echo "<p>Correct, Cookies are used to personalise a user's web experience - 1/1 marks.</p>";
                                 $score = $score + 1;
                             }
                             else {
+                                echo "<p>5 <br> </p>";
                                 echo "<p>Incorrect - 0/1 marks.</p>";
                             }
+
                         }
                         else 
                         {
+                            echo "<p>6 <br> </p>";
                             $err_msg .= "<p>Please answer question $q_num.</p>";
                             $questions = false;
                         }
-
-                    }
-                    */
-                    
-                    // checking if the question selected is a text input
-                    if (${"type_" . $i} == "text") {
-                        continue;
-
-                        $text = array();
-                        array_push($text, $_POST[${"name_" . $i}]);
-                        echo $text[0];
-                        echo $text[1];
-                        // TEXT QUESTION VALIDATION
-                        /*if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
-                        {
-                            $text = sanitise_input($_POST[${"name_" . $i}]);
-                            $text = $_POST[${"name_" . $i}];
-                        
-                            // TEXT QUESTION MARKING
-                            $score = intval($score);
-                            if ($text[$i] == ${"answer_" . $i}) {
-                            //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
-                                echo "<p>Correct - 1/1 marks.</p>";
-                                $score = $score + 1;
-                            } else {
-                                echo "<p>Incorrect - 0/1 marks.</p>";
-                            }
-                        }   
-                        else 
-                        {
-                            $err_msg .= "<p>Please answer question $q_num.<p>";
-                            $questions = false;
-                        }
-                        */
                     }
 
-                    // checking if the question selected is a radio 
-                    if (${"type_" . $i} == "radio") {
-                        // RADIO QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}])) 
-                        {
-                            $radio = $_POST[${"name_" . $i}];
-                            
-                            // RADIO QUESTION MARKING
-                            $score = intval($score); //intval makes it an int so 1+1 correct marks = 2 and not 11 by adding strings if that makes sense
-                            if ($radio == ${"answer_" . $i}) 
+                    if ($q_type[$i] = "text") {
+                        echo "<p>1 <br> </p>";
+                        echo $row['name'];
+                        if (isset ($_POST[$row['name']]) && ($_POST[$row['name']] != "")) 
                             {
-                                echo "<p>Correct - 1/1 marks.</p>";
-                                $score = $score + 1;
+                                
+                                echo "<p>2 <br> </p>";
+                                $text = $_POST[$row['name']];
+                                echo $text;
+                                $text = sanitise_input($_POST[$row['name']]);
+                                echo $text;
+
+                                // TEXT QUESTION MARKING
+                                $score = intval($score);
+                                if ($text == $row['answer']) {
+                                //will probably add more to this at another time so there can be more variety in correct responses. but for now i think these two answers will make do.
+                                    echo "<p>3 <br> </p>";
+                                    echo "<p>Correct - 1/1 marks.</p>";
+                                    $score = $score + 1;
+                                } else {
+                                    echo "<p>4 <br> </p>";
+                                    echo "<p>Incorrect - 0/1 marks.</p>";
+                                }
+
                             } else {
-                                echo "<p>Incorrect - 0/1 marks.</p>";
+                                echo "<p>5 <br> </p>";
+                                $err_msg .= "<p>Please answer question $q_num.<p>";
+                                $questions = false;
                             }
-                        }
-                        else
-                        {
-                            $err_msg .= "<p>Please answer question $q_num.<p>"; 
-                            $questions = false;
-                        }
-                        /*if (!isset ($_POST["client_true" || "client_false"])) // *is this part also need if we already did the part above?
-                        {
-                            $err_msg .= "<p>Please answer question $q_num.<p>"; 
-                        }
-                        */
                     }
 
-                    // checking if the question selected is a dropdown
-                    if (${"type_" . $i} == "dropdown") {
-                        // DROPDOWN QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
+                    if ($q_type[$i] = "radio") {
+                        echo "<p>1 <br> </p>";
+                            // RADIO QUESTION VALIDATION
+                            if (isset ($_POST[$row['name']]) && ($_POST[$row['name']]) != "") {
+                                echo "<p>2 <br> </p>";
+                                $radio = $_POST[$row['type']];
+                                echo $radio;
+                                
+                                // RADIO QUESTION MARKING
+                                $score = intval($score);
+                                if ($radio == $row['answer']) 
+                                {
+                                    echo "<p>3 <br> </p>";
+                                    echo "<p>Correct - 1/1 marks.</p>";
+                                    $score = $score + 1;
+                                } else {
+                                    echo "<p>4 <br> </p>";
+                                    echo "<p>Incorrect - 0/1 marks.</p>";
+                                }
+                            } else {
+                                echo "<p>5 <br> </p>";
+                                $err_msg .= "<p>Please answer question $q_num.<p>"; 
+                                $questions = false;
+                            }
+                    }
+
+                    if ($q_type[$i] = "dropdown") {
+                        echo "<p>1 <br> </p>";
+                        if (isset($_POST[$q_name]) && ($_POST[$$q_name]) != "")
                         {
-                            $dropdown = $_POST[${"name_" . $i}];
+                            echo "<p>2 <br> </p>";
+                            $dropdown = $_POST[$q_name];
                             
                             // DROPDOWN QUESTION MARKING
                             $score = intval($score);
-                            if ($dropdown == ${"answer_" . $i})
-                            {
+                            if ($dropdown == $q_answer) {
+                                echo "<p>3 <br> </p>";
                                 echo "<p>Correct, the financial times declared that cookies were dangerous - 1/1 marks.</p>";
                                 $score = $score + 1;
                             } else {
+                                echo "<p>4 <br> </p>";
                                 echo "<p>Incorrect - 0/1 marks.</p>";
                             }
-                        }
-                        else 
-                        {
+                        } else {
+                            echo "<p>5 <br> </p>";
                             $err_msg .= "<p>Please answer question $q_num.<p>";
                             $questions = false;
-                        }    
-                    }
-                    
-                    // checking if the question selected is a number input
-                    if (${"type_" . $i} == "number") {
-                        // NUMBER QUESTION VALIDATION
-                        if (isset ($_POST[${"name_" . $i}]) && ($_POST[${"name_" . $i}] != ""))
-                        {
-                            if (is_numeric($_POST[${"name_" . $i}]) == true) {
-                                $number = sanitise_input($number);
-                                $number = $_POST[${"name_" . $i}];
-                                
-                                // NUMBER QUESTION MARKING
-                                $score = intval($score);
-                                if ($number == ${"answer_" . $i}) {
-                                    echo "<p>Correct, the default time period for a cookie to expire is 30 minutes - 1/1 marks.</p>";
-                                    $score = $score + 1;
-                                } else {
-                                    echo "<p>Incorrect, it takes 30 minutes for a cookie to timeout by default - 0/1 marks.</p>";
-                                }
-                            } else {
-                                echo "<p>Please enter a number between 1-60 for question $q_num.</p>";
-                            }
-
                         }
-                        else 
-                        {
-                            $err_msg .= "<p>Please answer question $q_num.<p>";
-                            $questions = false;
-                        } 
                     }
+                    */
                 }
-                echo $text;
-                echo "$radio <br>";
-
-                echo "$number <br>";
-                echo "$dropdown <br>";
-                echo "$checkbox <br>";
-                
-                
                 /*
                 // RADIO - What kind of file is a cookie?
                 if (isset ($_POST["file_true"])){
@@ -395,6 +374,13 @@
                     }
                 }
 
+                /*
+                if ($score == 0) {
+                    echo "<p>Please try again later. Your score was 0/5.</p>";
+                    exit();
+                }
+                */
+
                 // Adding attempt number before scoring
                 if (isset ($_POST['firstname']) && ($_POST["firstname"] != "")) {
                     if (isset ($_POST['lastname']) && ($_POST["lastname"] != "")) {
@@ -419,7 +405,7 @@
                 } elseif ($attempt_num == 2) {
                     echo "<p>It took you $attempt_num attempts. Would you like to <a href='quiz.php'>try again?</a></p>";
                 }
-
+                
                 // conditions if the connection isn't made
                 if (!$sql_db) {
                     echo "<p>Database connection failure!</p>";
@@ -483,8 +469,7 @@
                                     echo "<p>Successfully added new question attempt!</p>";
                                 }
 
-                            }
-                            else { 
+                            } else { 
                                 echo "<p>Something is wrong with " , $query , "</p>";
                             }
                             mysqli_close($sql_db);
