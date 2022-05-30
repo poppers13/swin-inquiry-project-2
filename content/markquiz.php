@@ -374,7 +374,7 @@
                     }
                 }
 
-                /*
+                /* code won't run fully if this is being used
                 if ($score == 0) {
                     echo "<p>Please try again later. Your score was 0/5.</p>";
                     exit();
